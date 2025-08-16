@@ -20,11 +20,3 @@ Feature: Sample mobile interaction
     | pin    | confirmPin | result                               |
     | 123456 | 654321     | PIN did not match. Please try again. |
 
-
-# @walletCreation
-# Scenario: Create new wallet after PIN setup
-#   Given the app is launched
-#   And I enter a new PIN "123456"
-#   And I confirm the PIN "123456"
-#   When I click on "CREATE A NEW WALLET" button
-#   Then I verify wallet creation is successful
