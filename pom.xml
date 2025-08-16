@@ -1,0 +1,180 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.swiftEx</groupId>
+    <artifactId>mobile-cucumber-framework</artifactId>
+    <version>0.1.0</version>
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <cucumber.version>7.11.2</cucumber.version>
+        <appium.client.version>8.6.0</appium.client.version>
+        <selenium.version>4.15.0</selenium.version>
+    </properties>
+
+    <dependencies>
+        <!-- Cucumber -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Use Cucumber JUnit Platform Engine so scenarios can run under JUnit Platform (parallel enabled) -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit Jupiter engine for JUnit Platform -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.3</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit Platform Suite API to enable @Suite annotations -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.9.3</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- JUnit Platform Suite Engine to run @Suite annotations -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>1.9.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit 4 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Appium / Selenium -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${appium.client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>        <!-- Logging (optional) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+        <!-- YAML loader for locators -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <!-- Allure Java Commons for manual attachments (lightweight) -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-java-commons</artifactId>
+            <version>2.20.1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Allure Cucumber JUnit5 for integration with exclusions -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>2.20.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>gherkin</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>messages</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <!-- Assertion Libraries -->
+        <!-- AssertJ - Fluent assertions (Recommended) -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.24.2</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Hamcrest - Matcher-based assertions -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- TestNG - Alternative testing framework with built-in assertions -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.8.0</version>
+            <scope>test</scope>
+        </dependency>
+    <!-- Allure integration removed to avoid dependency conflicts; consider adding a compatible adapter or using Allure JUnit integration later -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M8</version>
+                <configuration>
+                    <!-- Use JUnit 4 provider -->
+                    <useModulePath>false</useModulePath>
+                    <forkCount>2C</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <includes>
+                        <include>**/*Test*.java</include>
+                        <include>**/*Tests*.java</include>
+                        <include>**/*Runner*.java</include>
+                        <include>**/*Suite*.java</include>
+                    </includes>
+                    <systemPropertyVariables>
+                        <cucumber.execution.parallel.enabled>true</cucumber.execution.parallel.enabled>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            
+            <!-- Allure Maven Plugin -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>2.20.1</reportVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

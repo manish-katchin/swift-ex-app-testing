@@ -1,0 +1,27 @@
+username:
+  strategy: id
+  value: username
+
+password:
+  strategy: id
+  value: password
+
+welcomeBtn:
+  strategy: accessibilityId
+  value: welcome_button_ios
+
+pinField:
+  strategy: accessibilityId
+  value: pin_input_ios
+
+confirmPinField:
+  strategy: accessibilityId
+  value: pin_confirm_input_ios
+
+confirmPinBtn:
+  strategy: accessibilityId
+  value: pin_confirm_button_ios
+
+homeIndicator:
+  strategy: accessibilityId
+  value: home_root_ios
