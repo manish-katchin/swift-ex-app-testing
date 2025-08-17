@@ -1,653 +1,691 @@
-# SwiftEx Mobile Testing Framework
+# 📱 SwiftEx Mobile Test Automation Framework
 
-A comprehensive mobile automation testing framework built with Java, Cucumber, and Appium for testing mobile applications on Android and iOS platforms.
+A comprehensive mobile test automation framework supporting both Android and iOS platforms with local execution and SauceLabs cloud testing integration.
 
-## Project Architecture
+## 🚀 Quick Start
+
+### Prerequisites
+- Java 17+
+- Maven 3.6+
+- Node.js (for local Appium server)
+- Android SDK (for local Android testing)
+- Xcode (for local iOS testing - macOS only)
+
+### Run Tests
+```bash
+# Android Local
+mvn clean test -Dplatform=android -Dcucumber.filter.tags="@createPin"
+
+# Android SauceLabs Cloud
+mvn clean test -Dplatform=androidSauce -Dcucumber.filter.tags="@createPin"
+
+# iOS SauceLabs Cloud  
+mvn clean test -Dplatform=iOSSauce -Dcucumber.filter.tags="@createPin"
+```
+
+## 📋 Table of Contents
+
+1. [Project Architecture](#-project-architecture)
+2. [Framework Features](#-framework-features)
+3. [Technology Stack](#-technology-stack)
+4. [Project Structure](#-project-structure)
+5. [Configuration](#-configuration)
+6. [Test Execution Flow](#-test-execution-flow)
+7. [Page Object Model](#-page-object-model)
+8. [Locator Management](#-locator-management)
+9. [SauceLabs Integration](#-saucelabs-integration)
+10. [GitHub Actions CI/CD](#-github-actions-cicd)
+11. [Reporting](#-reporting)
+12. [Advanced Features](#-advanced-features)
+
+## 🏗️ Project Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    GitHub Actions CI/CD                        │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
+│  │Manual Trigger│  │Auto Trigger │  │ Scheduled Runs        │  │
+│  │with Inputs  │  │(Push/PR)    │  │ (Nightly)             │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                SwiftEx Test Framework                           │
+│                                                                 │
+│  ┌─────────────────┐    ┌──────────────────────────────────┐   │
+│  │   Test Layer    │    │         Execution Platforms     │   │
+│  │                 │    │                                  │   │
+│  │ ┌─────────────┐ │    │ ┌─────────┐  ┌─────────────────┐ │   │
+│  │ │ Cucumber    │ │    │ │ Local   │  │   SauceLabs     │ │   │
+│  │ │ Features    │ │    │ │ Android │  │   Cloud         │ │   │
+│  │ │ & Scenarios │ │    │ │ iOS     │  │   Android/iOS   │ │   │
+│  │ └─────────────┘ │    │ └─────────┘  └─────────────────┘ │   │
+│  │                 │    │                                  │   │
+│  │ ┌─────────────┐ │    │ ┌─────────────────────────────┐  │   │
+│  │ │ Step        │ │    │ │      Driver Management     │  │   │
+│  │ │ Definitions │ │    │ │                             │  │   │
+│  │ └─────────────┘ │    │ │ ┌─────────┐ ┌─────────────┐ │  │   │
+│  │                 │    │ │ │Android  │ │iOS Driver   │ │  │   │
+│  │ ┌─────────────┐ │    │ │ │Driver   │ │Management   │ │  │   │
+│  │ │ Test Hooks  │ │    │ │ └─────────┘ └─────────────┘ │  │   │
+│  │ │ & Context   │ │    │ └─────────────────────────────┘  │   │
+│  │ └─────────────┘ │    └──────────────────────────────────┘   │
+│  └─────────────────┘                                          │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │              Page Object Layer                          │   │
+│  │                                                         │   │
+│  │ ┌─────────────┐  ┌────────────┐  ┌──────────────────┐  │   │
+│  │ │  Base Page  │  │  PIN Page  │  │ Other Pages...   │  │   │
+│  │ │  Framework  │  │  Object    │  │                  │  │   │
+│  │ └─────────────┘  └────────────┘  └──────────────────┘  │   │
+│  │                                                         │   │
+│  │ ┌─────────────────────────────────────────────────────┐ │   │
+│  │ │           Locator Management System                 │ │   │
+│  │ │                                                     │ │   │
+│  │ │ ┌──────────────┐           ┌──────────────────────┐ │ │   │
+│  │ │ │Android YAML  │           │iOS YAML Locators    │ │ │   │
+│  │ │ │Locators      │           │                      │ │ │   │
+│  │ │ └──────────────┘           └──────────────────────┘ │ │   │
+│  │ └─────────────────────────────────────────────────────┘ │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                 │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │              Utility & Configuration Layer              │   │
+│  │                                                         │   │
+│  │ ┌─────────────┐ ┌─────────────┐ ┌─────────────────────┐ │   │
+│  │ │Config       │ │Element      │ │Test Context &       │ │   │
+│  │ │Loader       │ │Actions      │ │Reporting Utils      │ │   │
+│  │ └─────────────┘ └─────────────┘ └─────────────────────┘ │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    Reporting & Artifacts                       │
+│                                                                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
+│  │   Allure    │  │  Surefire   │  │    Screenshots &       │  │
+│  │  Reports    │  │  Reports    │  │    Test Artifacts      │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## ✨ Framework Features
+
+### 🎯 Core Capabilities
+- **Cross-Platform Testing**: Android and iOS support
+- **Cloud Testing**: SauceLabs integration with custom test naming
+- **Local Testing**: Local device/emulator support
+- **BDD Framework**: Cucumber integration with Gherkin syntax
+- **Page Object Model**: Maintainable and reusable page objects
+- **Smart Locator System**: Platform-specific YAML-based locators
+- **Parallel Execution**: Multi-thread test execution support
+- **Rich Reporting**: Allure reports with screenshots and detailed steps
+
+### 🔧 Advanced Features
+- **Dynamic Platform Switching**: Runtime platform selection
+- **Intelligent Element Handling**: Retry mechanisms and smart waits
+- **Test Context Management**: Thread-safe test data management
+- **Custom Test Naming**: Meaningful test names in SauceLabs dashboard
+- **Comprehensive Logging**: Structured logging with SLF4J
+- **CI/CD Ready**: GitHub Actions integration with manual triggers
+
+## 🛠️ Technology Stack
+
+| Component | Technology | Version | Purpose |
+|-----------|------------|---------|---------|
+| **Language** | Java | 17+ | Core programming language |
+| **Build Tool** | Maven | 3.6+ | Dependency management & build |
+| **Test Framework** | JUnit 5 | 5.10.0 | Test execution engine |
+| **BDD Framework** | Cucumber | 7.14.0 | Behavior-driven development |
+| **Mobile Automation** | Appium | 8.5.1 | Mobile app automation |
+| **WebDriver** | Selenium | 4.13.0 | WebDriver implementation |
+| **Cloud Platform** | SauceLabs | - | Cloud testing platform |
+| **Reporting** | Allure | 2.24.0 | Rich test reporting |
+| **Logging** | SLF4J + Logback | 2.0.9 | Structured logging |
+| **YAML Processing** | SnakeYAML | 2.2 | Configuration management |
+| **CI/CD** | GitHub Actions | - | Continuous integration |
+
+## 📁 Project Structure
 
 ```
 swiftExMobileApp/
-├── src/
-│   ├── main/java/com/swiftEx/mobileAutomationFramework/
-│   │   ├── driver/                     # Driver management
-│   │   │   ├── DriverFactory.java      # Appium driver creation
-│   │   │   └── MinimalDriverFactory.java # Lightweight driver factory
-│   │   ├── pages/                      # Page Object Model
-│   │   │   ├── BasePage.java          # Base page with common methods
-│   │   │   └── PinCreationPage.java   # PIN creation functionality
-│   │   ├── steps/                     # Step definitions for main logic
-│   │   │   └── PinCreationStepDefinitions.java
-│   │   └── utils/                     # Utility classes
-│   │       ├── ElementActions.java     # Centralized UI interactions
-│   │       ├── LocatorLoader.java      # YAML locator loading
-│   │       ├── LocatorUtils.java       # Locator utilities
-│   │       └── UiAutomator2Recovery.java # Recovery mechanisms
-│   └── test/java/com/swiftEx/mobileAutomationFramework/
-│       ├── runner/                    # Test runners
-│       │   └── TestRunner.java        # Cucumber test runner
-│       ├── steps/                     # Cucumber step definitions
-│       │   ├── Hooks.java            # Setup and teardown
-│       │   └── PinCreationStep.java  # PIN creation steps
-│       ├── support/                  # Test support utilities
-│       │   └── BaseTest.java         # Base test setup
-│       └── utils/                    # Test utilities
-│           └── AllureUtils.java      # Allure reporting utilities
-└── src/test/resources/
-    ├── features/                     # Cucumber feature files
-    │   └── pinCreation.feature       # PIN creation scenarios
-    ├── locators/                     # Element locators
-    │   ├── android/                  # Android-specific locators
-    │   │   └── pinCreation.yaml
-    │   └── ios/                      # iOS-specific locators
-    │       └── sample_page.yaml
-    ├── apps/                         # Application binaries
-    │   ├── android/                  # Android APK files
-    │   └── ios/                      # iOS APP/IPA files
-    └── *.properties                  # Configuration files
+├── 📁 src/
+│   ├── 📁 main/java/com/swiftEx/mobileAutomationFramework/
+│   │   ├── 📁 driver/
+│   │   │   ├── 🔧 DriverFactory.java          # Driver management & creation
+│   │   │   └── 🔧 MinimalDriverFactory.java   # Lightweight driver factory
+│   │   ├── 📁 pages/
+│   │   │   ├── 🏗️ BasePage.java               # Base page object framework
+│   │   │   └── 📱 PinCreationPage.java        # PIN creation page object
+│   │   └── 📁 utils/
+│   │       ├── ⚙️ ConfigLoader.java           # Configuration management
+│   │       ├── 🎯 PlatformConfig.java         # Platform-specific configs
+│   │       ├── 📍 LocatorLoader.java          # YAML locator loader
+│   │       ├── 🔄 ElementActions.java         # Element interaction utilities
+│   │       ├── 📊 AllureUtils.java            # Allure reporting utilities
+│   │       └── 🧪 TestContext.java            # Test context management
+│   └── 📁 test/
+│       ├── 📁 java/com/swiftEx/mobileAutomationFramework/
+│       │   ├── 📁 steps/
+│       │   │   ├── 🔗 Hooks.java              # Test lifecycle hooks
+│       │   │   └── 📋 PinCreationStep.java    # Step definitions
+│       │   └── 📁 runner/
+│       │       └── 🚀 TestRunner.java         # Test execution runner
+│       └── 📁 resources/
+│           ├── 📄 framework.properties        # Main configuration
+│           ├── 📁 features/
+│           │   └── 📋 pinCreation.feature     # BDD test scenarios
+│           ├── 📁 locators/
+│           │   ├── 📁 android/
+│           │   │   └── 📍 pinCreation.yaml    # Android locators
+│           │   └── 📁 ios/
+│           │       └── 📍 pinCreation.yaml    # iOS locators
+│           └── 📁 apps/
+│               ├── 📁 android/
+│               │   └── 📱 android.apk         # Android test app
+│               └── 📁 ios/
+│                   ├── 📱 ios.app/            # iOS simulator app
+│                   └── 📦 ios_simulator.zip   # iOS app package
+├── 📁 .github/workflows/
+│   ├── 🔄 mobile-tests.yml                   # Comprehensive CI/CD pipeline
+│   └── ⚡ manual-test.yml                    # Manual trigger workflow
+├── 📄 pom.xml                                # Maven configuration
+└── 📖 README.md                              # This documentation
 ```
 
-## 📱 Automated PIN Creation Testing
+## ⚙️ Configuration
 
-This framework includes comprehensive automated testing for mobile PIN creation functionality with both **positive** and **negative** test scenarios.
+### Main Configuration (`framework.properties`)
 
-### 🎯 Test Scenarios Covered
-
-#### ✅ **PIN Validation Success (@pinValidationSuccess)**
-```gherkin
-@pinValidationSuccess @createPin 
-Scenario: Setup PIN on first launch
-  Given the app is launched
-  When I enter a new PIN "123456"
-  And I confirm the PIN "123456"
-  Then I verify "CREATE A NEW WALLET" button on screen
-```
-**What it validates:**
-- App launches successfully
-- User can enter a 6-digit PIN
-- PIN confirmation matches the original PIN
-- Successful PIN creation leads to wallet creation screen
-
-#### ❌ **PIN Validation Failure (@pinValidationFailed)**
-```gherkin
-@pinValidationFailed @createPin
-Scenario Outline: PIN Validation with incorrect confirmation
-  Given the app is launched
-  When I enter a new PIN "<pin>"
-  And I confirm the PIN "<confirmPin>"
-  Then I should see "<result>"
-
-  Examples:
-  | pin    | confirmPin | result                               |
-  | 123456 | 654321     | PIN did not match. Please try again. |
-```
-**What it validates:**
-- App properly validates PIN confirmation
-- Error message displays when PINs don't match
-- User is prompted to try again after failed validation
-- App maintains security by preventing mismatched PIN acceptance
-
-### 🚀 Running PIN Creation Tests
-
-#### **Android PIN Testing**
-```bash
-# Run all PIN creation scenarios on Android
-mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
-
-# Run only successful PIN creation
-mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationSuccess"
-
-# Run only failed PIN validation
-mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationFailed"
-```
-
-#### **iOS PIN Testing**
-```bash
-# Run all PIN creation scenarios on iOS  
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
-
-# Run only successful PIN creation on iOS
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"
-
-# Run only failed PIN validation on iOS
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"
-```
-
-#### **Cross-Platform PIN Testing**
-```bash
-# Test PIN functionality on both platforms
-mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
-
-# Comprehensive PIN security testing
-mvn test -Dcucumber.filter.tags="@createPin" # Android default
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin" # Then iOS
-```
-
-### 🔒 Security Testing Features
-
-- **PIN Mismatch Detection**: Validates that non-matching PINs are rejected
-- **Error Message Verification**: Ensures proper user feedback on failures  
-- **Fresh App State**: Each scenario starts with a clean app launch
-- **Cross-Platform Consistency**: Same PIN logic tested on both Android and iOS
-- **Recovery Mechanisms**: Framework handles app crashes and UI recovery
-
-Key Features
-
-### 🏗️ Architecture Patterns
-- **Page Object Model (POM)**: Organized page classes with reusable methods
-- **Centralized Element Actions**: `ElementActions` utility for consistent UI interactions
-- **YAML-based Locators**: Platform-specific locator management
-- **Recovery Mechanisms**: Robust UiAutomator2 recovery for stability
-- **Allure Integration**: Rich HTML reporting with screenshots
-
-### 🔧 Framework Components
-
-#### Driver Management
-- **DriverFactory**: Creates Appium drivers for Android/iOS
-- **Platform Detection**: Automatic platform-specific configurations
-- **Session Management**: Proper driver lifecycle handling
-
-#### Element Interactions
-- **ElementActions**: Centralized utility for all UI interactions
-  - Click, double-click, send keys
-  - Text retrieval and verification
-  - Element visibility and state checks
-  - Dropdown selections and swipe actions
-
-#### Locator Management
-- **YAML-based**: Platform-specific locator files
-- **Dynamic Resolution**: Support for YAML maps, By objects, and string locators
-- **Fallback Mechanisms**: Multiple locator strategies for reliability
-
-## Quick Start
-
-### Prerequisites
-- Java 8 or higher
-- Maven 3.6+
-- Appium Server 2.0+
-- Android SDK (for Android testing)
-- Xcode (for iOS testing on macOS)
-
-### Installation
-```bash
-git clone https://github.com/manish-katchin/swift-ex-app-testing.git
-cd swift-ex-app-testing
-mvn clean compile
-```
-
-### Configuration
-1. **Place your app binaries:**
-   - Android APKs: `src/test/resources/apps/android/`
-   - iOS Apps: `src/test/resources/apps/ios/`
-
-2. **Update configuration files:**
-   - `src/test/resources/framework.properties`
-   - `src/test/resources/allure.properties`
-
-## Running Tests
-
-### 📱 Cross-Platform Testing Support
-
-This framework supports both **Android** and **iOS** platforms with easy switching capabilities.
-
-#### Platform Configuration
-The framework is configured with Android as default in `src/test/resources/framework.properties`:
 ```properties
-# Default: Android Configuration
-platformName=Android
-appium.deviceName=Android Emulator
-appium.app=src/test/resources/apps/android/android.apk
-
-# iOS Configuration (uncomment for iOS testing)
-# platformName=iOS
-# appium.deviceName=iPhone 15 Pro
-# appium.app=src/test/resources/apps/ios/SwiftExApp.app
-```
-
-### 🚀 Platform Switching Commands
-
-#### **Android Testing (Default)**
-```bash
-# Run with default Android configuration
-mvn test
-
-# Explicit Android platform
-mvn test -Dplatform=android
-
-# Android with specific tags
-mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
-
-# Android PIN creation tests
-mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationSuccess"
-```
-
-#### **iOS Testing**
-```bash
-# Switch to iOS platform
-mvn test -Dplatform=ios
-
-# iOS with specific tags
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
-
-# iOS PIN creation tests
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"
-
-# iOS with custom device
-mvn test -Dplatform=ios -DdeviceName="iPhone 14 Pro"
-```
-
-#### **🌐 SauceLabs Cloud Testing**
-Execute tests on SauceLabs cloud devices for broader coverage and parallel execution.
-
-##### **SauceLabs Android Testing**
-```bash
-# Android on SauceLabs cloud
-mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@createPin"
-
-# Android PIN creation on SauceLabs
-mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@pinValidationSuccess"
-
-# Android with SauceLabs credentials
-mvn test -Dplatform=androidSauce \
-         -Dsaucelabs.username=your_username \
-         -Dsaucelabs.accessKey=your_access_key \
-         -Dcucumber.filter.tags="@createPin"
-
-# Custom Android device on SauceLabs
-mvn test -Dplatform=androidSauce \
-         -Dsaucelabs.android.deviceName="Samsung Galaxy S22 GoogleAPI Emulator" \
-         -Dsaucelabs.android.platformVersion="12.0"
-```
-
-##### **SauceLabs iOS Testing**
-```bash
-# iOS on SauceLabs cloud
-mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@createPin"
-
-# iOS PIN creation on SauceLabs
-mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@pinValidationSuccess"
-
-# iOS with SauceLabs credentials
-mvn test -Dplatform=iOSSauce \
-         -Dsaucelabs.username=your_username \
-         -Dsaucelabs.accessKey=your_access_key \
-         -Dcucumber.filter.tags="@createPin"
-
-# Custom iOS device on SauceLabs
-mvn test -Dplatform=iOSSauce \
-         -Dsaucelabs.ios.deviceName="iPhone 14 Pro Simulator" \
-         -Dsaucelabs.ios.platformVersion="16.4"
-```
-
-##### **🔧 SauceLabs Configuration**
-Before running SauceLabs tests, configure your credentials:
-
-```bash
-# Method 1: Environment Variables (Recommended)
-export SAUCE_USERNAME=your_username
-export SAUCE_ACCESS_KEY=your_access_key
-
-# Method 2: Command Line Parameters
-mvn test -Dplatform=androidSauce \
-         -Dsaucelabs.username=your_username \
-         -Dsaucelabs.accessKey=your_access_key
-
-# Method 3: Update framework.properties
-# Edit src/test/resources/framework.properties:
-# saucelabs.username=your_username
-# saucelabs.accessKey=your_access_key
-```
-
-##### **📱 SauceLabs App Upload**
-Upload your apps to SauceLabs storage before testing:
-
-```bash
-# Upload Android APK
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
-     -X POST \
-     -F "payload=@src/test/resources/apps/android/android.apk" \
-     -F "name=android.apk" \
-     "https://api.us-west-1.saucelabs.com/rest/v1/storage/upload"
-
-# Upload iOS App
-curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
-     -X POST \
-     -F "payload=@src/test/resources/apps/ios/SwiftExApp.app" \
-     -F "name=SwiftExApp.app" \
-     "https://api.us-west-1.saucelabs.com/rest/v1/storage/upload"
-```
-
-##### **🚀 SauceLabs Quick Start Script**
-Use the provided script for easy SauceLabs testing:
-
-```bash
-# Make script executable
-chmod +x run-saucelabs-tests.sh
-
-# Run with credentials as parameters
-./run-saucelabs-tests.sh your_username your_access_key
-
-# Run with environment variables
-export SAUCE_USERNAME=your_username
-export SAUCE_ACCESS_KEY=your_access_key
-./run-saucelabs-tests.sh
-```
-
-### 🎯 Test Execution Examples
-
-#### **PIN Creation Testing**
-```bash
-# Android PIN creation (success scenario)
-mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationSuccess"
-
-# iOS PIN creation (success scenario)  
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"
-
-# Android PIN validation (failure scenario)
-mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationFailed"
-
-# iOS PIN validation (failure scenario)
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"
-```
-
-#### **Cross-Platform Test Suite**
-```bash
-# Run all PIN creation tests on Android
-mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
-
-# Run the same tests on iOS
-mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
-
-# Run multiple scenarios
-mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin or @pinValidation"
-```
-
-### 📋 Platform Requirements
-
-#### **Android Setup**
-```bash
-# 1. Check connected Android devices
-adb devices
-
-# 2. Start Android emulator (if needed)
-emulator -avd Pixel_4_API_30
-
-# 3. Verify APK file exists
-ls src/test/resources/apps/android/android.apk
-
-# 4. Run Android tests
-mvn test -Dplatform=android
-```
-
-#### **iOS Setup** (macOS only)
-```bash
-# 1. Check available iOS simulators
-xcrun simctl list devices
-
-# 2. Start iOS simulator (if needed)
-xcrun simctl boot "iPhone 15 Pro"
-
-# 3. Verify iOS app file exists
-ls src/test/resources/apps/ios/SwiftExApp.app
-
-# 4. Run iOS tests
-mvn test -Dplatform=ios
-```
-
-### 🔄 Advanced Platform Switching
-
-#### **Environment Variables**
-```bash
-# Set platform via environment variable
-export PLATFORM=ios
-mvn test
-
-# Override with command line
-PLATFORM=android mvn test -Dplatform=ios  # iOS wins
-```
-
-#### **Configuration File Method**
-To permanently switch platforms, edit `src/test/resources/framework.properties`:
-
-**For Android (default):**
-```properties
+# Platform Configuration
 platformName=Android
 appium.deviceName=Android Emulator
 appium.platformVersion=12
 appium.automationName=UiAutomator2
-appium.app=src/test/resources/apps/android/android.apk
-appPackage=com.app.swiftEx.app
+
+# SauceLabs Configuration
+saucelabs.username=oauth-your-username
+saucelabs.accessKey=your-access-key
+saucelabs.url=https://ondemand.eu-central-1.saucelabs.com:443/wd/hub
+
+# Android SauceLabs
+saucelabs.android.deviceName=Google Pixel 4 GoogleAPI Emulator
+saucelabs.android.platformVersion=12.0
+saucelabs.android.app=sauce-storage:android.apk
+
+# iOS SauceLabs  
+saucelabs.ios.deviceName=iPhone 14 Simulator
+saucelabs.ios.platformVersion=16.2
+saucelabs.ios.app=sauce-storage:ios_simulator.zip
 ```
 
-**For iOS:**
-```properties
-platformName=iOS
-appium.deviceName=iPhone 15 Pro
-appium.platformVersion=17.0
-appium.automationName=XCUITest
-appium.app=src/test/resources/apps/ios/SwiftExApp.app
-appium.bundleId=com.app.swiftEx.ios
+### Runtime Parameters
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `-Dplatform` | Target platform | `android`, `ios`, `androidSauce`, `iOSSauce` |
+| `-Dcucumber.filter.tags` | Test tags to execute | `@createPin`, `@smoke`, `@pinValidationFailed` |
+| `-Dandroid.device.name` | Android device name | `"emulator-5554"`, `"Google Pixel 4"` |
+| `-Dios.device.name` | iOS device name | `"iPhone 14 Simulator"` |
+| `-DfailIfNoTests` | Fail if no tests found | `false` |
+
+## 🔄 Test Execution Flow
+
+```mermaid
+graph TD
+    A[Test Start] --> B{Platform Detection}
+    B -->|android| C[Local Android Setup]
+    B -->|ios| D[Local iOS Setup] 
+    B -->|androidSauce| E[SauceLabs Android Setup]
+    B -->|iOSSauce| F[SauceLabs iOS Setup]
+    
+    C --> G[Create Android Driver]
+    D --> H[Create iOS Driver]
+    E --> I[Create SauceLabs Android Driver]
+    F --> J[Create SauceLabs iOS Driver]
+    
+    G --> K[Load Platform Locators]
+    H --> K
+    I --> K  
+    J --> K
+    
+    K --> L[Execute Cucumber Scenarios]
+    L --> M[Run Step Definitions]
+    M --> N[Page Object Interactions]
+    N --> O[Generate Reports]
+    O --> P[Cleanup Resources]
+    P --> Q[Test Complete]
 ```
 
-### 🎪 Parallel Execution
+### Detailed Flow Description
+
+1. **Test Initialization** (`Hooks.java`)
+   - Scenario context setup with `TestContext`
+   - Driver creation via `DriverFactory`
+   - Platform-specific configuration loading
+
+2. **Driver Management** (`DriverFactory.java`)
+   - Platform detection and validation
+   - Capability building with platform-specific settings
+   - SauceLabs authentication and session creation
+   - Local Appium server connection
+
+3. **Page Object Creation** (`BasePage.java`)
+   - YAML locator file loading
+   - Platform-specific element mapping
+   - Element action initialization
+
+4. **Test Execution** 
+   - Cucumber scenario parsing
+   - Step definition execution
+   - Page object method invocation
+   - Element interactions with retry logic
+
+5. **Cleanup & Reporting**
+   - Driver session termination
+   - Test context cleanup
+   - Report generation (Allure, Surefire)
+   - Artifact collection
+
+## 📱 Page Object Model
+
+### Architecture Design
+
+The framework uses a sophisticated Page Object Model with several key components:
+
+#### BasePage Foundation
+```java
+public abstract class BasePage {
+    protected final AppiumDriver driver;
+    protected final String platform;
+    protected final Map<String, Object> locators;
+    protected final ElementActions elementActions;
+    
+    // Automatic locator loading from YAML
+    public BasePage(AppiumDriver driver, String locatorFile) {
+        this.locators = LocatorLoader.loadLocators(locatorFile, platform);
+        // ... initialization
+    }
+    
+    // Smart element retrieval
+    protected By getBy(String locatorKey) {
+        return LocatorLoader.getBy(locators, locatorKey);
+    }
+}
+```
+
+#### PIN Creation Page Example
+```java
+public class PinCreationPage extends BasePage {
+    
+    public PinCreationPage(AppiumDriver driver) {
+        super(driver, "pinCreation.yaml");  // Auto-loads platform locators
+    }
+    
+    public void enterPIN(String pin) {
+        for (char digit : pin.toCharArray()) {
+            click("digit_" + digit);  // Uses YAML locators
+        }
+    }
+    
+    public String getErrorMessage() {
+        return elementActions.getText(getBy("error_message"));
+    }
+}
+```
+
+### Key Features
+
+- **Automatic Locator Loading**: YAML files loaded based on platform
+- **Smart Element Handling**: Retry logic and intelligent waits
+- **Platform Abstraction**: Same API works across Android/iOS
+- **Maintainable Design**: Locators externalized in YAML files
+
+## 🎯 Locator Management
+
+### YAML-Based Locator System
+
+The framework uses platform-specific YAML files for element locators:
+
+#### Android Locators (`android/pinCreation.yaml`)
+```yaml
+error_message:
+  strategy: id
+  value: com.app.swiftEx.app:id/snackbar_text
+
+digit_1:
+  strategy: xpath  
+  value: //android.view.ViewGroup[@content-desc="1"]
+
+create_wallet_button:
+  strategy: xpath
+  value: //android.widget.Button[contains(@text,'CREATE A NEW WALLET')]
+```
+
+#### iOS Locators (`ios/pinCreation.yaml`)
+```yaml
+error_message:
+  strategy: accessibility_id
+  value: "error-message"
+  fallback_xpath: "//XCUIElementTypeStaticText[contains(@value,'did not match')]"
+
+digit_1:
+  strategy: accessibility_id
+  value: "digit-1"
+  fallback_xpath: "//XCUIElementTypeButton[@name='1' or @label='1']"
+
+create_wallet_button:
+  strategy: accessibility_id
+  value: "create-wallet-button"
+  fallback_xpath: "//XCUIElementTypeButton[@name='CREATE A NEW WALLET']"
+```
+
+### Locator Loading Process
+
+1. **Platform Detection**: Framework identifies current platform
+2. **File Loading**: Appropriate YAML file loaded (`android/` or `ios/`)
+3. **Locator Parsing**: YAML parsed into `Map<String, Object>` structure
+4. **By Object Creation**: Locators converted to Selenium `By` objects
+5. **Fallback Support**: iOS supports multiple locator strategies
+
+### Benefits
+
+- **Platform Isolation**: Separate locators for each platform
+- **Easy Maintenance**: Non-technical users can update locators
+- **Multiple Strategies**: iOS supports primary + fallback locators
+- **Version Control**: YAML changes tracked in Git
+
+## ☁️ SauceLabs Integration
+
+### Architecture Overview
+
+The framework provides seamless SauceLabs cloud testing integration with advanced features:
+
+#### Key Components
+
+1. **Authentication Management**
+   ```java
+   // Environment variable support
+   String username = System.getProperty("saucelabs.username", 
+                    System.getenv("SAUCELABS_USERNAME"));
+   ```
+
+2. **Platform-Specific Configuration**
+   ```java
+   if (platform.equals("androidSauce")) {
+       capabilities.setProperty("deviceName", 
+           ConfigLoader.getProperty("saucelabs.android.deviceName"));
+   }
+   ```
+
+3. **Custom Test Naming**
+   ```java
+   // Uses actual scenario names instead of timestamps
+   String testName = TestContext.getFormattedTestName();
+   sauceOptions.put("name", testName);
+   ```
+
+### Supported Devices
+
+#### Android Devices
+- Google Pixel 4 GoogleAPI Emulator (Android 12.0)
+- Google Pixel 6 GoogleAPI Emulator (Android 13.0)
+- Samsung Galaxy S22 GoogleAPI Emulator (Android 12.0)
+
+#### iOS Simulators  
+- iPhone 14 Simulator (iOS 16.2)
+- iPhone 13 Simulator (iOS 15.0, 16.0)
+- iPad Pro 12.9" Simulator (iOS 16.2)
+
+### Test Session Features
+
+- **Custom Test Names**: Shows "Create PIN: PIN Validation" instead of timestamps
+- **Tagging System**: Automatic tags (`swiftex`, `mobile`, `automation`, `android/ios`)
+- **Build Grouping**: Tests grouped by build number for easy tracking
+- **Session Cleanup**: Automatic session termination and cleanup
+
+## 🚀 GitHub Actions CI/CD
+
+### Workflow Architecture
+
+The framework includes sophisticated CI/CD pipelines with manual trigger support:
+
+#### Main Workflow (`mobile-tests.yml`)
+
+```yaml
+name: SwiftEx Mobile Test Automation
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: '🤖 Select Test Platform'
+        required: true
+        default: 'androidSauce'
+        type: choice
+        options:
+          - androidSauce
+          - iOSSauce  
+          - android
+          - ios
+      
+      test_tags:
+        description: 'Cucumber Tags'
+        required: true
+        default: '@createPin'
+        type: choice
+        options:
+          - '@createPin'
+          - '@pinValidationSuccess'
+          - '@pinValidationFailed'
+          - '@smoke'
+```
+
+### Manual Trigger Interface
+
+Users can run tests through GitHub Actions UI with these options:
+
+| Input | Type | Options | Description |
+|-------|------|---------|-------------|
+| Platform | Choice | `androidSauce`, `iOSSauce`, `android`, `ios` | Test execution platform |
+| Test Tags | Choice | `@createPin`, `@smoke`, etc. | Cucumber tags to execute |
+| SauceLabs Device | Choice | `Google Pixel 4`, `iPhone 14` | Cloud testing device |
+| Platform Version | Choice | `12.0`, `16.2`, etc. | OS version |
+| Environment | Choice | `dev`, `staging`, `prod` | Target environment |
+| Generate Reports | Boolean | `true`/`false` | Enable Allure reporting |
+
+### Execution Flow
+
+1. **Input Validation**: User inputs validated and processed
+2. **Environment Setup**: JDK 17, Maven, dependencies installed  
+3. **Platform Configuration**: Dynamic command building based on inputs
+4. **Test Execution**: Maven test command with platform-specific parameters
+5. **Report Generation**: Allure reports generated automatically
+6. **Artifact Upload**: Test results, reports, screenshots uploaded
+7. **Status Reporting**: Results posted as PR comments
+
+### Advanced CI/CD Features
+
+- **Parallel Matrix Builds**: Multiple platform/tag combinations
+- **Nightly Comprehensive Testing**: Scheduled complete test runs
+- **Failure Handling**: Tests continue even if some scenarios fail
+- **Smart Caching**: Maven dependencies cached for faster builds
+- **Multi-Environment Support**: Development, staging, production testing
+
+## 📊 Reporting
+
+### Allure Integration
+
+The framework generates comprehensive Allure reports with:
+
+#### Features
+- **Test Execution Timeline**: Visual representation of test duration
+- **Step-by-Step Details**: Each test step with timing information
+- **Screenshots on Failure**: Automatic screenshot capture
+- **Environment Information**: Platform, device, version details
+- **Trend Analysis**: Historical test execution trends
+- **Categorization**: Tests organized by features and tags
+
+#### Report Structure
+```
+Allure Report/
+├── 📊 Overview Dashboard
+├── 📋 Test Suites (by Feature)
+├── 🏷️ Test Categories (by Tags)  
+├── 📈 Timeline View
+├── 📱 Environment Details
+└── 📸 Screenshots & Attachments
+```
+
+### Additional Reporting
+
+- **Surefire Reports**: Standard Maven test reports
+- **Console Logs**: Detailed execution logs with timestamps
+- **GitHub Actions Summaries**: Test results in workflow summary
+- **PR Comments**: Automated test result comments on pull requests
+
+## 🔧 Advanced Features
+
+### Test Context Management
+
+The framework includes sophisticated test context handling:
+
+```java
+public class TestContext {
+    private static final ThreadLocal<String> scenarioName = new ThreadLocal<>();
+    private static final ThreadLocal<String> featureName = new ThreadLocal<>();
+    private static final ThreadLocal<String[]> tags = new ThreadLocal<>();
+    
+    public static String getFormattedTestName() {
+        String feature = getFeatureName();
+        String scenario = getScenarioName();
+        return feature + ": " + scenario;
+    }
+}
+```
+
+#### Benefits
+- **Thread Safety**: Supports parallel test execution
+- **Context Isolation**: Each test maintains independent context  
+- **Custom Naming**: Meaningful test names in reporting
+- **Memory Management**: Automatic cleanup prevents memory leaks
+
+### Smart Element Handling
+
+The framework provides intelligent element interaction:
+
+```java
+public class ElementActions {
+    public void clickWithRetry(By locator, int maxRetries) {
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+                WebElement element = waitForElement(locator, 10);
+                element.click();
+                return;
+            } catch (Exception e) {
+                if (i == maxRetries - 1) throw e;
+                waitBetweenRetries();
+            }
+        }
+    }
+}
+```
+
+#### Features
+- **Retry Logic**: Automatic retries for flaky elements
+- **Smart Waits**: Intelligent waiting strategies
+- **Exception Handling**: Graceful error recovery
+- **Performance Optimization**: Efficient element location
+
+### Dynamic Platform Switching
+
+The framework supports runtime platform switching:
+
 ```bash
-# Run tests in parallel (single platform)
-mvn test -Dcucumber.execution.parallel.enabled=true \
-         -Dcucumber.execution.parallel.config.strategy=dynamic \
-         -Dplatform=android
-
-# Sequential execution with fresh driver per scenario (recommended)
-mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
+# Switch platforms without code changes
+mvn test -Dplatform=android          # Local Android
+mvn test -Dplatform=androidSauce     # Cloud Android
+mvn test -Dplatform=ios             # Local iOS  
+mvn test -Dplatform=iOSSauce        # Cloud iOS
 ```
 
-### 📚 Quick Command Reference
+## 🚨 Troubleshooting
 
-| **Scenario** | **Android (Local)** | **iOS (Local)** | **Android (SauceLabs)** | **iOS (SauceLabs)** |
-|--------------|---------------------|-----------------|-------------------------|---------------------|
-| **All Tests** | `mvn test` | `mvn test -Dplatform=ios` | `mvn test -Dplatform=androidSauce` | `mvn test -Dplatform=iOSSauce` |
-| **PIN Creation** | `mvn test -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@createPin"` |
-| **PIN Success** | `mvn test -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@pinValidationSuccess"` |
-| **PIN Failure** | `mvn test -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@pinValidationFailed"` |
-| **Custom Device** | `mvn test -DdeviceName="Pixel 6"` | `mvn test -Dplatform=ios -DdeviceName="iPhone 14 Pro Max"` | `mvn test -Dplatform=androidSauce -Dsaucelabs.android.deviceName="Samsung Galaxy S22"` | `mvn test -Dplatform=iOSSauce -Dsaucelabs.ios.deviceName="iPhone 14 Pro"` |
+### Common Issues & Solutions
 
-### Test Execution Examples
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| Driver creation failed | Missing dependencies | Install Android SDK/Xcode |
+| SauceLabs authentication error | Wrong credentials | Check `SAUCELABS_USERNAME` and `SAUCELABS_ACCESS_KEY` |
+| iOS simulator build error | Wrong app build type | Use simulator build, not device build |
+| Locator not found | Missing YAML entry | Add locator to appropriate YAML file |
+| GitHub Actions manual trigger not visible | Workflow file issues | Check YAML syntax and push to correct branch |
+
+### Debug Commands
 
 ```bash
-# Run without failing on no tests
+# Verbose Maven execution
+mvn test -X -Dplatform=androidSauce
+
+# Skip tests compilation check
 mvn test -DfailIfNoTests=false
 
-# Run with specific test runner
-mvn test -Dtest=TestRunner -DfailIfNoTests=false
-
-# Run with custom thread count
-mvn test -Dthread.count=3
+# Generate verbose Allure report
+mvn allure:serve -Dallure.results.directory=target/allure-results
 ```
 
-## Reporting
+## 🤝 Contributing
 
-### Allure Reports
-```bash
-# Generate Allure report
-mvn allure:report
+### Development Workflow
 
-# Serve Allure report (opens browser automatically)
-mvn allure:serve
+1. **Fork the repository**
+2. **Create feature branch**: `git checkout -b feature/new-feature`
+3. **Add tests**: Ensure new features have corresponding tests
+4. **Update documentation**: Update README.md for significant changes
+5. **Submit pull request**: Include description of changes
 
-# Clean previous results
-mvn allure:clean
-```
+### Code Standards
 
-### Cucumber Reports
-Reports are automatically generated in:
-- `target/cucumber-reports/` - Cucumber HTML reports
-- `target/allure-results/` - Allure test results
-- `target/surefire-reports/` - Maven Surefire reports
+- **Java Code Style**: Follow Google Java Style Guide
+- **YAML Format**: Use 2-space indentation
+- **Commit Messages**: Use conventional commits format
+- **Documentation**: Update relevant documentation for changes
 
-## Test Data Management
+## 📞 Support
 
-### Feature Files
-Located in `src/test/resources/features/`
-```gherkin
-@createPin
-Scenario: Setup PIN on first launch
-  Given the app is launched
-  When I enter a new PIN "123456"
-  And I confirm the PIN "123456"
-  Then I verify "CREATE A NEW WALLET" button on screen
-```
+### Resources
 
-### Locator Files
-Platform-specific YAML files in `src/test/resources/locators/`
-```yaml
-# android/pinCreation.yaml
-digit1:
-  id: com.app.swiftEx.app:id/digit_1
-  xpath: //android.view.ViewGroup[@content-desc="1"]
+- **GitHub Issues**: Report bugs and request features
+- **Wiki**: Additional documentation and examples  
+- **SauceLabs Docs**: https://docs.saucelabs.com/mobile-apps/
+- **Appium Guide**: https://appium.io/docs/
 
-incorrectPIN:
-  id: com.app.swiftEx.app:id/snackbar_text
-```
+### Getting Help
 
-## Development Guidelines
+1. Check existing GitHub issues
+2. Review troubleshooting section
+3. Create detailed issue with:
+   - Platform and version
+   - Error messages
+   - Steps to reproduce
+   - Expected vs actual behavior
 
-### Adding New Tests
-1. Create feature file in `src/test/resources/features/`
-2. Add corresponding step definitions in `src/test/java/.../steps/`
-3. Create page objects in `src/main/java/.../pages/`
-4. Add locators in `src/test/resources/locators/`
+---
 
-### Page Object Pattern
-```java
-public class NewPage extends BasePage {
-    private ElementActions elementActions;
-    
-    public NewPage(WebDriver driver) {
-        super(driver);
-        this.elementActions = new ElementActions(driver);
-    }
-    
-    public void clickElement() {
-        elementActions.click(getLocator("elementKey"));
-    }
-}
-```
+## 🎉 Conclusion
 
-### Using ElementActions
-```java
-// Click element
-elementActions.click(getLocator("buttonKey"));
+The SwiftEx Mobile Test Automation Framework provides a robust, scalable solution for mobile application testing across multiple platforms and environments. With its advanced features like SauceLabs integration, intelligent locator management, and comprehensive CI/CD pipeline, it enables teams to deliver high-quality mobile applications with confidence.
 
-// Send text
-elementActions.sendKeys(getLocator("inputKey"), "test data");
+### Key Achievements
+- ✅ **Cross-Platform Testing**: Unified framework for Android and iOS
+- ✅ **Cloud Integration**: Seamless SauceLabs integration with custom naming
+- ✅ **CI/CD Ready**: GitHub Actions with manual trigger support
+- ✅ **Maintainable Architecture**: YAML-based locators and page objects
+- ✅ **Rich Reporting**: Allure integration with screenshots and detailed steps
+- ✅ **Developer Experience**: Easy setup, comprehensive documentation, troubleshooting guides
 
-// Verify text
-elementActions.verifyText(getLocator("labelKey"), "expected text");
-
-// Get text
-String actualText = elementActions.getText(getLocator("textKey"));
-```
-
-## CI/CD Integration
-
-### GitHub Actions (Recommended)
-```yaml
-name: Mobile Tests
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
-      - name: Run tests
-        run: mvn test -Dcucumber.filter.tags="@smoke"
-```
-
-### Jenkins Pipeline
-```groovy
-pipeline {
-    agent any
-    stages {
-        stage('Test') {
-            steps {
-                sh 'mvn clean test -Dcucumber.filter.tags="@regression"'
-            }
-        }
-        stage('Report') {
-            steps {
-                allure includeProperties: false, 
-                       results: [[path: 'target/allure-results']]
-            }
-        }
-    }
-}
-```
-
-## Configuration Files
-
-### framework.properties
-```properties
-# Appium Configuration
-appium.server=http://127.0.0.1:4723/wd/hub
-implicit.wait=10
-explicit.wait=20
-
-# Platform Configuration
-platform=android
-device.name=Android Emulator
-app.path=src/test/resources/apps/android/android.apk
-```
-
-### allure.properties
-```properties
-allure.results.directory=target/allure-results
-allure.link.issue.pattern=https://jira.company.com/browse/{}
-allure.link.tms.pattern=https://testmanagement.company.com/{}
-```
-
-## Troubleshooting
-
-### Common Issues
-
-#### Driver Not Found
-```bash
-# Ensure Appium server is running
-appium --address 127.0.0.1 --port 4723
-```
-
-#### Element Not Found
-- Check locators in YAML files
-- Verify app state and timing
-- Use explicit waits
-
-#### Test Failures
-- Check Allure reports for screenshots
-- Review logs in `target/surefire-reports/`
-- Verify device/emulator availability
-
-### Debugging Tips
-1. Enable verbose logging in `framework.properties`
-2. Use `elementActions.waitForElement()` for timing issues
-3. Take screenshots with `AllureUtils.attachScreenshot()`
-4. Review UiAutomator2 recovery logs
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Commit changes: `git commit -am 'Add new feature'`
-4. Push to branch: `git push origin feature/new-feature`
-5. Create Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Support
-
-For questions and support:
-- Create an issue on GitHub
-- Review the documentation in `/docs`
-- Check existing discussions and solutions
+**Happy Testing!** 🚀📱
