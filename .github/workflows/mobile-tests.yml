@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       platform:
-        description: 'Select Test Platform'
+        description: '🤖 Select Test Platform'
         required: true
         default: 'androidSauce'
         type: choice
