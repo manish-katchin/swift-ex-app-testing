@@ -3,6 +3,7 @@ package com.swiftEx.mobileAutomationFramework.steps;
 import com.swiftEx.mobileAutomationFramework.driver.DriverFactory;
 import com.swiftEx.mobileAutomationFramework.pages.PinCreationPage;
 import com.swiftEx.mobileAutomationFramework.utils.AllureUtils;
+import com.swiftEx.mobileAutomationFramework.utils.TestContext;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.cucumber.java.After;
@@ -30,6 +31,14 @@ public class Hooks {
     public void setUp(Scenario scenario) {
         synchronized (DRIVER_LOCK) {
             logger.info("=== STARTING NEW SCENARIO: {} ===", scenario.getName());
+            
+            // Set test context for SauceLabs test naming
+            TestContext.setScenarioName(scenario.getName());
+            TestContext.setFeatureName("Create PIN"); // Can be extracted from scenario.getUri() if needed
+            String[] tags = scenario.getSourceTagNames().toArray(new String[0]);
+            TestContext.setTags(tags);
+            TestContext.printContext();
+            
             logger.info("INFO: Test setup - Initializing fresh driver and page objects...");
             
             try {
@@ -97,6 +106,9 @@ public class Hooks {
                 } else {
                     AllureUtils.attachText("Scenario Passed", scenario.getName());
                 }
+                
+                // Clear TestContext to prevent memory leaks
+                TestContext.clear();
                 
                 // Aggressive driver cleanup to ensure fresh start for next scenario
                 if (driver != null) {

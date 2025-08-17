@@ -235,6 +235,103 @@ mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"
 mvn test -Dplatform=ios -DdeviceName="iPhone 14 Pro"
 ```
 
+#### **🌐 SauceLabs Cloud Testing**
+Execute tests on SauceLabs cloud devices for broader coverage and parallel execution.
+
+##### **SauceLabs Android Testing**
+```bash
+# Android on SauceLabs cloud
+mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@createPin"
+
+# Android PIN creation on SauceLabs
+mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@pinValidationSuccess"
+
+# Android with SauceLabs credentials
+mvn test -Dplatform=androidSauce \
+         -Dsaucelabs.username=your_username \
+         -Dsaucelabs.accessKey=your_access_key \
+         -Dcucumber.filter.tags="@createPin"
+
+# Custom Android device on SauceLabs
+mvn test -Dplatform=androidSauce \
+         -Dsaucelabs.android.deviceName="Samsung Galaxy S22 GoogleAPI Emulator" \
+         -Dsaucelabs.android.platformVersion="12.0"
+```
+
+##### **SauceLabs iOS Testing**
+```bash
+# iOS on SauceLabs cloud
+mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@createPin"
+
+# iOS PIN creation on SauceLabs
+mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@pinValidationSuccess"
+
+# iOS with SauceLabs credentials
+mvn test -Dplatform=iOSSauce \
+         -Dsaucelabs.username=your_username \
+         -Dsaucelabs.accessKey=your_access_key \
+         -Dcucumber.filter.tags="@createPin"
+
+# Custom iOS device on SauceLabs
+mvn test -Dplatform=iOSSauce \
+         -Dsaucelabs.ios.deviceName="iPhone 14 Pro Simulator" \
+         -Dsaucelabs.ios.platformVersion="16.4"
+```
+
+##### **🔧 SauceLabs Configuration**
+Before running SauceLabs tests, configure your credentials:
+
+```bash
+# Method 1: Environment Variables (Recommended)
+export SAUCE_USERNAME=your_username
+export SAUCE_ACCESS_KEY=your_access_key
+
+# Method 2: Command Line Parameters
+mvn test -Dplatform=androidSauce \
+         -Dsaucelabs.username=your_username \
+         -Dsaucelabs.accessKey=your_access_key
+
+# Method 3: Update framework.properties
+# Edit src/test/resources/framework.properties:
+# saucelabs.username=your_username
+# saucelabs.accessKey=your_access_key
+```
+
+##### **📱 SauceLabs App Upload**
+Upload your apps to SauceLabs storage before testing:
+
+```bash
+# Upload Android APK
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
+     -X POST \
+     -F "payload=@src/test/resources/apps/android/android.apk" \
+     -F "name=android.apk" \
+     "https://api.us-west-1.saucelabs.com/rest/v1/storage/upload"
+
+# Upload iOS App
+curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" \
+     -X POST \
+     -F "payload=@src/test/resources/apps/ios/SwiftExApp.app" \
+     -F "name=SwiftExApp.app" \
+     "https://api.us-west-1.saucelabs.com/rest/v1/storage/upload"
+```
+
+##### **🚀 SauceLabs Quick Start Script**
+Use the provided script for easy SauceLabs testing:
+
+```bash
+# Make script executable
+chmod +x run-saucelabs-tests.sh
+
+# Run with credentials as parameters
+./run-saucelabs-tests.sh your_username your_access_key
+
+# Run with environment variables
+export SAUCE_USERNAME=your_username
+export SAUCE_ACCESS_KEY=your_access_key
+./run-saucelabs-tests.sh
+```
+
 ### 🎯 Test Execution Examples
 
 #### **PIN Creation Testing**
@@ -344,13 +441,13 @@ mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
 
 ### 📚 Quick Command Reference
 
-| **Scenario** | **Android** | **iOS** |
-|--------------|-------------|---------|
-| **All Tests** | `mvn test` | `mvn test -Dplatform=ios` |
-| **PIN Creation** | `mvn test -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"` |
-| **PIN Success** | `mvn test -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"` |
-| **PIN Failure** | `mvn test -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"` |
-| **Custom Device** | `mvn test -DdeviceName="Pixel 6"` | `mvn test -Dplatform=ios -DdeviceName="iPhone 14 Pro Max"` |
+| **Scenario** | **Android (Local)** | **iOS (Local)** | **Android (SauceLabs)** | **iOS (SauceLabs)** |
+|--------------|---------------------|-----------------|-------------------------|---------------------|
+| **All Tests** | `mvn test` | `mvn test -Dplatform=ios` | `mvn test -Dplatform=androidSauce` | `mvn test -Dplatform=iOSSauce` |
+| **PIN Creation** | `mvn test -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@createPin"` |
+| **PIN Success** | `mvn test -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@pinValidationSuccess"` |
+| **PIN Failure** | `mvn test -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=androidSauce -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=iOSSauce -Dcucumber.filter.tags="@pinValidationFailed"` |
+| **Custom Device** | `mvn test -DdeviceName="Pixel 6"` | `mvn test -Dplatform=ios -DdeviceName="iPhone 14 Pro Max"` | `mvn test -Dplatform=androidSauce -Dsaucelabs.android.deviceName="Samsung Galaxy S22"` | `mvn test -Dplatform=iOSSauce -Dsaucelabs.ios.deviceName="iPhone 14 Pro"` |
 
 ### Test Execution Examples
 

@@ -43,8 +43,11 @@ public abstract class BasePage {
         this.elementActions = new ElementActions(driver);
 
         // Auto-detect platform from framework.properties with CLI override
-        this.platform = ConfigLoader.getPlatformName();
-        logger.debug("BasePage initialized for platform: {}", platform.toUpperCase());
+        // Use base platform for locator loading (android/ios regardless of SauceLabs)
+        this.platform = ConfigLoader.getBasePlatform();
+        logger.debug("BasePage initialized for platform: {} (execution: {})", 
+                    platform.toUpperCase(), 
+                    ConfigLoader.isSauceLabs() ? "SauceLabs" : "Local");
 
         // Auto-load platform-specific locators
         this.locators = LocatorLoader.loadWithFallback(locatorFileName);

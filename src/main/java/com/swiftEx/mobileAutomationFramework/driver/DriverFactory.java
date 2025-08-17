@@ -1,6 +1,8 @@
 package com.swiftEx.mobileAutomationFramework.driver;
 
 import com.swiftEx.mobileAutomationFramework.utils.PlatformConfig;
+import com.swiftEx.mobileAutomationFramework.utils.ConfigLoader;
+import com.swiftEx.mobileAutomationFramework.utils.TestContext;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -39,33 +41,41 @@ public class DriverFactory {
             try {
                 logger.info("Terminating app session...");
                 
-                // Try to terminate the app if it's Android
-                try {
-                    if (drv instanceof AndroidDriver) {
-                        AndroidDriver androidDriver = (AndroidDriver) drv;
-                        String appPackage = System.getProperty("appPackage", "com.app.swiftEx.app");
-                        androidDriver.terminateApp(appPackage);
-                        logger.info("Android app terminated: {}", appPackage);
-                        
-                        // Force close any app processes
-                        androidDriver.closeApp();
-                        logger.info("App force closed");
-                    }
-                } catch (Exception termError) {
-                    logger.warn("Could not terminate app (continuing with quit): {}", termError.getMessage());
-                }
-                
-                // Longer wait to ensure app is completely terminated
-                Thread.sleep(3000);
-                
                 // Get session ID for logging before quitting
                 String sessionId = drv.getSessionId() != null ? drv.getSessionId().toString() : "unknown";
                 
-                // Then quit the driver session
-                logger.info("Quitting driver session: {}", sessionId);
-                drv.quit();
+                // Different cleanup strategies for local vs SauceLabs
+                if (PlatformConfig.isSauceLabs()) {
+                    logger.info("SauceLabs session cleanup for session: {}", sessionId);
+                    // For SauceLabs, simpler cleanup - just quit the session
+                    drv.quit();
+                    logger.info("SauceLabs session terminated successfully: {}", sessionId);
+                } else {
+                    // Local execution - more aggressive cleanup
+                    try {
+                        if (drv instanceof AndroidDriver) {
+                            AndroidDriver androidDriver = (AndroidDriver) drv;
+                            String appPackage = System.getProperty("appPackage", "com.app.swiftEx.app");
+                            androidDriver.terminateApp(appPackage);
+                            logger.info("Android app terminated: {}", appPackage);
+                            
+                            // Force close any app processes
+                            androidDriver.closeApp();
+                            logger.info("App force closed");
+                        }
+                    } catch (Exception termError) {
+                        logger.warn("Could not terminate app (continuing with quit): {}", termError.getMessage());
+                    }
+                    
+                    // Longer wait to ensure app is completely terminated
+                    Thread.sleep(3000);
+                    
+                    // Then quit the driver session
+                    logger.info("Quitting local driver session: {}", sessionId);
+                    drv.quit();
+                    logger.info("Local driver session terminated successfully: {}", sessionId);
+                }
                 
-                logger.info("Driver session terminated successfully: {}", sessionId);
             } catch (Exception e) {
                 logger.warn("Error during driver cleanup: {}", e.getMessage());
                 try {
@@ -104,8 +114,33 @@ public class DriverFactory {
         Properties platformCaps = PlatformConfig.getPlatformCapabilities();
         DesiredCapabilities caps = new DesiredCapabilities();
         
-        // Convert Properties to DesiredCapabilities
-        platformCaps.forEach((key, value) -> caps.setCapability(key.toString(), value.toString()));
+        // Convert Properties to DesiredCapabilities with special handling for SauceLabs
+        platformCaps.forEach((key, value) -> {
+            String keyStr = key.toString();
+            Object valueObj = value;
+            
+            // Special handling for sauce:options - it should remain as a Map object
+            if ("sauce:options".equals(keyStr) && value instanceof java.util.Map) {
+                caps.setCapability(keyStr, value);
+            } else {
+                caps.setCapability(keyStr, value.toString());
+            }
+        });
+        
+        // Add SauceLabs sauce:options if running on SauceLabs
+        if (PlatformConfig.isSauceLabs()) {
+            // Get the scenario name from TestContext for meaningful test names
+            String testName = TestContext.getFormattedTestName();
+            if (testName == null || testName.isEmpty()) {
+                testName = "SwiftEx Mobile Test"; // Fallback name
+            }
+            logger.info("Using test name for SauceLabs: {}", testName);
+            
+            java.util.Map<String, Object> sauceOptions = PlatformConfig.getSauceOptions(testName);
+            if (sauceOptions != null) {
+                caps.setCapability("sauce:options", sauceOptions);
+            }
+        }
         
         // Additional Android-specific capabilities if needed
         if (PlatformConfig.isAndroid()) {
@@ -121,11 +156,16 @@ public class DriverFactory {
             caps.setCapability("appWaitDuration", 20000);
         }
         
-        // Get Appium server URL
-        String appiumServer = System.getProperty("appiumServer", 
-                System.getProperty("appium.server", "http://127.0.0.1:4723"));
-        
-        logger.info("Appium server URL: {}", appiumServer);
+        // Get Appium server URL - different for SauceLabs vs local
+        String appiumServer;
+        if (PlatformConfig.isSauceLabs()) {
+            appiumServer = ConfigLoader.getSauceLabsUrl();
+            logger.info("Using SauceLabs hub URL: {}", appiumServer);
+        } else {
+            appiumServer = System.getProperty("appiumServer", 
+                    System.getProperty("appium.server", "http://127.0.0.1:4723"));
+            logger.info("Using local Appium server URL: {}", appiumServer);
+        }
         logger.info("Platform capabilities: {}", caps.asMap());
         
         try {
