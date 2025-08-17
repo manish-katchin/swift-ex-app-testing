@@ -1,0 +1,94 @@
+# iOS PIN Creation Page Locators
+# SwiftEx Mobile App - iOS Specific Elements
+
+pinKeypad:
+  digit_0: 
+    accessibility_id: "digit-0"
+    xpath: "//XCUIElementTypeButton[@name='0' or @label='0']"
+  digit_1: 
+    accessibility_id: "digit-1"
+    xpath: "//XCUIElementTypeButton[@name='1' or @label='1']"
+  digit_2: 
+    accessibility_id: "digit-2"
+    xpath: "//XCUIElementTypeButton[@name='2' or @label='2']"
+  digit_3: 
+    accessibility_id: "digit-3"
+    xpath: "//XCUIElementTypeButton[@name='3' or @label='3']"
+  digit_4: 
+    accessibility_id: "digit-4"
+    xpath: "//XCUIElementTypeButton[@name='4' or @label='4']"
+  digit_5: 
+    accessibility_id: "digit-5"
+    xpath: "//XCUIElementTypeButton[@name='5' or @label='5']"
+  digit_6: 
+    accessibility_id: "digit-6"
+    xpath: "//XCUIElementTypeButton[@name='6' or @label='6']"
+  digit_7: 
+    accessibility_id: "digit-7"
+    xpath: "//XCUIElementTypeButton[@name='7' or @label='7']"
+  digit_8: 
+    accessibility_id: "digit-8"
+    xpath: "//XCUIElementTypeButton[@name='8' or @label='8']"
+  digit_9: 
+    accessibility_id: "digit-9"
+    xpath: "//XCUIElementTypeButton[@name='9' or @label='9']"
+
+pinActions:
+  backspace_button:
+    accessibility_id: "delete-button"
+    xpath: "//XCUIElementTypeButton[contains(@name,'delete') or contains(@label,'backspace')]"
+  clear_button:
+    accessibility_id: "clear-button"
+    xpath: "//XCUIElementTypeButton[contains(@name,'clear')]"
+
+pinScreenElements:
+  pin_dots_container:
+    accessibility_id: "pin-input-container"
+    xpath: "//XCUIElementTypeView[contains(@name,'pin') or contains(@name,'dots')]"
+  pin_dot_1:
+    xpath: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[1]"
+  pin_dot_2:
+    xpath: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[2]"
+  pin_dot_3:
+    xpath: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[3]"
+  pin_dot_4:
+    xpath: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[4]"
+  pin_dot_5:
+    xpath: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[5]"
+  pin_dot_6:
+    xpath: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[6]"
+
+pinMessages:
+  success_message:
+    accessibility_id: "success-message"
+    xpath: "//XCUIElementTypeStaticText[contains(@name,'success') or contains(@value,'success')]"
+  error_message:
+    accessibility_id: "error-message"
+    xpath: "//XCUIElementTypeStaticText[contains(@name,'error') or contains(@value,'did not match')]"
+    ios_predicate: "type == 'XCUIElementTypeStaticText' AND (name CONTAINS 'error' OR value CONTAINS 'PIN did not match')"
+  confirmation_prompt:
+    accessibility_id: "confirm-pin-prompt"
+    xpath: "//XCUIElementTypeStaticText[contains(@value,'Confirm your PIN')]"
+
+navigationElements:
+  create_wallet_button:
+    accessibility_id: "create-wallet-button"
+    xpath: "//XCUIElementTypeButton[@name='CREATE A NEW WALLET' or @label='CREATE A NEW WALLET']"
+    ios_predicate: "type == 'XCUIElementTypeButton' AND (name == 'CREATE A NEW WALLET' OR label == 'CREATE A NEW WALLET')"
+  back_button:
+    accessibility_id: "back-button"
+    xpath: "//XCUIElementTypeButton[contains(@name,'back') or contains(@name,'Back')]"
+  settings_button:
+    accessibility_id: "settings-button"
+    xpath: "//XCUIElementTypeButton[contains(@name,'settings')]"
+
+# iOS-specific elements that don't exist on Android
+iosSpecific:
+  status_bar:
+    xpath: "//XCUIElementTypeStatusBar"
+  navigation_bar:
+    xpath: "//XCUIElementTypeNavigationBar"
+  tab_bar:
+    xpath: "//XCUIElementTypeTabBar"
+  scroll_view:
+    xpath: "//XCUIElementTypeScrollView"

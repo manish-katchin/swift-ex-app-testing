@@ -1,9 +1,8 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
-import com.swiftEx.mobileAutomationFramework.utils.ElementActions;
-import com.swiftEx.mobileAutomationFramework.utils.LocatorLoader;
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,99 +10,105 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * PinCreationPage with YAML locators and instrumentation crash recovery
- */
 public class PinCreationPage extends BasePage {
     private static final Logger logger = LoggerFactory.getLogger(PinCreationPage.class);
-    private final Map<String, Map<String, String>> locators;
-    private final String platform;
-    private final ElementActions elementActions;
 
     public PinCreationPage(AppiumDriver driver) {
-        super(driver); // Initialize base page with recovery capabilities
-        this.platform = System.getProperty("platform", "android").toLowerCase();
-        String resource = "/locators/" + platform + "/pinCreation.yaml";
-        this.locators = LocatorLoader.load(resource);
-        this.elementActions = new ElementActions(driver); // Initialize ElementActions with driver
+        super(driver, "pinCreation.yaml"); 
+        logger.info("✅ PinCreationPage ready for platform: {}", platform.toUpperCase());
     }
 
-    // ===== UTILITY METHOD FOR YAML LOCATOR ACCESS =====
-    private Map<String, String> getLocator(String locatorKey) {
-        Map<String, String> locator = locators.get(locatorKey);
-        if (locator == null) {
-            throw new RuntimeException("ERROR: Locator '" + locatorKey + "' not found in YAML file");
-        }
-        return locator;
-    }
-
+    /**
+     * Enter PIN with automatic platform handling
+     * 
+     * @param pin PIN to enter (e.g., "123456")
+     */
     public void enterPIN(String pin) {
-        logger.info("Starting PIN entry with recovery support: {}", pin);
+        logger.info("📝 Entering PIN: {}", pin);
 
-        for (char c : pin.toCharArray()) {
-            logger.info("Entering digit: {}", c);
-            tapDigitWithRecovery(String.valueOf(c));
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
-            }
+        for (char digit : pin.toCharArray()) {
+            tapDigit(String.valueOf(digit));
+            sleepBetweenTaps();
         }
 
-        logger.info("PIN entry completed successfully: {}", pin);
+        logger.info("✅ PIN entry completed: {}", pin);
     }
 
+    /**
+     * Confirm PIN with automatic platform handling
+     * 
+     * @param pin PIN to confirm
+     */
     public void confirmPIN(String pin) {
-        logger.info("Confirming PIN with recovery support: {}", pin);
+        logger.info("🔐 Confirming PIN: {}", pin);
 
-        for (char c : pin.toCharArray()) {
-            logger.info("Confirming digit: {}", c);
-            tapDigitWithRecovery(String.valueOf(c));
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
-            }
+        for (char digit : pin.toCharArray()) {
+            tapDigit(String.valueOf(digit));
+            sleepBetweenTaps();
         }
 
-        logger.info("PIN confirmation completed successfully: {}", pin);
+        logger.info("✅ PIN confirmation completed: {}", pin);
     }
 
-    private void tapDigitWithRecovery(String digit) {
-        logger.info("Tapping digit with recovery support: {}", digit);
+    /**
+     * Get error message text (for validation scenarios)
+     * 
+     * @return Error message text
+     */
+    public String getErrorMessage() {
 
-        Map<String, String> key = locators.get("digit_" + digit);
-        By by;
+        return elementActions.getText(getBy("error_message"));
 
-        if (key != null) {
-            by = LocatorUtils.toBy(key);
-            logger.info("Using YAML locator for digit {}", digit);
+    }
+
+
+    /**
+     * Tap a digit with smart fallback logic
+     * 
+     * @param digit Single digit as string (e.g., "1", "2")
+     */
+    private void tapDigit(String digit) {
+        logger.debug("🔢 Tapping digit: {}", digit);
+
+        String digitKey = "digit_" + digit;
+
+        if (hasLocator(digitKey)) {
+            // Use locator from YAML file
+            click(digitKey);
+            logger.debug("✅ Used YAML locator for digit {}", digit);
         } else {
-            if ("android".equals(platform)) {
-                Map<String, String> fallbackLocator = new HashMap<>();
-                fallbackLocator.put("strategy", "xpath");
-                fallbackLocator.put("value", "//android.view.ViewGroup[@content-desc=\"" + digit + "\"]");
-                by = LocatorUtils.toBy(fallbackLocator);
-                logger.info("Using fallback XPath locator for digit {}", digit);
-            } else {
-                Map<String, String> fallbackLocator = new HashMap<>();
-                fallbackLocator.put("strategy", "accessibilityId");
-                fallbackLocator.put("value", digit);
-                by = LocatorUtils.toBy(fallbackLocator);
-                logger.info("Using fallback accessibility ID for digit {}", digit);
-            }
+            // Smart platform fallback
+            By fallbackLocator = createDigitFallbackLocator(digit);
+            clickElementWithRetry(fallbackLocator, 3);
+            logger.debug("⚡ Used fallback locator for digit {}", digit);
         }
-
-        clickElementWithRetry(by, 3);
-        logger.info("Successfully tapped digit: {}", digit);
     }
 
-    public String getErrorMessageText() {
-        return elementActions.getText(getLocator("incorrectPIN"));
+    /**
+     * Create platform-specific fallback locator for digits
+     * 
+     * @param digit The digit to find
+     * @return By locator for the digit
+     */
+    private By createDigitFallbackLocator(String digit) {
+        if (isAndroid()) {
+            // Android fallback: content-desc or XPath
+            return By.xpath("//android.view.ViewGroup[@content-desc=\"" + digit + "\"]");
+        } else {
+            // iOS fallback: accessibility ID
+            return AppiumBy.accessibilityId("digit-" + digit);
+        }
     }
 
+    /**
+     * Small sleep between digit taps for stability
+     */
+    private void sleepBetweenTaps() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.warn("Sleep interrupted during PIN entry");
+        }
+    }
 }

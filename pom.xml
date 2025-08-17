@@ -177,4 +177,28 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Platform-specific profiles for easy command line usage -->
+    <!-- All platform switching is now handled by PlatformConfig utility via CLI parameters -->
+    <profiles>
+        <!-- Default profile with common properties -->
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Default Appium server URL (can be overridden via -Dappium.server=url) -->
+                <appium.server>http://127.0.0.1:4723</appium.server>
+            </properties>
+        </profile>
+
+        <!-- Remote execution profile for CI/CD -->
+        <profile>
+            <id>remote</id>
+            <properties>
+                <appium.server>http://your-selenium-grid-url:4444</appium.server>
+            </properties>
+        </profile>
+    </profiles>
 </project>

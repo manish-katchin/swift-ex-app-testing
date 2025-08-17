@@ -45,7 +45,92 @@ swiftExMobileApp/
     └── *.properties                  # Configuration files
 ```
 
-## Key Features
+## 📱 Automated PIN Creation Testing
+
+This framework includes comprehensive automated testing for mobile PIN creation functionality with both **positive** and **negative** test scenarios.
+
+### 🎯 Test Scenarios Covered
+
+#### ✅ **PIN Validation Success (@pinValidationSuccess)**
+```gherkin
+@pinValidationSuccess @createPin 
+Scenario: Setup PIN on first launch
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "CREATE A NEW WALLET" button on screen
+```
+**What it validates:**
+- App launches successfully
+- User can enter a 6-digit PIN
+- PIN confirmation matches the original PIN
+- Successful PIN creation leads to wallet creation screen
+
+#### ❌ **PIN Validation Failure (@pinValidationFailed)**
+```gherkin
+@pinValidationFailed @createPin
+Scenario Outline: PIN Validation with incorrect confirmation
+  Given the app is launched
+  When I enter a new PIN "<pin>"
+  And I confirm the PIN "<confirmPin>"
+  Then I should see "<result>"
+
+  Examples:
+  | pin    | confirmPin | result                               |
+  | 123456 | 654321     | PIN did not match. Please try again. |
+```
+**What it validates:**
+- App properly validates PIN confirmation
+- Error message displays when PINs don't match
+- User is prompted to try again after failed validation
+- App maintains security by preventing mismatched PIN acceptance
+
+### 🚀 Running PIN Creation Tests
+
+#### **Android PIN Testing**
+```bash
+# Run all PIN creation scenarios on Android
+mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
+
+# Run only successful PIN creation
+mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationSuccess"
+
+# Run only failed PIN validation
+mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationFailed"
+```
+
+#### **iOS PIN Testing**
+```bash
+# Run all PIN creation scenarios on iOS  
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
+
+# Run only successful PIN creation on iOS
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"
+
+# Run only failed PIN validation on iOS
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"
+```
+
+#### **Cross-Platform PIN Testing**
+```bash
+# Test PIN functionality on both platforms
+mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
+
+# Comprehensive PIN security testing
+mvn test -Dcucumber.filter.tags="@createPin" # Android default
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin" # Then iOS
+```
+
+### 🔒 Security Testing Features
+
+- **PIN Mismatch Detection**: Validates that non-matching PINs are rejected
+- **Error Message Verification**: Ensures proper user feedback on failures  
+- **Fresh App State**: Each scenario starts with a clean app launch
+- **Cross-Platform Consistency**: Same PIN logic tested on both Android and iOS
+- **Recovery Mechanisms**: Framework handles app crashes and UI recovery
+
+Key Features
 
 ### 🏗️ Architecture Patterns
 - **Page Object Model (POM)**: Organized page classes with reusable methods
@@ -100,46 +185,172 @@ mvn clean compile
 
 ## Running Tests
 
-### Command Line Options
+### 📱 Cross-Platform Testing Support
 
-#### Run All Tests
+This framework supports both **Android** and **iOS** platforms with easy switching capabilities.
+
+#### Platform Configuration
+The framework is configured with Android as default in `src/test/resources/framework.properties`:
+```properties
+# Default: Android Configuration
+platformName=Android
+appium.deviceName=Android Emulator
+appium.app=src/test/resources/apps/android/android.apk
+
+# iOS Configuration (uncomment for iOS testing)
+# platformName=iOS
+# appium.deviceName=iPhone 15 Pro
+# appium.app=src/test/resources/apps/ios/SwiftExApp.app
+```
+
+### 🚀 Platform Switching Commands
+
+#### **Android Testing (Default)**
 ```bash
+# Run with default Android configuration
 mvn test
+
+# Explicit Android platform
+mvn test -Dplatform=android
+
+# Android with specific tags
+mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
+
+# Android PIN creation tests
+mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationSuccess"
 ```
 
-#### Run Specific Tags
+#### **iOS Testing**
 ```bash
-# Run PIN creation tests
-mvn test -Dcucumber.filter.tags="@createPin"
+# Switch to iOS platform
+mvn test -Dplatform=ios
 
-# Run PIN validation tests
-mvn test -Dcucumber.filter.tags="@pinValidation"
+# iOS with specific tags
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
 
-# Run multiple tags
-mvn test -Dcucumber.filter.tags="@createPin or @pinValidation"
+# iOS PIN creation tests
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"
+
+# iOS with custom device
+mvn test -Dplatform=ios -DdeviceName="iPhone 14 Pro"
 ```
 
-#### Platform-Specific Execution
-```bash
-# Android execution
-mvn test -Dplatform=android \
-         -DappiumServer=http://127.0.0.1:4723/wd/hub \
-         -DdeviceName="Android Emulator" \
-         -Dapp=src/test/resources/apps/android/android.apk
+### 🎯 Test Execution Examples
 
-# iOS execution
-mvn test -Dplatform=ios \
-         -DappiumServer=http://127.0.0.1:4723/wd/hub \
-         -DdeviceName="iPhone 14" \
-         -Dudid=<device_udid> \
-         -DbundleId=com.swiftEx.app
+#### **PIN Creation Testing**
+```bash
+# Android PIN creation (success scenario)
+mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationSuccess"
+
+# iOS PIN creation (success scenario)  
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"
+
+# Android PIN validation (failure scenario)
+mvn test -Dplatform=android -Dcucumber.filter.tags="@pinValidationFailed"
+
+# iOS PIN validation (failure scenario)
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"
 ```
 
-#### Parallel Execution
+#### **Cross-Platform Test Suite**
 ```bash
+# Run all PIN creation tests on Android
+mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
+
+# Run the same tests on iOS
+mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"
+
+# Run multiple scenarios
+mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin or @pinValidation"
+```
+
+### 📋 Platform Requirements
+
+#### **Android Setup**
+```bash
+# 1. Check connected Android devices
+adb devices
+
+# 2. Start Android emulator (if needed)
+emulator -avd Pixel_4_API_30
+
+# 3. Verify APK file exists
+ls src/test/resources/apps/android/android.apk
+
+# 4. Run Android tests
+mvn test -Dplatform=android
+```
+
+#### **iOS Setup** (macOS only)
+```bash
+# 1. Check available iOS simulators
+xcrun simctl list devices
+
+# 2. Start iOS simulator (if needed)
+xcrun simctl boot "iPhone 15 Pro"
+
+# 3. Verify iOS app file exists
+ls src/test/resources/apps/ios/SwiftExApp.app
+
+# 4. Run iOS tests
+mvn test -Dplatform=ios
+```
+
+### 🔄 Advanced Platform Switching
+
+#### **Environment Variables**
+```bash
+# Set platform via environment variable
+export PLATFORM=ios
+mvn test
+
+# Override with command line
+PLATFORM=android mvn test -Dplatform=ios  # iOS wins
+```
+
+#### **Configuration File Method**
+To permanently switch platforms, edit `src/test/resources/framework.properties`:
+
+**For Android (default):**
+```properties
+platformName=Android
+appium.deviceName=Android Emulator
+appium.platformVersion=12
+appium.automationName=UiAutomator2
+appium.app=src/test/resources/apps/android/android.apk
+appPackage=com.app.swiftEx.app
+```
+
+**For iOS:**
+```properties
+platformName=iOS
+appium.deviceName=iPhone 15 Pro
+appium.platformVersion=17.0
+appium.automationName=XCUITest
+appium.app=src/test/resources/apps/ios/SwiftExApp.app
+appium.bundleId=com.app.swiftEx.ios
+```
+
+### 🎪 Parallel Execution
+```bash
+# Run tests in parallel (single platform)
 mvn test -Dcucumber.execution.parallel.enabled=true \
-         -Dcucumber.execution.parallel.config.strategy=dynamic
+         -Dcucumber.execution.parallel.config.strategy=dynamic \
+         -Dplatform=android
+
+# Sequential execution with fresh driver per scenario (recommended)
+mvn test -Dplatform=android -Dcucumber.filter.tags="@createPin"
 ```
+
+### 📚 Quick Command Reference
+
+| **Scenario** | **Android** | **iOS** |
+|--------------|-------------|---------|
+| **All Tests** | `mvn test` | `mvn test -Dplatform=ios` |
+| **PIN Creation** | `mvn test -Dcucumber.filter.tags="@createPin"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@createPin"` |
+| **PIN Success** | `mvn test -Dcucumber.filter.tags="@pinValidationSuccess"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationSuccess"` |
+| **PIN Failure** | `mvn test -Dcucumber.filter.tags="@pinValidationFailed"` | `mvn test -Dplatform=ios -Dcucumber.filter.tags="@pinValidationFailed"` |
+| **Custom Device** | `mvn test -DdeviceName="Pixel 6"` | `mvn test -Dplatform=ios -DdeviceName="iPhone 14 Pro Max"` |
 
 ### Test Execution Examples
 

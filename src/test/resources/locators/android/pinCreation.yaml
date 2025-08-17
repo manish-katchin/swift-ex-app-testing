@@ -1,4 +1,4 @@
-incorrectPIN:
+error_message:
   strategy: id
   value: com.app.swiftEx.app:id/snackbar_text
 

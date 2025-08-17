@@ -80,7 +80,7 @@ public class PinCreationStep {
     @Then("I should see {string}")
 public void i_should_see(String expectedError) {
 
-    String actualErrorString = Hooks.getPinPage().getErrorMessageText();
+    String actualErrorString = Hooks.getPinPage().getErrorMessage();
     assertThat(actualErrorString)
             .as("Error message should match expected value")
             .isEqualTo(expectedError);
