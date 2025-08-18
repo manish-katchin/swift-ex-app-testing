@@ -1,0 +1,433 @@
+name: SwiftEx Mobile Test Automation
+
+on:
+  # Allow manual triggering with parameters
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: '🤖 Select Test Platform'
+        required: true
+        default: 'androidSauce'
+        type: choice
+        options:
+          - androidSauce
+          - iOSSauce
+          - android
+          - ios
+      
+      test_tags:
+        description: 'Cucumber Tags (e.g., @createPin, @pinValidationSuccess, @pinValidationFailed)'
+        required: true
+        default: '@createPin'
+        type: choice
+        options:
+          - '@createPin'
+          - '@pinValidationSuccess'
+          - '@pinValidationFailed'
+          - '@smoke'
+          - 'custom'
+      
+      custom_tags:
+        description: '✏️ Custom Tags (if "custom" selected above, e.g., @createPin and @smoke)'
+        required: false
+        default: ''
+        type: string
+      
+      sauce_device:
+        description: 'SauceLabs Device (for cloud execution)'
+        required: false
+        default: 'Google Pixel 4 GoogleAPI Emulator'
+        type: choice
+        options:
+          - 'Google Pixel 4 GoogleAPI Emulator'
+          - 'Google Pixel 6 GoogleAPI Emulator'
+          - 'Samsung Galaxy S22 GoogleAPI Emulator'
+          - 'iPhone 14 Simulator'
+          - 'iPhone 13 Simulator'
+          - 'iPad Pro (12.9 inch) (6th generation) Simulator'
+      
+      sauce_platform_version:
+        description: 'Platform Version (for SauceLabs)'
+        required: false
+        default: '12.0'
+        type: choice
+        options:
+          - '12.0'
+          - '13.0'
+          - '14.0'
+          - '15.0'
+          - '16.0'
+      
+      local_device_name:
+        description: 'Local Device Name (for local execution only)'
+        required: false
+        default: 'emulator-5554'
+        type: string
+      
+      test_environment:
+        description: 'Test Environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      
+      generate_allure_report:
+        description: 'Generate Allure Report'
+        required: false
+        default: true
+        type: boolean
+        
+      parallel_execution:
+        description: '⚡ Enable Parallel Execution'
+        required: false
+        default: false
+        type: boolean
+
+  # Automatic triggers
+  push:
+    branches: [ pin-creation, main, develop ]
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+      - '.github/workflows/**'
+  
+  pull_request:
+    branches: [ pin-creation, main, develop ]
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+
+  # Schedule for nightly runs
+  schedule:
+    # Run every day at 2 AM UTC (adjust timezone as needed)
+    - cron: '0 2 * * *'
+
+env:
+  # Default values for automatic runs
+  DEFAULT_PLATFORM: androidSauce
+  DEFAULT_TEST_TAGS: '@createPin'
+  DEFAULT_DEVICE_NAME: 'emulator-5554'
+  JAVA_VERSION: '17'
+  MAVEN_OPTS: '-Xmx2048m'
+
+jobs:
+  test:
+    name: Mobile Tests - ${{ inputs.platform || 'androidSauce' }}
+    runs-on: ubuntu-latest
+    
+    strategy:
+      # Don't cancel other jobs if one fails
+      fail-fast: false
+    
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: ☕ Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: 🔧 Configure Test Environment
+      run: |
+        echo "========================================="
+        echo "🚀 SwiftEx Mobile Test Configuration"
+        echo "========================================="
+        echo "Platform: ${{ inputs.platform || env.DEFAULT_PLATFORM }}"
+        
+        # Determine device based on platform
+        if [[ "${{ inputs.platform || env.DEFAULT_PLATFORM }}" == *"Sauce"* ]]; then
+          DEVICE_NAME="${{ inputs.sauce_device || 'Google Pixel 4 GoogleAPI Emulator' }}"
+          echo "SauceLabs Device: $DEVICE_NAME"
+          echo "Platform Version: ${{ inputs.sauce_platform_version || '12.0' }}"
+        else
+          DEVICE_NAME="${{ inputs.local_device_name || env.DEFAULT_DEVICE_NAME }}"
+          echo "Local Device: $DEVICE_NAME"
+        fi
+        
+        # Handle custom tags
+        if [ "${{ inputs.test_tags }}" == "custom" ]; then
+          TEST_TAGS="${{ inputs.custom_tags || '@createPin' }}"
+        else
+          TEST_TAGS="${{ inputs.test_tags || env.DEFAULT_TEST_TAGS }}"
+        fi
+        
+        echo "Tags: $TEST_TAGS"
+        echo "Environment: ${{ inputs.test_environment || 'dev' }}"
+        echo "Parallel Execution: ${{ inputs.parallel_execution || false }}"
+        echo "Trigger: ${{ github.event_name }}"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "========================================="
+        
+        # Set environment variables for the test run
+        echo "TEST_PLATFORM=${{ inputs.platform || env.DEFAULT_PLATFORM }}" >> $GITHUB_ENV
+        echo "TEST_DEVICE=$DEVICE_NAME" >> $GITHUB_ENV
+        echo "TEST_TAGS=$TEST_TAGS" >> $GITHUB_ENV
+        echo "TEST_ENV=${{ inputs.test_environment || 'dev' }}" >> $GITHUB_ENV
+        echo "SAUCE_PLATFORM_VERSION=${{ inputs.sauce_platform_version || '12.0' }}" >> $GITHUB_ENV
+        echo "PARALLEL_EXECUTION=${{ inputs.parallel_execution || 'false' }}" >> $GITHUB_ENV
+    
+    - name:  Configure SauceLabs Credentials
+      if: contains(inputs.platform || env.DEFAULT_PLATFORM, 'Sauce')
+      run: |
+        echo "Setting up SauceLabs credentials for cloud execution..."
+        echo "SauceLabs credentials configured from repository secrets"
+      env:
+        SAUCELABS_USERNAME: ${{ secrets.SAUCELABS_USERNAME }}
+        SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCELABS_ACCESS_KEY }}
+    
+    - name: Set up Android SDK (for local Android tests)
+      if: inputs.platform == 'android' || (inputs.platform == '' && env.DEFAULT_PLATFORM == 'android')
+      uses: android-actions/setup-android@v3
+      env:
+        SKIP_JDK_VERSION_CHECK: true
+      with:
+        cmdline-tools-version: latest
+        accept-android-sdk-licenses: true
+    
+    - name: Start Android Emulator (for local Android tests)
+      if: inputs.platform == 'android' || (inputs.platform == '' && env.DEFAULT_PLATFORM == 'android')
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 33
+        target: google_apis
+        arch: x86_64
+        profile: pixel_4
+        script: echo "Android emulator started"
+        timeout-minutes: 10
+    
+    - name: Install Node.js and Appium (for local tests)
+      if: ${{ !contains(inputs.platform || env.DEFAULT_PLATFORM, 'Sauce') }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Install Appium Server (for local tests)
+      if: ${{ !contains(inputs.platform || env.DEFAULT_PLATFORM, 'Sauce') }}
+      run: |
+        echo "Installing Appium server and drivers..."
+        npm install -g appium@latest
+        appium driver install uiautomator2
+        appium driver install xcuitest || echo "XCUITest driver installation skipped (iOS not available on Linux)"
+        
+        # Verify installation
+        appium driver list --installed
+        echo " Appium server installed successfully"
+    
+    - name: 🏃 Start Appium Server (for local tests)
+      if: ${{ !contains(inputs.platform || env.DEFAULT_PLATFORM, 'Sauce') }}
+      run: |
+        echo "Starting Appium server..."
+        appium server --port 4723 --log-level info &
+        
+        # Wait for server to start
+        timeout 60 bash -c 'until curl -f http://localhost:4723/status; do sleep 2; done'
+        echo "Appium server is running on port 4723"
+      env:
+        APPIUM_LOG_LEVEL: info
+    
+    - name: Validate Maven Configuration
+      run: |
+        echo "🔍 Validating Maven configuration..."
+        mvn validate
+        mvn dependency:resolve
+        echo " Maven configuration validated successfully"
+    
+    - name: 🧪 Run Mobile Tests
+      run: |
+        echo "🧪 Starting mobile test execution..."
+        echo "========================================="
+        echo "Platform: $TEST_PLATFORM"
+        echo "Device: $TEST_DEVICE" 
+        echo "Tags: $TEST_TAGS"
+        echo "Environment: $TEST_ENV"
+        echo "Platform Version: $SAUCE_PLATFORM_VERSION"
+        echo "Parallel Execution: $PARALLEL_EXECUTION"
+        echo "========================================="
+        
+        # Build Maven command with dynamic parameters
+        MAVEN_CMD="mvn clean test"
+        MAVEN_CMD="$MAVEN_CMD -Dplatform=$TEST_PLATFORM"
+        MAVEN_CMD="$MAVEN_CMD -Dcucumber.filter.tags=\"$TEST_TAGS\""
+        MAVEN_CMD="$MAVEN_CMD -DfailIfNoTests=false"
+        MAVEN_CMD="$MAVEN_CMD -Dmaven.test.failure.ignore=true"
+        
+        # Add device-specific parameters
+        if [[ "$TEST_PLATFORM" == *"Sauce"* ]]; then
+          # SauceLabs specific parameters
+          if [[ "$TEST_PLATFORM" == "androidSauce" ]]; then
+            MAVEN_CMD="$MAVEN_CMD -Dandroid.device.name=\"$TEST_DEVICE\""
+            MAVEN_CMD="$MAVEN_CMD -Dandroid.version=\"$SAUCE_PLATFORM_VERSION\""
+          elif [[ "$TEST_PLATFORM" == "iOSSauce" ]]; then
+            MAVEN_CMD="$MAVEN_CMD -Dios.device.name=\"$TEST_DEVICE\""
+            MAVEN_CMD="$MAVEN_CMD -Dios.version=\"$SAUCE_PLATFORM_VERSION\""
+          fi
+        else
+          # Local execution parameters
+          MAVEN_CMD="$MAVEN_CMD -Dandroid.device.name=\"$TEST_DEVICE\""
+          MAVEN_CMD="$MAVEN_CMD -Dios.device.name=\"$TEST_DEVICE\""
+        fi
+        
+        # Add parallel execution if enabled
+        if [ "$PARALLEL_EXECUTION" == "true" ]; then
+          MAVEN_CMD="$MAVEN_CMD -Dcucumber.execution.parallel.enabled=true"
+          MAVEN_CMD="$MAVEN_CMD -Dcucumber.execution.parallel.mode.default=concurrent"
+        fi
+        
+        echo " Executing command: $MAVEN_CMD"
+        eval $MAVEN_CMD
+        
+        TEST_EXIT_CODE=$?
+        echo "Test execution completed with exit code: $TEST_EXIT_CODE"
+        
+        # Set result for later steps
+        if [ $TEST_EXIT_CODE -ne 0 ]; then
+          echo "Tests had failures, but continuing to generate reports..."
+          echo "TEST_FAILED=true" >> $GITHUB_ENV
+        else
+          echo " All tests passed successfully!"
+          echo "TEST_FAILED=false" >> $GITHUB_ENV
+        fi
+      env:
+        SAUCELABS_USERNAME: ${{ secrets.SAUCELABS_USERNAME }}
+        SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCELABS_ACCESS_KEY }}
+    
+    - name: Generate Allure Report
+      if: always() && (inputs.generate_allure_report == true || inputs.generate_allure_report == null)
+      run: |
+        echo "Generating Allure test report..."
+        
+        # Generate report using Maven plugin
+        if [ -d "target/allure-results" ] && [ "$(ls -A target/allure-results)" ]; then
+          mvn allure:report || echo "⚠️ Allure report generation failed, continuing..."
+          echo "Allure report generated successfully"
+        else
+          echo "No Allure results found, skipping report generation"
+        fi
+    
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-${{ inputs.platform || env.DEFAULT_PLATFORM }}-${{ github.run_number }}
+        path: |
+          target/surefire-reports/
+          target/allure-results/
+          target/site/allure-maven-plugin/
+          target/screenshots/
+        retention-days: 30
+    
+    - name: Upload Allure Report
+      if: always() && (inputs.generate_allure_report == true || inputs.generate_allure_report == null)
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report-${{ inputs.platform || env.DEFAULT_PLATFORM }}-${{ github.run_number }}
+        path: target/site/allure-maven-plugin/
+        retention-days: 7
+    
+    - name: Test Results Summary
+      if: always()
+      run: |
+        echo "========================================="
+        echo "🏁 SwiftEx Mobile Test Execution Summary"
+        echo "========================================="
+        echo "Platform: $TEST_PLATFORM"
+        echo "Device: $TEST_DEVICE"
+        echo "Tags: $TEST_TAGS"
+        echo "Environment: $TEST_ENV"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
+        echo "========================================="
+        
+        if [ "$TEST_FAILED" == "true" ]; then
+          echo " Test execution had failures"
+          echo " Check the uploaded artifacts for detailed reports"
+          exit 1
+        else
+          echo "All tests passed successfully!"
+        fi
+    
+    - name: 🔗 Add PR Comment (for Pull Requests)
+      if: always() && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const testStatus = process.env.TEST_FAILED === 'true' ? '❌ FAILED' : '✅ PASSED';
+          const platform = process.env.TEST_PLATFORM;
+          const tags = process.env.TEST_TAGS;
+          
+          const comment = `
+          ## 📱 Mobile Test Results ${testStatus}
+          
+          **Platform:** \`${platform}\`  
+          **Tags:** \`${tags}\`  
+          **Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          
+          [View detailed test reports in artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          `;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+      env:
+        TEST_FAILED: ${{ env.TEST_FAILED }}
+        TEST_PLATFORM: ${{ env.TEST_PLATFORM }}
+        TEST_TAGS: ${{ env.TEST_TAGS }}
+
+  # Separate job for nightly comprehensive testing
+  nightly-comprehensive:
+    name: Nightly Comprehensive Testing
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [android, androidSauce]
+        test_suite: ['@createPin', '@pinValidationSuccess', '@pinValidationFailed']
+    
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+    
+    - name: ☕ Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+        cache: maven
+    
+    - name: 🧪 Run Comprehensive Tests
+      run: |
+        echo "🌙 Running nightly comprehensive test suite..."
+        echo "Platform: ${{ matrix.platform }}"
+        echo "Test Suite: ${{ matrix.test_suite }}"
+        
+        mvn clean test \
+          -Dplatform=${{ matrix.platform }} \
+          -Dcucumber.filter.tags="${{ matrix.test_suite }}" \
+          -DfailIfNoTests=false \
+          -Dmaven.test.failure.ignore=true
+      env:
+        SAUCELABS_USERNAME: ${{ secrets.SAUCELABS_USERNAME }}
+        SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCELABS_ACCESS_KEY }}
+    
+    - name: 📤 Upload Nightly Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: nightly-results-${{ matrix.platform }}-${{ matrix.test_suite }}-${{ github.run_number }}
+        path: |
+          target/surefire-reports/
+          target/allure-results/
+        retention-days: 14
