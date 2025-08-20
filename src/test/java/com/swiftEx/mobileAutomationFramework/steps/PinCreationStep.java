@@ -1,5 +1,6 @@
 package com.swiftEx.mobileAutomationFramework.steps;
 
+import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -35,9 +36,10 @@ public class PinCreationStep {
                 logger.warn("WARNING: App verification warning: {}", e.getMessage());
             }
         } else {
+            
             logger.warn("WARNING: App launch simulated (no real driver available)");
             logger.warn("   In real scenario: App would be launched on connected device");
-        }
+        }        
     }
 
     @When("I enter a new PIN {string}")

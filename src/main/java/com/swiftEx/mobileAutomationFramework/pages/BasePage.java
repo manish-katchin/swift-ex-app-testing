@@ -24,6 +24,17 @@ import com.swiftEx.mobileAutomationFramework.utils.ConfigLoader;
  * Provides a clean, user-friendly foundation for all page classes
  */
 public abstract class BasePage {
+    /**
+     * Waits for the element to be visible for up to 10 seconds. Does nothing if not visible.
+     * @param by The locator to wait for
+     */
+    protected void waitForElementVisible(By by) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        } catch (Exception e) {
+            logger.warn("Element not visible after 10 seconds: {}", by);
+        }
+    }
     protected static final Logger logger = LoggerFactory.getLogger(BasePage.class);
     protected final AppiumDriver driver;
     protected final WebDriverWait wait;
