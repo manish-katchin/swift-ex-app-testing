@@ -1,0 +1,96 @@
+createNewWalletBtn:
+  strategy: accessibilityId
+  value: CREATE A NEW WALLET
+
+importWalletBtn:
+  strategy: accessibilityId
+  value: Import Wallet
+
+useDefaultWalletBtn:
+  strategy: accessibilityId
+  value: Use default wallet
+
+# Backup wallet screen locators
+losePrivateKeyWarning:
+  strategy: accessibilityId
+  value: "\u984544, If I lose my private key, my funds will be lost"
+
+sharePrivateKeyWarning:
+  strategy: accessibilityId
+  value: "\u984544, If I share my private key, my funds can get stolen"
+
+continueBtn:
+  strategy: accessibilityId
+  value: "Continue"
+
+# Clickable options for warning messages
+losePrivateKeyOption:
+  strategy: accessibilityId
+  value: "\u984544, If I lose my private key, my funds will be lost"
+
+sharePrivateKeyOption:
+  strategy: accessibilityId
+  value: "\u984544, If I share my private key, my funds can get stolen"
+
+# Mnemonic backup screen locators
+privateKeyTitle:
+  strategy: text
+  value: "Private Key"
+
+accountNameLabel:
+  strategy: text
+  value: " Account Name"
+
+accountNameInput:
+  strategy: xpath
+  value: "//android.widget.EditText[@hint='Enter your account name']"
+
+backupMnemonicLabel:
+  strategy: text
+  value: " Backup Mnemonic Phrase"
+
+mnemonicInstruction:
+  strategy: text
+  value: "Please select the Mnemonic in order to ensure the backup is correct."
+
+# Dynamic locator for mnemonic words (verification screen)
+strategy: xpath
+value: "//android.view.ViewGroup[contains(@content-desc, ',')]"
+
+# Usage: Replace {word} with the actual mnemonic word to click
+
+verifySecretPhraseTitle:
+  strategy: text 
+  value: "Verify Secret Phrase"
+
+verifyInstruction:
+  strategy: text
+  value: "Please top on the correct answer of the below seed phrases."
+
+verifyWordPrompt:
+  strategy: text
+  value: "Word #{index}"
+# Usage: Replace {index} with the word number shown on the screen
+
+verifyMnemonicOption:
+  strategy: accessibilityId
+  value: "{word}"
+# Usage: Replace {word} with the correct mnemonic word from previous screen
+
+doneBtn:
+  strategy: accessibilityId
+  value: "Done"
+copyBtn:
+  strategy: accessibilityId
+  value: "Copy"
+
+mnemonicSafetyTip1:
+  strategy: text
+  value: "Keep your mnemonic in a safe place, isolated from any network."
+mnemonicSafetyTip2:
+  strategy: text
+  value: "Do not share it through email, photos, social media, apps, etc."
+
+nextBtn:
+  strategy: accessibilityId
+  value: "Next"
