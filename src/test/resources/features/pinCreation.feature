@@ -9,7 +9,7 @@ Feature: Create PIN
     Then I verify "CREATE A NEW WALLET" button on screen
 
 
-  @pinValidationFailed  @createPin
+  @pinValidationFailed 
   Scenario Outline: PIN Validation with incorrect confirmation
     Given the app is launched
     When I enter a new PIN "<pin>"
@@ -19,4 +19,5 @@ Feature: Create PIN
     Examples:
     | pin    | confirmPin | result                               |
     | 123456 | 654321     | PIN did not match. Please try again. |
+
 

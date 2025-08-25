@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.swiftEx</groupId>
     <artifactId>mobile-cucumber-framework</artifactId>
@@ -10,8 +10,8 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <cucumber.version>7.11.2</cucumber.version>
-        <appium.client.version>8.6.0</appium.client.version>
-        <selenium.version>4.15.0</selenium.version>
+        <appium.client.version>10.0.0</appium.client.version>
+        <selenium.version> 4.35.0</selenium.version>
     </properties>
 
     <dependencies>
@@ -20,35 +20,36 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
-            <scope>test</scope>
+
         </dependency>
-        <!-- Use Cucumber JUnit Platform Engine so scenarios can run under JUnit Platform (parallel enabled) -->
+        <!-- Use Cucumber JUnit Platform Engine so scenarios can run under JUnit Platform (parallel
+        enabled) -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit-platform-engine</artifactId>
             <version>${cucumber.version}</version>
-            <scope>test</scope>
+
         </dependency>
         <!-- JUnit Jupiter engine for JUnit Platform -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.9.3</version>
-            <scope>test</scope>
+
         </dependency>
         <!-- JUnit Platform Suite API to enable @Suite annotations -->
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite-api</artifactId>
             <version>1.9.3</version>
-            <scope>test</scope>
+
         </dependency>
         <!-- JUnit Platform Suite Engine to run @Suite annotations -->
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite-engine</artifactId>
             <version>1.9.3</version>
-            <scope>test</scope>
+
         </dependency>
 
         <!-- JUnit 4 -->
@@ -56,7 +57,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
-            <scope>test</scope>
+
         </dependency>
 
         <!-- Appium / Selenium -->
@@ -86,15 +87,28 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
             <version>2.20.1</version>
-            <scope>test</scope>
+
         </dependency>
-        
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Allure Cucumber JUnit5 for integration with exclusions -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-cucumber7-jvm</artifactId>
             <version>2.20.1</version>
-            <scope>test</scope>
+
             <exclusions>
                 <exclusion>
                     <groupId>io.cucumber</groupId>
@@ -106,32 +120,33 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
         <!-- Assertion Libraries -->
         <!-- AssertJ - Fluent assertions (Recommended) -->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.24.2</version>
-            <scope>test</scope>
+
         </dependency>
-        
+
         <!-- Hamcrest - Matcher-based assertions -->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
             <version>2.2</version>
-            <scope>test</scope>
+
         </dependency>
-        
+
         <!-- TestNG - Alternative testing framework with built-in assertions -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.8.0</version>
-            <scope>test</scope>
+
         </dependency>
-    <!-- Allure integration removed to avoid dependency conflicts; consider adding a compatible adapter or using Allure JUnit integration later -->
+        <!-- Allure integration removed to avoid dependency conflicts; consider adding a compatible
+        adapter or using Allure JUnit integration later -->
     </dependencies>
 
     <build>
@@ -165,7 +180,7 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
-            
+
             <!-- Allure Maven Plugin -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
