@@ -2,6 +2,12 @@ package com.swiftEx.mobileAutomationFramework.steps;
 
 import com.swiftEx.mobileAutomationFramework.driver.DriverFactory;
 import com.swiftEx.mobileAutomationFramework.pages.PinCreationPage;
+import com.swiftEx.mobileAutomationFramework.pages.CreateNewWalletPage;
+import com.swiftEx.mobileAutomationFramework.pages.BackupYourWalletPage;
+import com.swiftEx.mobileAutomationFramework.pages.PrivateKeyPage;
+import com.swiftEx.mobileAutomationFramework.pages.CheckMnemonicPage;
+import com.swiftEx.mobileAutomationFramework.pages.PopupPage;
+import com.swiftEx.mobileAutomationFramework.pages.HomePage;
 import com.swiftEx.mobileAutomationFramework.utils.AllureUtils;
 import com.swiftEx.mobileAutomationFramework.utils.TestContext;
 import io.appium.java_client.AppiumDriver;
@@ -26,6 +32,12 @@ public class Hooks {
     // Static variables to share driver and page objects across all step definition classes
     private static AppiumDriver driver;
     private static PinCreationPage pinPage;
+    private static CreateNewWalletPage createNewWalletPage;
+    private static BackupYourWalletPage backupYourWalletPage;
+    private static PrivateKeyPage privateKeyPage;
+    private static CheckMnemonicPage checkMnemonicPage;
+    private static HomePage homePage;
+    private static PopupPage popupPage;
 
         @Before
     public void setUp(Scenario scenario) {
@@ -62,6 +74,12 @@ public class Hooks {
 
                 // Initialize page objects
                 pinPage = new PinCreationPage(driver);
+                createNewWalletPage = new CreateNewWalletPage(driver);
+                backupYourWalletPage = new BackupYourWalletPage(driver);
+                privateKeyPage = new PrivateKeyPage(driver);
+                checkMnemonicPage = new CheckMnemonicPage(driver);
+                homePage = new HomePage(driver);
+                popupPage = new PopupPage(driver);
                 logger.info("SUCCESS: Page objects initialized successfully!");
                 
                 // Wait for app to launch properly
@@ -128,6 +146,13 @@ public class Hooks {
                     // Clear all references
                     driver = null;
                     pinPage = null;
+                    createNewWalletPage = null;
+                    backupYourWalletPage = null;
+                    privateKeyPage = null;
+                    checkMnemonicPage = null;
+                    homePage = null;
+                    // Clear the static mnemonic map
+                    PrivateKeyPage.clearMnemonicMap();
                     
                     logger.info("SUCCESS: Driver cleanup completed - session terminated");
                     
@@ -167,6 +192,13 @@ public class Hooks {
             DriverFactory.quitDriver();
             driver = null;
             pinPage = null;
+            createNewWalletPage = null;
+            backupYourWalletPage = null;
+            privateKeyPage = null;
+            checkMnemonicPage = null;
+            homePage = null;
+            // Clear the static mnemonic map
+            PrivateKeyPage.clearMnemonicMap();
             logger.info("SUCCESS: Global cleanup completed");
         } catch (Exception e) {
             logger.error("ERROR: Global cleanup failed: {}", e.getMessage());
@@ -180,6 +212,30 @@ public class Hooks {
     
     public static PinCreationPage getPinPage() {
         return pinPage;
+    }
+
+    public static CreateNewWalletPage getCreateNewWalletPage() {
+        return createNewWalletPage;
+    }
+
+    public static BackupYourWalletPage getBackupYourWalletPage() {
+        return backupYourWalletPage;
+    }
+
+    public static PrivateKeyPage getPrivateKeyPage() {
+        return privateKeyPage;
+    }
+
+    public static CheckMnemonicPage getCheckMnemonicPage() {
+        return checkMnemonicPage;
+    }
+
+    public static HomePage getHomePage() {
+        return homePage;
+    }
+
+    public static PopupPage getPopupPage() {
+        return popupPage;
     }
     
     /**

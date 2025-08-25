@@ -1,0 +1,64 @@
+# Balance Section
+balance_amount:
+  strategy: xpath
+  value: //android.widget.TextView[starts-with(@text,'$')]
+
+balance_currency:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text,'X.XX')]
+
+# Action Buttons
+receive_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc=", Recive"]
+
+send_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc=", Send"]
+
+swap_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc=", Swap"]
+
+buy_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc=", Buy"]
+
+# Asset Tab Section
+assets_tab:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc="Assets"]
+
+add_assets_tab:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc="Add Assets"]
+
+# Navigation Bar
+home_tab:
+  strategy: xpath
+  value: //android.view.View[@content-desc=", Home"]
+
+wallet_tab:
+  strategy: xpath
+  value: //android.view.View[@content-desc=", Wallet"]
+
+market_tab:
+  strategy: xpath
+  value: //android.view.View[@content-desc=", Market"]
+
+exchange_tab:
+  strategy: xpath
+  value: //android.view.View[@content-desc=", Exchange"]
+
+settings_tab:
+  strategy: xpath
+  value: //android.view.View[@content-desc=", Settings"]
+
+# Asset Action Buttons
+trade_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc="Trade"]
+
+asset_buy_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc="Buy"]
