@@ -1,0 +1,68 @@
+import_wallet_header:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Import Wallet")
+
+create_new_wallet_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("CREATE A NEW WALLET")
+
+import_wallet_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Import Wallet")
+
+use_default_wallet_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Use default wallet")
+
+multi_chain_wallet_section:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Multi-Chain Wallet")
+
+binance_smart_chain_option:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Binance Smart Chain")
+
+ethereum_option:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Ethereum")
+
+name_label:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.TextView").text("Name")
+
+wallet_name_input:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Wallet")
+
+phrase_label:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.TextView").text("Phrase")
+
+mnemonic_phrase_input:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Phrase']/following-sibling::android.widget.EditText
+  
+input_wallet_name_label:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.TextView").text("Input Wallet Name")
+
+import_button:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.TextView").text("Import")
+
+
+multi_chain_wallet_header:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Multi-Chain Wallet")
+
+mnemonic_error_message:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.TextView").text("Please enter a valid mnemonic")
+
+  ethereum_wallet_header:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Ethereum Wallet")
+
+  private_key_error_message:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.TextView").text("Please enter a valid private key")
