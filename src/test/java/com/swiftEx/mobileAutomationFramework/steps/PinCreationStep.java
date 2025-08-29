@@ -51,7 +51,7 @@ public class PinCreationStep extends BaseStep {
         logger.info("Using XPath: {}", dynamicXPath);
 
         // Wait for element to be present (with timeout)
-        WebElement buttonElement = driver.findElement(By.xpath(dynamicXPath));
+        WebElement buttonElement = getDriver().findElement(By.xpath(dynamicXPath));
 
         assertThat(buttonElement.isDisplayed())
                 .as("Button with text '%s' should be visible on screen", buttonText)

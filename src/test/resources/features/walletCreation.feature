@@ -1,6 +1,7 @@
-Feature: Wallet Creation
+@Regression1
+Feature: Wallet Creation 
 
-  @createWallet
+  @Regression @createWallet @123242
   Scenario: Create a new wallet and proceed to the private key page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -11,8 +12,8 @@ Feature: Wallet Creation
   When I select the option If I lose my private keys, my funds will be lost
   And I select the option If I share my private key, my funds can be lost
   And I click on the "Continue" button
-  Then I should be on the "Private key" page
-  When I enter account name "TestAccount" in the Account Name fieldc
+  Then I should be on "Private key" page
+  When I enter account name "TestAccount" in the Account Name field
   And I click on the Next button
   When I click on the "Done" button
   Then I see error "Please provide all answers before submitting"
@@ -28,7 +29,7 @@ Feature: Wallet Creation
 
   
 
-@defaultWallet
+@Regression @defaultWallet @123242
   Scenario: Create a new wallet and proceed to the private key page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -50,7 +51,7 @@ Feature: Wallet Creation
   And I should see the Settings tab is displayed in bottom navigation
 
 
-@navigation 
+ @navigation 
   Scenario: Navigate to Wallet page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -68,7 +69,7 @@ Feature: Wallet Creation
   Then I see market page header
   And I see bitcoin option on market page
 
-@verificationExchangeTab
+ @verificationExchangeTab
 Scenario: Navigate to Exchange page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -86,7 +87,7 @@ Scenario: Navigate to Exchange page
 
 
 
-@verificationOfSettingsTab
+ @verificationOfSettingsTab
 Scenario: Navigate to Settings page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -107,7 +108,7 @@ Scenario: Navigate to Settings page
   And I should see the Help Center option
   And I should see the Logout option
 
-@logout
+ @logout 
 Scenario: Logout of the application
   Given the app is launched
   When I enter a new PIN "123456"

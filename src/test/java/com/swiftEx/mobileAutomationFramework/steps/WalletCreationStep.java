@@ -157,7 +157,7 @@ public class WalletCreationStep extends BaseStep {
         createNewWalletPage.tapCreateWallet();
     }
 
-    @When("I click Import wallet button")
+    @When("I click Import Wallet button")
     public void clickImportWallet() {
         logger.info("Clicking Import wallet button");
         createNewWalletPage.tapImportWallet();
@@ -200,7 +200,7 @@ public class WalletCreationStep extends BaseStep {
         backupYourWalletPage.tapContinue();
     }
 
-    @Then("I should be on the \"Private key\" page")
+    @Then("I should be on \"Private key\" page")
     public void iShouldBeOnPrivateKeyPage() {
         logger.info("Verifying Private Key page");
         Assert.assertTrue("Private Key page not displayed!",
@@ -237,7 +237,7 @@ public class WalletCreationStep extends BaseStep {
         logger.info("Verifying all mnemonic words are selected");
 
         // Get the page source for debugging
-        logger.debug("Current page source: {}", driver.getPageSource());
+        logger.debug("Current page source: {}", getDriver().getPageSource());
 
         // Add a small wait to ensure all selections are processed
         try {

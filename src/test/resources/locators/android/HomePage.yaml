@@ -10,7 +10,7 @@ balance_currency:
 # Action Buttons
 receive_button:
   strategy: xpath
-  value: //*[contains(@text,'Recive')]
+  value: //*[contains(@text,'Receive')]
 
 send_button:
   strategy: androiduiautomator

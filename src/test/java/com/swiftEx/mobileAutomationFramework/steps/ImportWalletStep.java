@@ -4,7 +4,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import com.swiftEx.mobileAutomationFramework.pages.ImportWalletPage;
-import com.swiftEx.mobileAutomationFramework.pages.BasePage;
 import com.swiftEx.mobileAutomationFramework.pages.HomePage;
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -38,39 +37,32 @@ public class ImportWalletStep extends BaseStep {
         logger.info("Entering phrase: {}", phrase);
         importWalletPage.enterMnemonicPhrase(phrase);
     }
+// I should see error message \"Please enter a valid private key\""
+    @Then("I should see error message \"Please enter a valid private key\"")
+    public void isPrivateKeyErrorMessageDisplayed() {
+        logger.info("Verifying private key error message is displayed");
+        Assert.assertTrue("Private key error message is not displayed!", importWalletPage.isPrivateKeyErrorMessageDisplayed());
+    }
 
-    // @And("I click on Import button")
-    // public void iClickOnImportButton() {
-    //     logger.info("Clicking Import button");
-    //     importWalletPage.clickImportButton();
-    // }
-
-    // isPrivateKeyErrorMessageDisplayed
 
     @Then("I should see error message \"Please enter a valid mnemonic\"")
-    public void isPrivateKeyErrorMessageDisplayed(String errorMessage) {
-        logger.info("Verifying private key error message is displayed");
-        Assert.assertTrue("Private key error message is not displayed!", importWalletPage.isPrivateKeyErrorMessageDisplayed(errorMessage));
-    }
-
-
-    @Then("I should see error message \"Please enter a valid private key\"")
-    public void iShouldSeeErrorMessage(String errorMessage) {
+    public void iShouldSeeErrorMessage() {
         logger.info("Verifying error message is displayed");
-        Assert.assertTrue("Error message is not displayed!", importWalletPage.isErrorMessageDisplayed(errorMessage));
+        Assert.assertTrue("Error message is not displayed!", importWalletPage.isErrorMessageDisplayed());
     }
 
-    @When("I click Import Wallet button")
+
+    @And("I click on \"Import\" button")
     public void iClickImportWalletButton() {
         logger.info("Clicking Import Wallet button");
         importWalletPage.clickImportWalletButton();
     }
 
-    @Then("I should be on the {string} screen")
-    public void iShouldBeOnScreen(String screenName) {
-        logger.info("Verifying screen: {}", screenName);
-        Assert.assertTrue("Not on the '" + screenName + "' screen!", importWalletPage.isOnImportWalletScreen());
-    }
+    // @Then("I should be on the {string} screen")
+    // public void iShouldBeOnScreen(String screenName) {
+    //     logger.info("Verifying screen: {}", screenName);
+    //     Assert.assertTrue("Not on the '" + screenName + "' screen!", importWalletPage.isOnImportWalletScreen());
+    // }
 
     @Then("I should see Import Wallet header")
     public void iShouldSeeImportWalletHeader() {
@@ -91,32 +83,12 @@ public class ImportWalletStep extends BaseStep {
         Assert.assertTrue("Ethereum option is not displayed!", importWalletPage.isEthereumOptionDisplayed());
     }
 
-    // Remove duplicate header step definition
-    // @When("I should see {string} header")
-    // @Then("I should see {string} header")
-    // public void iShouldSeeHeader(String header) {
-    //     logger.info("Verifying header: {}", header);
-    //     Assert.assertTrue(header + " header is not displayed!", importWalletPage.isElementDisplayed(header.toLowerCase().replace(" ", "_") + "_header"));
-    // }
-
-    // Remove generic section step definition to resolve ambiguity
-    // @When("I should see {string} section")
-    // public void iShouldSeeSection(String section) {
-    //     logger.info("Verifying section: {}", section);
-    //     Assert.assertTrue(section + " section is not displayed!", importWalletPage.isElementDisplayed(section.toLowerCase().replace(" ", "_") + "_section"));
-    // }
-
     @When("I should see {string} option")
     public void iShouldSeeOption(String option) {
         logger.info("Verifying option: {}", option);
         Assert.assertTrue(option + " option is not displayed!", importWalletPage.isElementDisplayed(option.toLowerCase().replace(" ", "_") + "_option"));
     }
 
-    // @When("I click on Multi-Chain Wallet")
-    // public void iClickOnMultiChainWallet() {
-    //     logger.info("Clicking on: Multi-Chain Wallet");
-    //     importWalletPage.tap("multi-chain-wallet-section");
-    // }
 
     @When("I enter name {string} in the input field with label {string}")
     public void iEnterNameWithLabel(String name, String label) {
@@ -153,6 +125,23 @@ public class ImportWalletStep extends BaseStep {
     public void iShouldSeeEthereumWalletHeader() {
         logger.info("Verifying Ethereum Wallet header is displayed");
         Assert.assertTrue("Ethereum Wallet header is not displayed!", importWalletPage.isEthereumWalletHeaderDisplayed());
+    }
+
+    @And("I enter JSON password {string} in the input field \"JSON password\"")
+    public void iEnterJsonPasswordInInputField(String password) {
+        logger.info("Entering JSON password: {}", password);
+        importWalletPage.enterJsonPassword(password);
+    }
+       @When("I click on \"Binance Smart Chain\"")
+    public void clickOnBinanceSmartChain() {
+        logger.info("Clicking Binance Smart Chain option");
+        importWalletPage.clickBinanceSmartChain();
+    }
+
+    @When("I enter name {string} in the input field")
+    public void iEnterNameInInputFieldSimple(String name) {
+        logger.info("Entering name: {}", name);
+        importWalletPage.enterName(name);
     }
     }
 

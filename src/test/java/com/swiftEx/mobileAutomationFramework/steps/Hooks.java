@@ -7,7 +7,9 @@ import com.swiftEx.mobileAutomationFramework.driver.DriverFactory;
 import com.swiftEx.mobileAutomationFramework.pages.PrivateKeyPage;
 
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
 import io.cucumber.java.Scenario;
 
 public class Hooks {
@@ -26,8 +28,7 @@ public class Hooks {
 
         try {
             // Clear static data only
-            PrivateKeyPage.clearMnemonicMap();
-            driverFactory.quitDriver();
+            BaseStep.quitDriver();
             logger.debug("Scenario cleanup completed");
 
         } catch (Exception e) {

@@ -12,6 +12,7 @@ public class LocatorUtils {
         String selector = "new UiSelector().textContains(\"" + text + "\")";
         return AppiumBy.androidUIAutomator(selector);
     }
+    
 
     public static By toBy(Map<String, String> locator) {
         if (locator == null)

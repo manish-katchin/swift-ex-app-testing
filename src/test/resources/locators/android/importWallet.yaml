@@ -8,7 +8,7 @@ create_new_wallet_button:
 
 import_wallet_button:
   strategy: androiduiautomator
-  value: new UiSelector().description("Import Wallet")
+  value: new UiSelector().description("Import")
 
 use_default_wallet_button:
   strategy: androiduiautomator
@@ -33,6 +33,10 @@ name_label:
 wallet_name_input:
   strategy: androiduiautomator
   value: new UiSelector().text("Wallet")
+
+wallet_name_field:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Wallet 1")
 
 phrase_label:
   strategy: androiduiautomator
@@ -59,10 +63,15 @@ mnemonic_error_message:
   strategy: androiduiautomator
   value: new UiSelector().className("android.widget.TextView").text("Please enter a valid mnemonic")
 
-  ethereum_wallet_header:
-  strategy: androiduiautomator
-  value: new UiSelector().description("Ethereum Wallet")
+ethereum_wallet_header:
+    strategy: androiduiautomator
+    value: new UiSelector().description("Ethereum Wallet")
 
-  private_key_error_message:
-  strategy: androiduiautomator
-  value: new UiSelector().className("android.widget.TextView").text("Please enter a valid private key")
+private_key_error_message:
+    strategy: androiduiautomator
+    value: new UiSelector().text("Please enter a valid private key")
+
+  
+json_password_input:
+    strategy: androiduiautomator
+    value: new UiSelector().text("JSON password")

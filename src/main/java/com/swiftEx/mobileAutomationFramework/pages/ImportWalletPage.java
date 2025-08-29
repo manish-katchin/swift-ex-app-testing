@@ -35,6 +35,16 @@ public class ImportWalletPage extends BasePage {
         logger.info("Entered mnemonic phrase: {}", phrase);
     }
 
+    public void enterJsonPassword(String password) {
+        sendKeys(LocatorUtils.getUIAutomatorTextLocatorBy("json_password_input"), password);
+        logger.info("Entered JSON password: {}", password);
+    }
+
+    public void clickBinanceSmartChain() {
+        tap("binance_smart_chain_option");
+        logger.info("Clicked Binance Smart Chain option");
+    }
+
     // Verifications
     public boolean isOnImportWalletScreen() {
         boolean displayed = isDisplayed("import_wallet_screen");
@@ -63,22 +73,17 @@ public class ImportWalletPage extends BasePage {
     }
 
     public boolean isMultiChainWalletHeaderDisplayed() {
-        boolean displayed = isDisplayed("multi_chain_wallet_header");
-        logger.info("Multi-Chain Wallet header visibility: {}", displayed);
-        return displayed;
+       return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Multi-Chain Wallet"), 20);
     }
 
-    public boolean isErrorMessageDisplayed(String errorMessage) {
-        boolean displayed = isDisplayed("mnemonic_error_message");
-        logger.info("Error message visibility: {}", displayed);
-        return displayed;
+    public boolean isErrorMessageDisplayed() {
+        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Please enter a valid mnemonic"), 20);
     }
 
-    public boolean isPrivateKeyErrorMessageDisplayed(String errorMessage) {
-        boolean displayed = isDisplayed("private_key_error_message");
-        logger.info("Private key error message visibility: {}", displayed);
-        return displayed;
+    public boolean isPrivateKeyErrorMessageDisplayed() {
+       return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Please enter a valid private key"), 20);
     }
+
 
     public void clickonEthereumWallet() {
         tap("ethereum_option");
@@ -97,5 +102,10 @@ public class ImportWalletPage extends BasePage {
         boolean displayed = isDisplayed("ethereum_wallet_header");
         logger.info("Ethereum Wallet header visibility: {}", displayed);
         return displayed;
+    }
+
+     public void enterName(String name) {
+        sendKeys("wallet_name_field", name); 
+        logger.info("Entered wallet name: {}", name);
     }
 }

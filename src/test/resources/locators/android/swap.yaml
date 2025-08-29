@@ -1,0 +1,27 @@
+swap_button:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap")
+      
+swap_header:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap")
+
+swap_amount_input:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.EditText").text("0.0")
+
+from_token:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("WETH, Balance")
+
+to_token:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("USDC, Balance")
+
+  SwapSuccessMessage:
+    strategy: androiduiautomator
+    value: new UiSelector().text("Swap Success")
+
+    swap_button_on_swap_page:
+      strategy: xpath
+      value: //android.view.ViewGroup[@content-desc="Swap"]

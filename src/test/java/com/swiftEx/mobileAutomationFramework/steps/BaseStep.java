@@ -15,17 +15,32 @@ public class BaseStep {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseStep.class);
     private static final Map<Class<?>, BasePage> pageCache = new ConcurrentHashMap<>();
-    protected static AppiumDriver driver;
+    private static AppiumDriver driver;
 
     @SuppressWarnings("unchecked")
     protected <T extends BasePage> T page(Class<T> pageClass) {
-        return (T) pageCache.computeIfAbsent(pageClass, clazz -> createPage(pageClass, driver));
+        return (T) pageCache.computeIfAbsent(pageClass, clazz -> createPage(pageClass, getDriver()));
+    }
+
+    public static AppiumDriver getDriver() {
+        if (driver == null) {
+            throw new IllegalStateException("Driver is not initialized. Make sure DriverFactory.setDriver() is called first.");
+        }
+        return driver;
     }
 
     public static void setDriver(AppiumDriver appiumDriver) {
         logger.info(appiumDriver.toString());
         driver = appiumDriver;
         logger.info("Driver set in BaseStep: {}", driver.getSessionId());
+    }
+
+    public static void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+            logger.info("Driver quit successfully");
+        }
     }
 
     private <T extends BasePage> T createPage(Class<T> pageClass, AppiumDriver driver) {
