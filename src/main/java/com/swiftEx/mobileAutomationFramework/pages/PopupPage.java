@@ -13,6 +13,7 @@ public class PopupPage extends BasePage {
     }
 
     public void clickCancel() {
+
         tap("cancel_button");
         logger.debug("Clicked cancel button");
     }
@@ -23,8 +24,19 @@ public class PopupPage extends BasePage {
     }
 
     public boolean isBiometricAuthPopupDisplayed() {
-        return isDisplayed("biometric_auth_title");
+    long endTime = System.currentTimeMillis() + 60000; // 60 seconds from now
+    while (System.currentTimeMillis() < endTime) {
+        try {
+            if (isDisplayed("biometric_auth_title")) {
+                return true;
+            }
+            Thread.sleep(5000); // Wait 5 seconds before retry
+        } catch (Exception e) {
+            // Optionally log or handle exception
+        }
     }
+    return false;
+}
 
     public String getBiometricAuthTitle() {
         return getText("biometric_auth_title");

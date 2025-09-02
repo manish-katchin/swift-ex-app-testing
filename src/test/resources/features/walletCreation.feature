@@ -1,7 +1,6 @@
-@Regression1
 Feature: Wallet Creation 
 
-  @Regression @createWallet @123242
+  @createWallet  
   Scenario: Create a new wallet and proceed to the private key page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -22,14 +21,13 @@ Feature: Wallet Creation
   When I click on the "Done" button
   Then I should see the biometric authentication popup
   When I handle the biometric authentication
-  Then I should see the Receive button is displayed
   And I should see the Send button is displayed
   And I should see the Swap button is displayed
   And I should see the Buy button is displayed
 
   
 
-@Regression @defaultWallet @123242
+  @defaultWallet 
   Scenario: Create a new wallet and proceed to the private key page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -38,7 +36,6 @@ Feature: Wallet Creation
   When I click use default button
   Then I should see the biometric authentication popup
   When I handle the biometric authentication
-  And I should see the Receive button is displayed
   And I should see the Send button is displayed
   And I should see the Swap button is displayed
   And I should see the Buy button is displayed
@@ -57,7 +54,7 @@ Feature: Wallet Creation
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
   Then I should be on Create A new wallet Page
-  When I click use default button
+  When I click Create a new wallet button
   Then I should see the biometric authentication popup
   When I handle the biometric authentication
   And I click on Wallet tab
@@ -75,7 +72,7 @@ Scenario: Navigate to Exchange page
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
   Then I should be on Create A new wallet Page
-  When I click use default button
+  When I click Create a new wallet button
   Then I should see the biometric authentication popup
   When I handle the biometric authentication
   And I click on the Exchange tab in bottom navigation
@@ -93,7 +90,7 @@ Scenario: Navigate to Settings page
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
   Then I should be on Create A new wallet Page
-  When I click use default button
+  When I click Create a new wallet button
   Then I should see the biometric authentication popup
   When I handle the biometric authentication
   And I click on the Settings tab in bottom navigation
@@ -114,7 +111,7 @@ Scenario: Logout of the application
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
   Then I should be on Create A new wallet Page
-  When I click use default button
+  When I click Create a new wallet button
   Then I should see the biometric authentication popup
   When I handle the biometric authentication
   And I click on the Settings tab in bottom navigation

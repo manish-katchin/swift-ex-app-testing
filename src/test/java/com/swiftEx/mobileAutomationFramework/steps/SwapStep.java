@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.junit.Assert;
 
 public class SwapStep extends BaseStep {
+
     private static final Logger logger = LoggerFactory.getLogger(SwapStep.class);
     private final SwapPage swapPage = page(SwapPage.class);
 
@@ -39,8 +40,13 @@ public class SwapStep extends BaseStep {
         }
 
         @Then("I click on the \"Swap\" button on Swap page")
-    public void clickOnSwapButtonOnSwapPage() throws InterruptedException {
-        swapPage.clickSwapButtonOnSwapPage();
-        logger.info("Clicked on Swap button on Swap page");
+        public void clickOnSwapButtonOnSwapPage() throws InterruptedException {
+            swapPage.clickSwapButtonOnSwapPage();
+            logger.info("Clicked on Swap button on Swap page");
+        }
+        @Then("I press the currency switch arrow")
+    public void pressCurrencySwitchArrow() {
+        swapPage.tapCurrencySwitchArrow();
+        logger.info("Pressed the currency switch arrow");
     }
 }

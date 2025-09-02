@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 import com.swiftEx.mobileAutomationFramework.utils.LocatorLoader;
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
@@ -133,5 +134,14 @@ public abstract class BasePage {
 
     protected String getPlatform() {
         return driver.getCapabilities().getCapability("platformName").toString();
+    }
+
+    public void tapOnCoordinates(AppiumDriver driver, int x, int y) {
+    Map<String, Object> args = new HashMap<>();
+    args.put("x", x);
+    args.put("y", y);
+    args.put("tapCount", 1);
+    args.put("duration", 100); // duration in ms
+    driver.executeScript("mobile: clickGesture", args);
     }
 }

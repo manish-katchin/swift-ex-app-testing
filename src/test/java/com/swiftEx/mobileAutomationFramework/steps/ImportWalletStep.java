@@ -10,9 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ImportWalletStep extends BaseStep {
+   
     private final ImportWalletPage importWalletPage = page(ImportWalletPage.class);
-    private final HomePage homePage = page(HomePage.class);
+//    private final HomePage homePage = page(HomePage.class);
     private static final Logger logger = LoggerFactory.getLogger(ImportWalletStep.class);
+    
 
     @When("I click on \"Multi-Chain Wallet\"")
     public void iClickOnMultiChainWallet() {
@@ -53,7 +55,7 @@ public class ImportWalletStep extends BaseStep {
 
 
     @And("I click on \"Import\" button")
-    public void iClickImportWalletButton() {
+    public void iClickImportWalletButton() throws InterruptedException {
         logger.info("Clicking Import Wallet button");
         importWalletPage.clickImportWalletButton();
     }
@@ -142,6 +144,11 @@ public class ImportWalletStep extends BaseStep {
     public void iEnterNameInInputFieldSimple(String name) {
         logger.info("Entering name: {}", name);
         importWalletPage.enterName(name);
+    }
+     @When("I click on \"Mnemonic\" button after import wallet Screen")
+    public void iClickOnMnemonicButton() {
+        logger.info("Clicking on 'Mnemonic' button");
+        importWalletPage.clickMnemonicButton();
     }
     }
 

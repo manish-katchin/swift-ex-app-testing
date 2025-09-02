@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 
 public class ImportWalletPage extends BasePage {
+    
     private static final Logger logger = LoggerFactory.getLogger(ImportWalletPage.class);
 
     public ImportWalletPage(AppiumDriver driver) {
@@ -104,8 +105,13 @@ public class ImportWalletPage extends BasePage {
         return displayed;
     }
 
-     public void enterName(String name) {
-        sendKeys("wallet_name_field", name); 
+    public void enterName(String name) {
+        sendKeys("wallet_name_field", name);
         logger.info("Entered wallet name: {}", name);
+    }
+    
+    public void clickMnemonicButton() {
+        tapElement("mnemonic_button");
+        logger.info("Clicked Mnemonic button");
     }
 }

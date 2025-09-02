@@ -71,7 +71,14 @@ private_key_error_message:
     strategy: androiduiautomator
     value: new UiSelector().text("Please enter a valid private key")
 
-  
 json_password_input:
     strategy: androiduiautomator
     value: new UiSelector().text("JSON password")
+
+mnemonic_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Mnemonic")
+
+json_key_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("JSON key")

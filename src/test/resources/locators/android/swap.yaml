@@ -22,6 +22,11 @@ to_token:
     strategy: androiduiautomator
     value: new UiSelector().text("Swap Success")
 
-    swap_button_on_swap_page:
-      strategy: xpath
-      value: //android.view.ViewGroup[@content-desc="Swap"]
+  swap_button_on_swap_page:
+    strategy: xpath
+    value: //android.view.ViewGroup[@content-desc="Swap"]
+
+  currency_switch_arrow:
+    strategy: xpath
+    value: (//*[@text="To"]/parent::android.view.ViewGroup/android.view.ViewGroup)[position()=3]
+ 
