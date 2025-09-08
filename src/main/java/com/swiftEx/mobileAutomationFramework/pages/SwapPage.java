@@ -58,6 +58,12 @@ public class SwapPage extends BasePage {
         return false;
     }
 
+        // Verifies the Transactions header is displayed
+        public boolean isTransactionsHeaderDisplayed() throws InterruptedException {
+            Thread.sleep(30000);
+            return isDisplayed("Transactions_header");
+        }
+
     // Clicks the Swap button specifically on the Swap page
     public void clickSwapButtonOnSwapPage() throws InterruptedException {
         logger.info("Waiting 10 seconds before clicking Swap button on Swap page");
@@ -120,7 +126,7 @@ public class SwapPage extends BasePage {
 
     // Clicks on the second ETH element on the page
     public void clickOnFirstTransaction() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(45));
         WebElement secondEth = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("(//*[@text='ETH'])[2]")));
         secondEth.click();

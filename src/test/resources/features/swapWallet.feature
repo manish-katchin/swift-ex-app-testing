@@ -160,7 +160,7 @@ Then I should see the "Confirm Transaction" header
 And I click on the "Send" button
 When I enter a new PIN "123456"
 Then I click on first Transaction On Transactions Page
-#Then I should see the "Transactions" header on the screen
+Then I should see the "Transactions" header on the screen
 And I should see "0.0001" amount on the screen
 And I should see "0x05cBb7CbEEE7C8f1B2DBf0Bb4bb820ac918D7c0e" recipient address on the screen
 

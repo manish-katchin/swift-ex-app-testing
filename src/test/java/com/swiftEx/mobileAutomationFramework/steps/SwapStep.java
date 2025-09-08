@@ -111,17 +111,22 @@ public void shouldSeeInsufficientBalanceMessageOnScreen() {
             swapPage.isInsufficientBalanceMessageDisplayed());
     logger.info("Insufficient Balance message is displayed");
 }
-    @And("I should see \"{string}\" amount on the screen")
+    @And("I should see {string} amount on the screen")
         public void shouldSeeAmountOnScreen(String expectedAmount) {
             String actualAmount = swapPage.getActualAmount();
             Assert.assertEquals("Amount on screen does not match", expectedAmount, actualAmount);
             logger.info("Verified amount on screen: {}", actualAmount);
         }
 
-    @And("I should see \"{string}\" recipient address on the screen")
-        public void shouldSeeRecipientAddressOnScreen(String expectedAddress) {
-            String actualAddress = swapPage.getActualRecipientAddress();
-            Assert.assertEquals("Recipient address on screen does not match", expectedAddress, actualAddress);
-            logger.info("Verified recipient address on screen: {}", actualAddress);
-        }
+    @And("I should see {string} recipient address on the screen")
+    public void shouldSeeRecipientAddressOnScreen(String expectedAddress) {
+        String actualAddress = swapPage.getActualRecipientAddress();
+        Assert.assertEquals("Recipient address on screen does not match", expectedAddress, actualAddress);
+        logger.info("Verified recipient address on screen: {}", actualAddress);
+    }
+
+    @Then("I should see the \"Transactions\" header on the screen")
+    public void shouldSeeTransactionsHeaderOnScreen() throws InterruptedException {
+        Assert.assertTrue("Transactions header is not displayed!", swapPage.isTransactionsHeaderDisplayed());
+    }
 }

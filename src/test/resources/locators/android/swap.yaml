@@ -60,3 +60,9 @@ Insufficient_balance_message:
     strategy: xpath
     value: //*[contains(@content-desc,'Insufficient Balance')]
 
+Transactions_header:
+    strategy: xpath
+    value: //*[@text="Transactions"]
+    
+    
+
