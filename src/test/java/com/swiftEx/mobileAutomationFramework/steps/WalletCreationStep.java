@@ -483,4 +483,14 @@ public class WalletCreationStep extends BaseStep {
         logger.info("Clicking on Create Wallet option");
         walletScreenPage.clickCreateWalletOption();
     }
+     @Then("I see \"Continue\" button is disabled on the screen")
+     public void iSeeContinueButtonIsDisabledOnScreen() {
+         logger.info("Verifying Continue button is disabled on the screen");
+         Assert.assertTrue("Continue button should be disabled!", backupYourWalletPage.isContinueButtonDisabled());
+     }
+        @Then("I should be on \"Backup Mnemonic Phrase\" page")
+        public void iShouldBeOnBackupMnemonicPhrasePage() {
+            logger.info("Verifying Backup Mnemonic Phrase page");
+            Assert.assertTrue("Backup Mnemonic Phrase page not displayed", backupYourWalletPage.isBackupMnemonicPhrasePageDisplayed());
+        }
 }

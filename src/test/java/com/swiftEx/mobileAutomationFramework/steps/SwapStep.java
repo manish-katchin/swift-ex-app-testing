@@ -49,8 +49,6 @@ public class SwapStep extends BaseStep {
 
     @Then("I press the currency switch arrow")
     public void pressCurrencySwitchArrow() throws InterruptedException {
-        // driver.findElement(By.xpath("(//*[@text='To']/parent::android.view.ViewGroup/android.view.ViewGroup)[3]"))
-        // .click();
         swapPage.tapCurrencySwitchArrow();
         logger.info("Pressed the currency switch arrow");
     }
