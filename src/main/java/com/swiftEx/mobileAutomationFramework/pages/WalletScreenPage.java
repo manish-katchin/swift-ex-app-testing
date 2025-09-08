@@ -27,4 +27,9 @@ public class WalletScreenPage extends BasePage {
     public boolean isChooseWalletOptionDisplayed() {
         return isDisplayed("choose_wallet_card");
     }
+ public void clickCreateWalletOption() {
+        tap("create_wallet_card");
+        logger.info("Clicked on Create Wallet option");
+    }
+    
 }

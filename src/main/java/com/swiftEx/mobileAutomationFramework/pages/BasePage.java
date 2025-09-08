@@ -17,7 +17,9 @@ import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 public abstract class BasePage {
     protected static final int DEFAULT_TIMEOUT = 10;
     protected static final Logger logger = LoggerFactory.getLogger(BasePage.class);
-    protected final AppiumDriver driver;
+    // protected final AppiumDriver driver;
+    public final AppiumDriver driver;
+
     protected final WebDriverWait wait;
     protected final Map<String, Map<String, String>> locators;
 
@@ -137,11 +139,11 @@ public abstract class BasePage {
     }
 
     public void tapOnCoordinates(AppiumDriver driver, int x, int y) {
-    Map<String, Object> args = new HashMap<>();
-    args.put("x", x);
-    args.put("y", y);
-    args.put("tapCount", 1);
-    args.put("duration", 100); // duration in ms
-    driver.executeScript("mobile: clickGesture", args);
+        Map<String, Object> args = new HashMap<>();
+        args.put("x", x);
+        args.put("y", y);
+        args.put("tapCount", 1);
+        args.put("duration", 100); // duration in ms
+        driver.executeScript("mobile: clickGesture", args);
     }
 }

@@ -2,17 +2,21 @@ package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 //import io.appium.java_client.MobileElement;
 
 public class SwapPage extends BasePage {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(SwapPage.class);
 
     public SwapPage(AppiumDriver driver) {
@@ -28,9 +32,9 @@ public class SwapPage extends BasePage {
 
     // Verifies the Swap header is displayed
     public boolean isSwapHeaderDisplayed() {
-            return isDisplayed(com.swiftEx.mobileAutomationFramework.utils.LocatorUtils.getUIAutomatorTextLocatorBy("Swap"), 20);
-            } 
-    
+        return isDisplayed(com.swiftEx.mobileAutomationFramework.utils.LocatorUtils.getUIAutomatorTextLocatorBy("Swap"),
+                20);
+    }
 
     // Enters amount in the input field below WETH
     public void enterSwapAmount(String amount) {
@@ -38,15 +42,15 @@ public class SwapPage extends BasePage {
         logger.info("Entered swap amount: {}", amount);
     }
 
-        // Verifies the Swap Success message is displayed
-        public boolean isSwapSuccessMessageDisplayed() {
-            long endTime = System.currentTimeMillis() + 80000; // 80 seconds from now
-            while (System.currentTimeMillis() < endTime) {
+    // Verifies the Swap Success message is displayed
+    public boolean isSwapSuccessMessageDisplayed() {
+        long endTime = System.currentTimeMillis() + 80000; // 80 seconds from now
+        while (System.currentTimeMillis() < endTime) {
             try {
                 if (isDisplayed("SwapSuccessMessage")) {
                     return true;
                 }
-                Thread.sleep(5000); // Wait 5 seconds before retry
+                Thread.sleep(1500); // Wait 1.5 seconds before retry
             } catch (Exception e) {
                 // Optionally log or handle exception
             }
@@ -54,20 +58,87 @@ public class SwapPage extends BasePage {
         return false;
     }
 
-        // Clicks the Swap button specifically on the Swap page
-        public void clickSwapButtonOnSwapPage() throws InterruptedException {
-            logger.info("Waiting 10 seconds before clicking Swap button on Swap page");
-            Thread.sleep(10000);
-        //    List<MobileElement> element = (MobileElement) driver.findElementByAccessibilityId("SomeAccessibilityID");
-        //    Point location = element.getLocation();
-            tapOnCoordinates(driver, 333, 1245);
-            logger.info("Clicked Swap button on Swap page via coordinates");
-        }
-    
-        // Taps the currency switch arrow symbol
-         public void tapCurrencySwitchArrow() {
+    // Clicks the Swap button specifically on the Swap page
+    public void clickSwapButtonOnSwapPage() throws InterruptedException {
+        logger.info("Waiting 10 seconds before clicking Swap button on Swap page");
+        Thread.sleep(10000);
+        tapOnCoordinates(driver, 333, 1245);
+        logger.info("Clicked Swap button on Swap page via coordinates");
+    }
+
+    // Taps the currency switch arrow symbol
+    public void tapCurrencySwitchArrow() throws InterruptedException {
         // Using accessibility id (content-desc) for the arrow symbol
-        tap("currency_switch_arrow");
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("(//*[@text='To']/parent::android.view.ViewGroup/android.view.ViewGroup)[3]"))
+                .click();
+        // tap("currency_switch_arrow");
         logger.info("Tapped currency switch arrow symbol");
     }
+
+    // new
+    // Clicks the Send button
+    public void clickSendButton() {
+        tap("send_button");
+        logger.info("Clicked on the Send button");
+    }
+
+    // Verifies the Choose Wallet header is displayed
+    public boolean isChooseWalletHeaderDisplayed() {
+        return isDisplayed(By.xpath("//android.widget.TextView[@text='Choose Wallet']"), 15);
+    }
+
+    // Clicks on Ethereum Wallet on choose wallet Screen
+    public void clickEthereumWalletOnChooseWalletScreen() throws InterruptedException {
+        Thread.sleep(5000);
+        tap("ethereum_wallet_card");
+        logger.info("Clicked on Ethereum Wallet on choose wallet Screen");
+    }
+
+    // Verifies the Send header is displayed
+    public boolean isSendHeaderDisplayed() {
+        return isDisplayed(By.xpath("//android.widget.TextView[@text='Send']"), 15);
+    }
+
+    // Enters amount in the input field below Amount
+    public void enterAmount(String amount) {
+        driver.findElement(By.xpath("//android.widget.EditText[@hint='Amount']")).sendKeys(amount);
+        logger.info("Entered amount: {}", amount);
+    }
+
+    // Enters recipient address in the input field with label Recipient Address
+    public void enterRecipientAddress(String recipientAddress) {
+        driver.findElement(By.xpath("//android.widget.EditText[@text=\"Recipient Address\"]"))
+                .sendKeys(recipientAddress);
+        logger.info("Entered recipient address: {}", recipientAddress);
+    }
+
+    // Verifies the Confirm Transaction header is displayed
+    public boolean isConfirmTransactionHeaderDisplayed() {
+        return isDisplayed(By.xpath("//*[@text='Confirm Transaction']"), 15);
+    }
+
+    // Clicks on the second ETH element on the page
+    public void clickOnFirstTransaction() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement secondEth = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("(//*[@text='ETH'])[2]")));
+        secondEth.click();
+        logger.info("Clicked on the second ETH element on the page");
+    }
+
+    public boolean isInsufficientBalanceMessageDisplayed() {
+        return isDisplayed("Insufficient_balance_message");
+    }
+        // Gets the actual amount displayed on the screen
+        public String getActualAmount() {
+            return driver.findElement(By.xpath("//*[@resource-id='wrapperContent']/*[position()=2]"))
+                    .getText();
+        }
+
+        // Gets the actual recipient address displayed on the screen
+        public String getActualRecipientAddress() {
+            return driver.findElement(By.xpath("//android.view.View[@resource-id='wrapperContent']/android.view.View/android.widget.TextView"))
+                    .getText();
+        }
 }

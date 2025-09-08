@@ -1,13 +1,15 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 
 public class ImportWalletPage extends BasePage {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(ImportWalletPage.class);
 
     public ImportWalletPage(AppiumDriver driver) {
@@ -54,7 +56,7 @@ public class ImportWalletPage extends BasePage {
     }
 
     public boolean isImportWalletHeaderDisplayed() {
-       return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Import Wallet"), 20);
+        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Import Wallet"), 20);
     }
 
     public boolean isMultiChainWalletSectionDisplayed() {
@@ -74,7 +76,7 @@ public class ImportWalletPage extends BasePage {
     }
 
     public boolean isMultiChainWalletHeaderDisplayed() {
-       return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Multi-Chain Wallet"), 20);
+        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Multi-Chain Wallet"), 20);
     }
 
     public boolean isErrorMessageDisplayed() {
@@ -82,9 +84,9 @@ public class ImportWalletPage extends BasePage {
     }
 
     public boolean isPrivateKeyErrorMessageDisplayed() {
-       return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Please enter a valid private key"), 20);
+        // tapElement(LocatorUtils.getUIAutomatorTextLocatorBy("SomeOtherElement"));
+        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Please enter a valid private key"), 20);
     }
-
 
     public void clickonEthereumWallet() {
         tap("ethereum_option");
@@ -99,6 +101,7 @@ public class ImportWalletPage extends BasePage {
     public void tapElement(String locatorKey) {
         super.tap(locatorKey);
     }
+
     public boolean isEthereumWalletHeaderDisplayed() {
         boolean displayed = isDisplayed("ethereum_wallet_header");
         logger.info("Ethereum Wallet header visibility: {}", displayed);
@@ -109,9 +112,27 @@ public class ImportWalletPage extends BasePage {
         sendKeys("wallet_name_field", name);
         logger.info("Entered wallet name: {}", name);
     }
-    
+
     public void clickMnemonicButton() {
         tapElement("mnemonic_button");
         logger.info("Clicked Mnemonic button");
+    }
+
+    public void clickAnyWalletCard() {
+        driver.findElement(By.xpath(
+                "(//android.widget.TextView[@text=\"All Wallets\"]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true'])[position()=1]"))
+                .click();
+        logger.info("Clicked first Wallet card");
+    }
+
+    public boolean isAllWalletsHeaderDisplayed() {
+        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("All Wallets"), 20);
+    }
+
+    // isHomeScreenWithWalletDisplayed
+    public boolean isHomeScreenWithWalletDisplayed() {
+        boolean displayed = isDisplayed("home_screen_with_wallet");
+        logger.info("Home screen with Selected wallet visibility: {}", displayed);
+        return displayed;
     }
 }

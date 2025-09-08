@@ -1,0 +1,15 @@
+firstwallet_card:
+ strategy: xpath
+ value: (//android.widget.TextView[@text="All Wallets"]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true'])[position()=1]
+
+secondWallet_card:
+ strategy: xpath
+ value: (//android.widget.TextView[@text="All Wallets"]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true'])[position()=1]
+ 
+thirdwallet_card:
+ strategy: xpath
+ value: (//android.widget.TextView[@text="All Wallets"]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true'])[position()=1]
+ 
+All_walletheader:
+ strategy: xpath
+ value: //android.widget.TextView[@text='All Wallets']

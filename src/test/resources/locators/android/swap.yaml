@@ -28,5 +28,35 @@ to_token:
 
   currency_switch_arrow:
     strategy: xpath
-    value: (//*[@text="To"]/parent::android.view.ViewGroup/android.view.ViewGroup)[position()=3]
- 
+    value: (//*[@text='To']/parent::android.view.ViewGroup/android.view.ViewGroup)[3]
+
+send_header:
+  strategy: xpath
+  value: //android.view.ViewGroup[@text='Send']
+
+recipient_address_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Recipient Address"]
+
+amount_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Amount"]
+
+send_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Send')]
+
+
+ethereum_wallet_card:
+  strategy: xpath
+  value: //*[@text="Ethereum"]
+
+  first_transaction:
+    strategy: xpath
+    value: (//*[@text="ETH"])[position()=2]
+
+  
+Insufficient_balance_message:
+    strategy: xpath
+    value: //*[contains(@content-desc,'Insufficient Balance')]
+

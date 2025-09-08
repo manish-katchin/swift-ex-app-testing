@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class WalletCreationStep extends BaseStep {
+
     private final WalletScreenPage walletScreenPage = page(WalletScreenPage.class);
 
     private static final Logger logger = LoggerFactory.getLogger(WalletCreationStep.class);
@@ -475,5 +476,11 @@ public class WalletCreationStep extends BaseStep {
     public void iClickOnLogoutOptionInSettings() {
         logger.info("Clicking on Logout option in Settings");
         settingsScreenPage.clickLogoutOption();
+    }
+    
+    @Then("I click on Create Wallet option")
+    public void iClickOnCreateWalletOption() {
+        logger.info("Clicking on Create Wallet option");
+        walletScreenPage.clickCreateWalletOption();
     }
 }

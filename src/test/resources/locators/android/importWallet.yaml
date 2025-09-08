@@ -7,16 +7,16 @@ create_new_wallet_button:
   value: new UiSelector().description("CREATE A NEW WALLET")
 
 import_wallet_button:
-  strategy: androiduiautomator
-  value: new UiSelector().description("Import")
+  strategy: xpath
+  value: //*[contains(@content-desc,'Import')]
 
 use_default_wallet_button:
   strategy: androiduiautomator
   value: new UiSelector().description("Use default wallet")
 
 multi_chain_wallet_section:
-  strategy: androiduiautomator
-  value: new UiSelector().description("Multi-Chain Wallet")
+  strategy: xpath
+  value: //*[contains(@content-desc,'Multi-Chain Wallet')]
 
 binance_smart_chain_option:
   strategy: androiduiautomator

@@ -10,11 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ImportWalletStep extends BaseStep {
-   
+
     private final ImportWalletPage importWalletPage = page(ImportWalletPage.class);
-//    private final HomePage homePage = page(HomePage.class);
+    // private final HomePage homePage = page(HomePage.class);
     private static final Logger logger = LoggerFactory.getLogger(ImportWalletStep.class);
-    
 
     @When("I click on \"Multi-Chain Wallet\"")
     public void iClickOnMultiChainWallet() {
@@ -25,7 +24,8 @@ public class ImportWalletStep extends BaseStep {
     @Then("I should see \"Multi-Chain Wallet\" header")
     public void iShouldSeeMultiChainWalletHeader() {
         logger.info("Verifying Multi-Chain Wallet header is displayed");
-        Assert.assertTrue("Multi-Chain Wallet header is not displayed!", importWalletPage.isMultiChainWalletHeaderDisplayed());
+        Assert.assertTrue("Multi-Chain Wallet header is not displayed!",
+                importWalletPage.isMultiChainWalletHeaderDisplayed());
     }
 
     @When("I enter name {string} in the input field with label Name")
@@ -39,20 +39,20 @@ public class ImportWalletStep extends BaseStep {
         logger.info("Entering phrase: {}", phrase);
         importWalletPage.enterMnemonicPhrase(phrase);
     }
-// I should see error message \"Please enter a valid private key\""
+
+    // I should see error message \"Please enter a valid private key\""
     @Then("I should see error message \"Please enter a valid private key\"")
     public void isPrivateKeyErrorMessageDisplayed() {
         logger.info("Verifying private key error message is displayed");
-        Assert.assertTrue("Private key error message is not displayed!", importWalletPage.isPrivateKeyErrorMessageDisplayed());
+        Assert.assertTrue("Private key error message is not displayed!",
+                importWalletPage.isPrivateKeyErrorMessageDisplayed());
     }
-
 
     @Then("I should see error message \"Please enter a valid mnemonic\"")
     public void iShouldSeeErrorMessage() {
         logger.info("Verifying error message is displayed");
         Assert.assertTrue("Error message is not displayed!", importWalletPage.isErrorMessageDisplayed());
     }
-
 
     @And("I click on \"Import\" button")
     public void iClickImportWalletButton() throws InterruptedException {
@@ -62,8 +62,9 @@ public class ImportWalletStep extends BaseStep {
 
     // @Then("I should be on the {string} screen")
     // public void iShouldBeOnScreen(String screenName) {
-    //     logger.info("Verifying screen: {}", screenName);
-    //     Assert.assertTrue("Not on the '" + screenName + "' screen!", importWalletPage.isOnImportWalletScreen());
+    // logger.info("Verifying screen: {}", screenName);
+    // Assert.assertTrue("Not on the '" + screenName + "' screen!",
+    // importWalletPage.isOnImportWalletScreen());
     // }
 
     @Then("I should see Import Wallet header")
@@ -72,11 +73,11 @@ public class ImportWalletStep extends BaseStep {
         Assert.assertTrue("Import Wallet header is not displayed!", importWalletPage.isImportWalletHeaderDisplayed());
     }
 
-
     @And("I should see Binance Smart Chain option")
     public void iShouldSeeBinanceSmartChainOption() {
         logger.info("Verifying Binance Smart Chain option is displayed");
-        Assert.assertTrue("Binance Smart Chain option is not displayed!", importWalletPage.isBinanceSmartChainOptionDisplayed());
+        Assert.assertTrue("Binance Smart Chain option is not displayed!",
+                importWalletPage.isBinanceSmartChainOptionDisplayed());
     }
 
     @And("I should see Ethereum option")
@@ -88,9 +89,9 @@ public class ImportWalletStep extends BaseStep {
     @When("I should see {string} option")
     public void iShouldSeeOption(String option) {
         logger.info("Verifying option: {}", option);
-        Assert.assertTrue(option + " option is not displayed!", importWalletPage.isElementDisplayed(option.toLowerCase().replace(" ", "_") + "_option"));
+        Assert.assertTrue(option + " option is not displayed!",
+                importWalletPage.isElementDisplayed(option.toLowerCase().replace(" ", "_") + "_option"));
     }
-
 
     @When("I enter name {string} in the input field with label {string}")
     public void iEnterNameWithLabel(String name, String label) {
@@ -113,11 +114,12 @@ public class ImportWalletStep extends BaseStep {
     @And("I should see \"Multi-Chain Wallet\" section")
     public void iShouldSeeMultiChainWalletSectionText() {
         logger.info("Verifying Multi-Chain Wallet section is displayed");
-        Assert.assertTrue("Multi-Chain Wallet section is not displayed!", importWalletPage.isMultiChainWalletSectionDisplayed());
+        Assert.assertTrue("Multi-Chain Wallet section is not displayed!",
+                importWalletPage.isMultiChainWalletSectionDisplayed());
     }
 
     // clickonEthereumWallet
-     @When("I click on \"Ethereum\"")
+    @When("I click on \"Ethereum\"")
     public void clickonEthereumWallet() {
         logger.info("Clicking Ethereum Wallet option");
         importWalletPage.clickonEthereumWallet();
@@ -126,7 +128,8 @@ public class ImportWalletStep extends BaseStep {
     @Then("I should see \"Ethereum Wallet\" header")
     public void iShouldSeeEthereumWalletHeader() {
         logger.info("Verifying Ethereum Wallet header is displayed");
-        Assert.assertTrue("Ethereum Wallet header is not displayed!", importWalletPage.isEthereumWalletHeaderDisplayed());
+        Assert.assertTrue("Ethereum Wallet header is not displayed!",
+                importWalletPage.isEthereumWalletHeaderDisplayed());
     }
 
     @And("I enter JSON password {string} in the input field \"JSON password\"")
@@ -134,7 +137,8 @@ public class ImportWalletStep extends BaseStep {
         logger.info("Entering JSON password: {}", password);
         importWalletPage.enterJsonPassword(password);
     }
-       @When("I click on \"Binance Smart Chain\"")
+
+    @When("I click on \"Binance Smart Chain\"")
     public void clickOnBinanceSmartChain() {
         logger.info("Clicking Binance Smart Chain option");
         importWalletPage.clickBinanceSmartChain();
@@ -145,10 +149,31 @@ public class ImportWalletStep extends BaseStep {
         logger.info("Entering name: {}", name);
         importWalletPage.enterName(name);
     }
-     @When("I click on \"Mnemonic\" button after import wallet Screen")
+
+    @When("I click on \"Mnemonic\" button after import wallet Screen")
     public void iClickOnMnemonicButton() {
         logger.info("Clicking on 'Mnemonic' button");
         importWalletPage.clickMnemonicButton();
     }
+
+    @Then("I should see \"All Wallets\" header on the screen")
+    public void iShouldSeeAllWalletsHeader() {
+        logger.info("Verifying 'All Wallets' header is displayed");
+        Assert.assertTrue("All Wallets header is not displayed!", importWalletPage.isAllWalletsHeaderDisplayed());
     }
 
+    @When("I click on any wallet card")
+    public void iClickOnWalletCard() throws InterruptedException {
+        Thread.sleep(5000);
+        logger.info("Clicking on any wallet card");
+        importWalletPage.clickAnyWalletCard();
+    }
+
+    @Then("I should be navigated to the home screen with that wallet")
+    public void iShouldBeNavigatedToHomeScreenWithWallet() {
+        logger.info("Verifying navigation to home screen with selected wallet");
+        Assert.assertTrue("Not navigated to home screen with selected wallet!",
+                importWalletPage.isHomeScreenWithWalletDisplayed());
+    }
+
+}
