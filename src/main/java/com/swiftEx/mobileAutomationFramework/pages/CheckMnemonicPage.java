@@ -1,3 +1,4 @@
+    // Checks if the Done button is enabled using locator ke
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class CheckMnemonicPage extends BasePage {
+
     private static final Logger logger = LoggerFactory.getLogger(CheckMnemonicPage.class);
 
     public CheckMnemonicPage(AppiumDriver driver) {
@@ -235,4 +237,66 @@ public class CheckMnemonicPage extends BasePage {
         }
         return false;
     }
+        // Verifies all mnemonic phrases are visible on the screen
+        public boolean areMnemonicPhrasesVisible() {
+            try {
+                WebElement mnemonicPhrase = driver.findElement(By.xpath(
+                        "//android.view.ViewGroup[contains(@content-desc, ', ')]/android.widget.TextView[position()=2]"));
+                boolean displayed = mnemonicPhrase.isDisplayed();
+                logger.info("Mnemonic phrase element displayed: {}", displayed);
+                return displayed;
+            } catch (Exception e) {
+                logger.error("Error verifying mnemonic phrase visibility: {}", e.getMessage());
+                return false;
+            }
+        }
+
+        public boolean isDoneButtonEnabled() {
+            try {
+                WebElement doneButton = driver.findElement(getBy("done_button"));
+                boolean enabled = doneButton.isEnabled();
+                logger.info("Done button enabled: {}", enabled);
+                return enabled;
+            } catch (Exception e) {
+                logger.error("Error checking Done button enabled state: {}", e.getMessage());
+                return false;
+            }
+        }
+        // Verifies the 'Verify Secret Phrase' label is visible on the screen
+        public boolean isVerifySecretPhraseLabelVisible() {
+            boolean displayed = isDisplayed("verify_secret_phrase_label");
+            logger.info("Verify Secret Phrase label visibility: {}", displayed);
+            return displayed;
+        }
+        //areJumbledMnemonicPhrasesVisible
+        public boolean areJumbledMnemonicPhrasesVisible() {
+            try {
+                List<WebElement> jumbledPhrases = driver.findElements(By.xpath(
+                        "//android.view.ViewGroup[@clickable='true' and @focusable='true' and not(@content-desc='Import') and android.widget.TextView]"));
+                boolean visible = jumbledPhrases.size() >= 12;
+                logger.info("Jumbled mnemonic phrases visible count: {}", jumbledPhrases.size());
+                return visible;
+            } catch (Exception e) {
+                logger.error("Error verifying jumbled mnemonic phrases visibility: {}", e.getMessage());
+                return false;
+            }
+        }
+        // Clicks the Import button on the Verify Secret Phrase screen
+    public void clickImportButtonOnVerifySecretPhraseScreen() {
+        tap("import_button_on_phrase_screen");
+        logger.info("Clicked Import button on Verify Secret Phrase screen");
+    }
+
+        // Checks if the Done button is disabled on the Check Mnemonic page
+        public boolean isDoneButtonDisabled() {
+            try {
+                WebElement doneButton = driver.findElement(getBy("done_button"));
+                boolean disabled = !doneButton.isEnabled();
+                logger.info("Done button disabled: {}", disabled);
+                return disabled;
+            } catch (Exception e) {
+                logger.error("Error checking Done button disabled state: {}", e.getMessage());
+                return false;
+            }
+        }
 }

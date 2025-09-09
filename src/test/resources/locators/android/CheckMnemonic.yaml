@@ -29,3 +29,18 @@ done_button:
 done_button_text:
   strategy: xpath
   value: //android.widget.TextView[@text='Done']
+
+  mnemonic_phrases:
+    strategy: xpath
+    value: //android.view.ViewGroup[contains(@content-desc, ', ')]/android.widget.TextView[position()=2]
+  
+
+  jumbled_mnemonic_phrases:
+    strategy: xpath
+    value: //android.view.ViewGroup[@clickable='true' and @focusable='true' and not(@content-desc='Import') and android.widget.TextView]
+
+  import_button_on_phrase_screen:
+    strategy: xpath
+    value: //*[contains(@text,'Import')]
+
+  
