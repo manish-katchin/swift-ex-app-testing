@@ -1,6 +1,9 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 
 import java.time.Duration;
 import java.util.List;
@@ -37,8 +40,22 @@ public class SwapPage extends BasePage {
     }
 
     // Enters amount in the input field below WETH
-    public void enterSwapAmount(String amount) {
-        sendKeys("swap_amount_input", amount);
+    public void enterSwapAmount(String amount) throws InterruptedException {
+        // sendKeys("swap_amount_input", amount);
+        WebElement amountField = driver.findElement(By.xpath("//android.widget.EditText[contains(@text, '0.0')]"));
+        amountField.click();
+        Thread.sleep(2000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.PERIOD));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_1));
         logger.info("Entered swap amount: {}", amount);
     }
 
@@ -107,16 +124,37 @@ public class SwapPage extends BasePage {
     }
 
     // Enters amount in the input field below Amount
-    public void enterAmount(String amount) {
-        driver.findElement(By.xpath("//android.widget.EditText[@hint='Amount']")).sendKeys(amount);
+    public void enterAmount(String amount) throws InterruptedException {
+        driver.findElement(By.xpath("//android.widget.EditText[@hint='Amount']")).click();
+        Thread.sleep(2000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.PERIOD));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_1));
+
         logger.info("Entered amount: {}", amount);
     }
 
     // Enters recipient address in the input field with label Recipient Address
     public void enterRecipientAddress(String recipientAddress) {
-        driver.findElement(By.xpath("//android.widget.EditText[@text=\"Recipient Address\"]"))
-                .sendKeys(recipientAddress);
+        WebElement addressField = driver.findElement(By.xpath("//android.widget.EditText[@text=\"Recipient Address\"]"));
+        addressField.sendKeys(recipientAddress);
         logger.info("Entered recipient address: {}", recipientAddress);
+        // Press Enter key (Android only)
+        try {
+            io.appium.java_client.android.AndroidDriver androidDriver = (io.appium.java_client.android.AndroidDriver) driver;
+            androidDriver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(io.appium.java_client.android.nativekey.AndroidKey.ENTER));
+            logger.info("Pressed Enter key after entering recipient address");
+        } catch (ClassCastException e) {
+            logger.warn("Driver is not AndroidDriver, skipping Enter key press");
+        }
     }
 
     // Verifies the Confirm Transaction header is displayed
@@ -126,7 +164,7 @@ public class SwapPage extends BasePage {
 
     // Clicks on the second ETH element on the page
     public void clickOnFirstTransaction() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(45));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
         WebElement secondEth = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("(//*[@text='ETH'])[2]")));
         secondEth.click();

@@ -8,11 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.swiftEx.mobileAutomationFramework.pages.BasePage;
-
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 
 public class BaseStep {
-
     private static final Logger logger = LoggerFactory.getLogger(BaseStep.class);
     private static final Map<Class<?>, BasePage> pageCache = new ConcurrentHashMap<>();
     private static AppiumDriver driver;
@@ -81,4 +81,70 @@ public class BaseStep {
         pageCache.clear();
         logger.debug("🧹 Page cache cleared");
     }
+     /**
+         * Closes the app provided in the capabilities at session creation
+         * @throws InterruptedException 
+         */
+     public void closeApp() {
+         try {
+             if (driver instanceof AndroidDriver) {
+                 String packageName = driver.getCapabilities().getCapability("appPackage").toString();
+                 ((AndroidDriver) driver).terminateApp(packageName);
+                 logger.info("App terminated successfully (Android)");
+             } else if (driver instanceof IOSDriver) {
+                 String bundleId = driver.getCapabilities().getCapability("bundleId").toString();
+                 ((IOSDriver) driver).terminateApp(bundleId);
+                 logger.info("App terminated successfully (iOS)");
+             } else {
+                 logger.warn("Driver type does not support closeApp()");
+             }
+         } catch (Exception e) {
+             logger.error("Error closing app: {}", e.getMessage());
+         }
+     }
+
+    /**
+     * Launches the app with noReset=true (preserves app state)
+     */
+    public void launchAppWithNoResetTrue() {
+        try {
+            if (driver instanceof AndroidDriver) {
+                String packageName = driver.getCapabilities().getCapability("appPackage").toString();
+                ((AndroidDriver) driver).activateApp(packageName);
+                logger.info("App launched with noReset=true (Android)");
+            } else if (driver instanceof IOSDriver) {
+                String bundleId = driver.getCapabilities().getCapability("bundleId").toString();
+                ((IOSDriver) driver).activateApp(bundleId);
+                logger.info("App launched with noReset=true (iOS)");
+            } else {
+                logger.warn("Driver type does not support launchAppWithNoResetTrue()");
+            }
+        } catch (Exception e) {
+            logger.error("Error launching app with noReset=true: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Launches the app with noReset=false (resets app state)
+     */
+    public void launchAppWithNoResetFalse() {
+        try {
+            if (driver instanceof AndroidDriver) {
+                String packageName = driver.getCapabilities().getCapability("appPackage").toString();
+                ((AndroidDriver) driver).terminateApp(packageName);
+                ((AndroidDriver) driver).activateApp(packageName);
+                logger.info("App launched with noReset=false (Android)");
+            } else if (driver instanceof IOSDriver) {
+                String bundleId = driver.getCapabilities().getCapability("bundleId").toString();
+                ((IOSDriver) driver).terminateApp(bundleId);
+                ((IOSDriver) driver).activateApp(bundleId);
+                logger.info("App launched with noReset=false (iOS)");
+            } else {
+                logger.warn("Driver type does not support launchAppWithNoResetFalse()");
+            }
+        } catch (Exception e) {
+            logger.error("Error launching app with noReset=false: {}", e.getMessage());
+        }
+    }
+
 }

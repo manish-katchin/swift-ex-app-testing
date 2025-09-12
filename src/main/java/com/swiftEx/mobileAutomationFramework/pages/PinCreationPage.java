@@ -16,10 +16,11 @@ public class PinCreationPage extends BasePage {
         logger.info("✅ PinCreationPage ready for platform: {}", getPlatform().toUpperCase());
     }
 
-    public void enterPIN(String pin) {
+    public void enterPIN(String pin) throws InterruptedException {
         logger.info("📝 Entering PIN: {}", pin);
 
         for (char digit : pin.toCharArray()) {
+            Thread.sleep(1000); // Small delay to mimic user input speed
             tapDigit(String.valueOf(digit));
         }
 

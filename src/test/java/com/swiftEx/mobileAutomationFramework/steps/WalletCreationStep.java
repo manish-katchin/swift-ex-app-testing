@@ -261,8 +261,9 @@ public class WalletCreationStep extends BaseStep {
     }
 
     @When("I click on the \"Done\" button")
-    public void iClickOnDoneButton() {
+    public void iClickOnDoneButton() throws InterruptedException {
         logger.info("Clicking Done button");
+        Thread.sleep(2000);
         checkMnemonicPage.tapDone();
     }
 

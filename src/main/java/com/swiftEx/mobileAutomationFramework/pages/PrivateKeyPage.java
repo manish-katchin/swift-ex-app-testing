@@ -116,4 +116,8 @@ public class PrivateKeyPage extends BasePage {
             logger.warn("Sleep interrupted during retry wait");
         }
     }
+    public String getAccountNameFieldText() {
+    WebElement accountNameField = driver.findElement(getBy("account_name_field"));
+    return accountNameField.getText();
+}
 }

@@ -2,9 +2,15 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
+import io.cucumber.messages.types.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -226,16 +232,14 @@ public class CheckMnemonicPage extends BasePage {
 
     public boolean verifyErrorMessage(String errorMessage) {
         try {
-            Thread.sleep(1000); // Wait for error to appear
-            WebElement errorElement = driver.findElement(LocatorUtils.getUIAutomatorTextLocatorBy(errorMessage));
+            By errorBy = LocatorUtils.getUIAutomatorTextLocatorBy(errorMessage);
+            WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(2));
+            WebElement errorElement = wait.until(ExpectedConditions.visibilityOfElementLocated(errorBy));
             return errorElement.isDisplayed();
-        } catch (NoSuchElementException e) {
-            logger.warn("Error message not found: {}", errorMessage);
+        } catch (Exception e) {
+            logger.warn("Error message not found or not visible: {}", errorMessage);
             return false;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-        return false;
     }
         // Verifies all mnemonic phrases are visible on the screen
         public boolean areMnemonicPhrasesVisible() {
@@ -282,10 +286,14 @@ public class CheckMnemonicPage extends BasePage {
             }
         }
         // Clicks the Import button on the Verify Secret Phrase screen
-    public void clickImportButtonOnVerifySecretPhraseScreen() {
-        tap("import_button_on_phrase_screen");
-        logger.info("Clicked Import button on Verify Secret Phrase screen");
-    }
+     public void clickImportButtonOnVerifySecretPhraseScreen() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        WebElement importButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(@text,'Import')]")));
+        importButton.click();
+        logger.info("Clicked on the Import button on the Verify Secret Phrase screen");
+
+        }
+    
 
         // Checks if the Done button is disabled on the Check Mnemonic page
         public boolean isDoneButtonDisabled() {
@@ -299,4 +307,5 @@ public class CheckMnemonicPage extends BasePage {
                 return false;
             }
         }
+
 }

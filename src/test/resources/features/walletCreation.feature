@@ -361,8 +361,140 @@ Scenario: Logout of the application
   Then I should be on "Backup Mnemonic Phrase" page
 
 
+@VerifyAppClosureRequiresStartingOver
+  Scenario: Verify that closing the app before completing wallet creation requires starting over.
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  When I enter account name "TestAccount" in the Account Name field
+  When I click on the "Done" button
+  Then App is closed
+  Then I launch the app with noReset true
+  When I enter a new PIN "123456"
+  Then I should see the biometric authentication popup
+
+@VerifyAppClosureCannotBypassWalletCreation
+  Scenario: Verify that a user cannot bypass wallet creation by force-closing and reopening the app.
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page  
+  Then App is closed
+  Then I launch the app with noReset true
+  When I enter a new PIN "123456"
+  Then I should be on Create A new wallet Page  
 
 
-  
+
+  @VerifyDoneButtonDisabledWhenSpaceEnteredInNameField
+  Scenario: Verify that clicking "Done" without entering an account name does not navigate to the next screen.
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  When I enter account name "    " in the Account Name field
+  Then I should see the "Done" button is disabled
+  Then I should be on "Backup Mnemonic Phrase" page
+
+
+@VerifyAccountNameFieldCharacterLimit
+  Scenario: Verify that the account name field does not accept more than 20 characters.
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  When I enter account name "Twenty One Characters" in the Account Name field
+  Then I verify only 20 characters are accepted in the Account Name field
+
+
+@VerifyEmojiNotAcceptedInAccountNameField
+  Scenario: Verify that the account name field does not accept only emojis.
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  When I enter account name "🙂 🙂 🙂" in the Account Name field
+  Then I should see the "Done" button is disabled
+  Then I verify no characters are accepted in the Account Name field
+
+@VerifyErrorWhenNoWordsSelected
+  Scenario: Verify that submitting without selecting all four required words shows an error.
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  When I enter account name "Sam" in the Account Name field
+  When I click on the "Done" button
+  Then I should be on "Verify Secret Phrase" screen
+  Then I click on the "Import" button on verify secret phrase screen
+  Then I see error "Please provide all answers before submitting"
+
 
 

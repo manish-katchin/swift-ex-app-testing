@@ -58,7 +58,7 @@ Feature: Import Wallet
       And I should see "Binance Smart Chain" option
       And I should see "Ethereum" option
       When I click on "Ethereum"
-      When I enter name "Sam" in the input field with label "Name"
+      When I enter name "Sam" in the input field
       And I enter phrase "0xd6d71ef95d22f96910d50a6d878f3bf2b1907838291247a3819f02c20eca7697" in the input field with label "Phrase"
       And I click on "Import" button
       Then I should see the biometric authentication popup
@@ -80,7 +80,7 @@ Feature: Import Wallet
       And I should see "Binance Smart Chain" option
       And I should see "Ethereum" option
       When I click on "Ethereum"
-      When I enter name "RandomName" in the input field with label "Name"
+      When I enter name "RandomName" in the input field
       And I enter phrase "random invalid phrase" in the input field with label "Phrase"
       Then I should see error message "Please enter a valid private key"
 
@@ -97,7 +97,7 @@ Feature: Import Wallet
     And I should see "Ethereum" option
     When I click on "Ethereum"
     When I click on "Mnemonic" button after import wallet Screen
-    When I enter name "Sameer" in the input field with label "Name"
+    When I enter name "Sameer" in the input field
     And I enter phrase "lend wreck slogan shrimp cradle december piece gallery limit blind south misery" in the input field with label "Phrase"
     And I click on "Import" button
     Then I should see the biometric authentication popup
@@ -120,7 +120,7 @@ Feature: Import Wallet
     And I should see "Ethereum" option
     When I click on "Ethereum"
     When I click on "Mnemonic" button after import wallet Screen
-    When I enter name "Sameer" in the input field with label "Name"
+    When I enter name "Sameer" in the input field
     And I enter phrase "lend limit blind south misery" in the input field with label "Phrase"
     Then I should see error message "Please enter a valid mnemonic"
 
@@ -232,11 +232,48 @@ Feature: Import Wallet
   And I click on "Import" button
   Then I should see "All Wallets" header on the screen
   When I click on any wallet card
-  #Then I should be navigated to the home screen with that wallet
   Then I should see the Receive button is displayed    
   And I should see the Send button is displayed
   And I should see the Swap button is displayed
   And I should see the Buy button is displayed
+
+  @verifyImportWalletScreen
+  Scenario: Verify Navigation to Import Wallet Screen
+    Given the app is launched
+    When I enter a new PIN "123456"
+    And I confirm the PIN "123456"
+    Then I verify "Import Wallet" button on screen
+    When I click Import Wallet button
+    And I should see "Import Wallet" header
+
+
+  @VerifyWalletImportOptions
+  Scenario: Verify the Presence of Wallet Import Options
+    Given the app is launched
+    When I enter a new PIN "123456"
+    And I confirm the PIN "123456"
+    Then I verify "Import Wallet" button on screen
+    When I click Import Wallet button
+    And I should see "Import Wallet" header
+    And I should see "Multi-Chain Wallet" section
+    And I should see "Binance Smart Chain" option
+    And I should see "Ethereum" option
+
+
+
+  @VerifyNavigationToMultiChainWalletScreen
+  Scenario: Verify Navigation to Multi-Chain Wallet Screen
+    Given the app is launched
+    When I enter a new PIN "123456"
+    And I confirm the PIN "123456"
+    Then I verify "Import Wallet" button on screen
+    When I click Import Wallet button
+    And I should see "Import Wallet" header
+    And I should see "Multi-Chain Wallet" section
+    And I should see "Binance Smart Chain" option
+    And I should see "Ethereum" option
+    When I click on "Multi-Chain Wallet" 
+    Then I should see "Multi-Chain Wallet" header
   
   
 

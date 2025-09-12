@@ -30,7 +30,7 @@ public class SwapStep extends BaseStep {
     }
 
     @And("I enter {string} in the input field below \"WETH\"")
-    public void enterAmountInInputFieldBelowWETH(String amount) {
+    public void enterAmountInInputFieldBelowWETH(String amount) throws InterruptedException {
         swapPage.enterSwapAmount(amount);
         logger.info("Entered amount {} in input field below WETH", amount);
     }
@@ -80,7 +80,7 @@ public class SwapStep extends BaseStep {
     }
 
     @When("I enter {string} in the input field below \"Amount\"")
-    public void enterAmountInInputFieldBelowAmount(String amount) {
+    public void enterAmountInInputFieldBelowAmount(String amount) throws InterruptedException {
         swapPage.enterAmount(amount);
         logger.info("Entered amount {} in input field below Amount", amount);
     }

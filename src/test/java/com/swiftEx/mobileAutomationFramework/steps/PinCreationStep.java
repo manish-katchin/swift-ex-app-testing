@@ -32,13 +32,13 @@ public class PinCreationStep extends BaseStep {
     }
 
     @When("I enter a new PIN {string}")
-    public void i_enter_a_new_pin(String pin) {
+    public void i_enter_a_new_pin(String pin) throws InterruptedException {
         logger.info("Entering new PIN");
         pinPage.enterPIN(pin);
     }
 
     @When("I confirm the PIN {string}")
-    public void i_confirm_the_pin(String pin) {
+    public void i_confirm_the_pin(String pin) throws InterruptedException {
         logger.info("Confirming PIN");
         pinPage.enterPIN(pin);
     }

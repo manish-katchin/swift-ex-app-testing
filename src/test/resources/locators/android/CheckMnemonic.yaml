@@ -39,7 +39,7 @@ done_button_text:
     strategy: xpath
     value: //android.view.ViewGroup[@clickable='true' and @focusable='true' and not(@content-desc='Import') and android.widget.TextView]
 
-  import_button_on_phrase_screen:
+  import_button_phrase_screen:
     strategy: xpath
     value: //*[contains(@text,'Import')]
 

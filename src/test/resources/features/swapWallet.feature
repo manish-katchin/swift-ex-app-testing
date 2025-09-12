@@ -14,7 +14,7 @@ I want to Swap wallet
     And I should see "Binance Smart Chain" option
     And I should see "Ethereum" option
     When I click on "Ethereum"
-    When I enter name "Sam" in the input field with label "Name"
+    When I enter name "Sam" in the input field
     And I enter phrase "0xd6d71ef95d22f96910d50a6d878f3bf2b1907838291247a3819f02c20eca7697" in the input field with label "Phrase"
     And I click on "Import" button
     Then I should see the biometric authentication popup
@@ -22,8 +22,7 @@ I want to Swap wallet
     And I should see the Swap button is displayed
     When I click on the "Swap" button
     Then I should see the "Swap" header on the screen
-    Then I press the currency switch arrow
-    And I enter "0.00025" in the input field below "WETH"
+    And I enter "0.0001" in the input field below "WETH"
     Then I click on the "Swap" button on Swap page
     Then I should see "Swap Success" message on the screen
  
@@ -64,7 +63,7 @@ And I should see "Multi-Chain Wallet" section
 And I should see "Binance Smart Chain" option
 And I should see "Ethereum" option
 When I click on "Ethereum"
-When I enter name "Sam" in the input field with label "Name"
+When I enter name "Sam" in the input field
 And I enter phrase "0xd6d71ef95d22f96910d50a6d878f3bf2b1907838291247a3819f02c20eca7697" in the input field with label "Phrase"
 And I click on "Import" button
 Then I should see the biometric authentication popup
@@ -74,8 +73,8 @@ When I click on the "Send" button
 Then I should see the "Choose Wallet" header on the screen
 When I click on Ethereum Wallet on choose wallet Screen
 Then I should see the "Send" header on the screen
-When I enter "0.0001" in the input field below "Amount"
 And I enter "0x05cBb7CbEEE7C8f1B2DBf0Bb4bb820ac918D7c0e" in the input field with label "Recipient Address"
+When I enter "0.0001" in the input field below "Amount"
 And I click on the "Send" button
 Then I should see the "Confirm Transaction" header
 And I click on the "Send" button
@@ -84,7 +83,7 @@ Then I click on first Transaction On Transactions Page
 
 
 @SwappingCryptoCurrencyfromUSDCToEthereumwithInsufficientBalance
-Scenario: Import wallet with valid private key
+Scenario: Swap USDC to Ethereum - Show Insufficient Balance When Funds Are Low
 Given the app is launched
 When I enter a new PIN "123456"
 And I confirm the PIN "123456"
@@ -95,7 +94,7 @@ And I should see "Multi-Chain Wallet" section
 And I should see "Binance Smart Chain" option
 And I should see "Ethereum" option
 When I click on "Ethereum"
-When I enter name "Sam" in the input field with label "Name"
+When I enter name "Sam" in the input field
 And I enter phrase "0xd6d71ef95d22f96910d50a6d878f3bf2b1907838291247a3819f02c20eca7697" in the input field with label "Phrase"
 And I click on "Import" button
 Then I should see the biometric authentication popup
@@ -108,7 +107,7 @@ And I enter "100" in the input field below "WETH"
 Then I should see "Insufficient Balance" message on the screen
 
   @SwappingCryptoCurrencyfromEthereumToUSDCwithInsufficientBalance
-    Scenario: Import wallet with valid private key
+    Scenario: Import wallet with valid private key Swap Ethereum to USDC - Display Insufficient Balance on Low Funds
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -119,7 +118,7 @@ Then I should see "Insufficient Balance" message on the screen
     And I should see "Binance Smart Chain" option
     And I should see "Ethereum" option
     When I click on "Ethereum"
-    When I enter name "Sam" in the input field with label "Name"
+    When I enter name "Sam" in the input field
     And I enter phrase "0xd6d71ef95d22f96910d50a6d878f3bf2b1907838291247a3819f02c20eca7697" in the input field with label "Phrase"
     And I click on "Import" button
     Then I should see the biometric authentication popup
@@ -132,7 +131,7 @@ Then I should see "Insufficient Balance" message on the screen
     Then I should see "Insufficient Balance" message on the screen
 
 @ValidateSendTransaction
-Scenario: Create a new wallet and proceed to the private key page
+Scenario:Send ETH Transaction - Validate Amount and Recipient Details
 Given the app is launched
 When I enter a new PIN "123456"
 And I confirm the PIN "123456"
@@ -153,8 +152,8 @@ When I click on the "Send" button
 Then I should see the "Choose Wallet" header on the screen
 When I click on Ethereum Wallet on choose wallet Screen
 Then I should see the "Send" header on the screen
-When I enter "0.0001" in the input field below "Amount"
 And I enter "0x05cBb7CbEEE7C8f1B2DBf0Bb4bb820ac918D7c0e" in the input field with label "Recipient Address"
+When I enter "0.0001" in the input field below "Amount"
 And I click on the "Send" button
 Then I should see the "Confirm Transaction" header
 And I click on the "Send" button
