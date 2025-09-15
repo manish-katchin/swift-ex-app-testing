@@ -1,0 +1,64 @@
+ProfileHeader:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Profile")
+
+GuestUserLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Guest User")
+
+Login_Option:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Log In")
+
+GuestModeMessage:
+  strategy: androiduiautomator
+  value: new UiSelector().text("You're in Guest Mode.")
+
+MyWalletLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("My Wallet ")
+
+ConnectedLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Connected!")
+
+ActivatedSubscriptionLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Activated Subcription")
+
+InvalidSubscriptionMessage:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Invalid subscription time line.")
+
+ProfileTab:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Profile")
+
+WelcomeBackHeader:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Hi, Welcome Back! 👋")
+
+EmailInputField:
+  strategy: androiduiautomator
+  value: new UiSelector().resourceId("emailLoginInput")
+
+PasswordInputField:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.EditText").text("Password")
+
+ForgotPasswordOption:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Forgot Password")
+
+LogInButton:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Login")
+
+Email_Value:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Email']/following-sibling::android.widget.TextView[1]
+
+BothFieldsRequiredError:
+  strategy: id
+  value: com.app.swiftEx.app:id/snackbar_text
+
