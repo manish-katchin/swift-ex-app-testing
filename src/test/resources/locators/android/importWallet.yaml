@@ -45,7 +45,7 @@ phrase_label:
 mnemonic_phrase_input:
   strategy: xpath
   value: //android.widget.TextView[@text='Phrase']/following-sibling::android.widget.EditText
-  
+
 input_wallet_name_label:
   strategy: androiduiautomator
   value: new UiSelector().className("android.widget.TextView").text("Input Wallet Name")
@@ -53,7 +53,6 @@ input_wallet_name_label:
 import_button:
   strategy: androiduiautomator
   value: new UiSelector().className("android.widget.TextView").text("Import")
-
 
 multi_chain_wallet_header:
   strategy: androiduiautomator
@@ -64,16 +63,16 @@ mnemonic_error_message:
   value: new UiSelector().className("android.widget.TextView").text("Please enter a valid mnemonic")
 
 ethereum_wallet_header:
-    strategy: androiduiautomator
-    value: new UiSelector().description("Ethereum Wallet")
+  strategy: androiduiautomator
+  value: new UiSelector().description("Ethereum Wallet")
 
 private_key_error_message:
-    strategy: androiduiautomator
-    value: new UiSelector().text("Please enter a valid private key")
+  strategy: androiduiautomator
+  value: new UiSelector().text("Please enter a valid private key")
 
 json_password_input:
-    strategy: androiduiautomator
-    value: new UiSelector().text("JSON password")
+  strategy: androiduiautomator
+  value: new UiSelector().text("JSON password")
 
 mnemonic_button:
   strategy: androiduiautomator
@@ -82,3 +81,27 @@ mnemonic_button:
 json_key_button:
   strategy: androiduiautomator
   value: new UiSelector().description("JSON key")
+
+private_key_option:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("PrivateKey")
+
+mnemonic_key_option:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("Mnemonic")
+
+json_key_option:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("JSON key")
+
+binance_smart_chain_header:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Binance Wallet")
+
+paste_button:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Paste")
+
+imp_wallet_back_btn:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("import_wallet_back")

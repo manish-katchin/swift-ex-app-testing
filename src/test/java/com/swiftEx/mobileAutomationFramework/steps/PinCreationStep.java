@@ -44,9 +44,9 @@ public class PinCreationStep extends BaseStep {
     }
 
     @Then("I verify {string} button on screen")
-    public void i_verify_button_on_screen(String buttonText) {
+    public void i_verify_button_on_screen(String buttonText) throws InterruptedException {
         logger.info("Verifying button: {}", buttonText);
-
+        Thread.sleep(3000); // Wait for UI to update
         String dynamicXPath = String.format("//*[@text='%s']", buttonText);
         logger.info("Using XPath: {}", dynamicXPath);
 

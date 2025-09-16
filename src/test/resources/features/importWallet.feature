@@ -46,7 +46,7 @@ Feature: Import Wallet
     Then I should see error message "Please enter a valid mnemonic"
 
 
-     @importWalletEthereumPositivewithPrivateKey
+    @importWalletEthereumPositivewithPrivateKey
     Scenario: Import wallet with valid Ethereum private key
       Given the app is launched
       When I enter a new PIN "123456"
@@ -237,6 +237,8 @@ Feature: Import Wallet
   And I should see the Swap button is displayed
   And I should see the Buy button is displayed
 
+# Test sheet import Wallet test cases:
+
   @verifyImportWalletScreen
   Scenario: Verify Navigation to Import Wallet Screen
     Given the app is launched
@@ -276,17 +278,131 @@ Feature: Import Wallet
     Then I should see "Multi-Chain Wallet" header
   
   
+  @VerifyFieldsOnMultiChainWalletScreen
+  Scenario: Verify Fields on Multi-Chain Wallet Screen
+    Given the app is launched
+    When I enter a new PIN "123456"
+    And I confirm the PIN "123456"
+    Then I verify "Import Wallet" button on screen
+    When I click Import Wallet button
+    And I should see "Import Wallet" header
+    And I should see "Multi-Chain Wallet" section
+    When I click on "Multi-Chain Wallet"
+    Then I should see "Multi-Chain Wallet" header
+    And I should see "Name" input field on multiwallet Page
+    And I should see "Phrase" input field on multiwallet Page
+    And I should see "Import" button on multiwallet Page
+    And I should see "Import" button is disabled on multiwallet Page
 
 
+  @VerifyImportButtonEnabledAfterEnteringDetails
+  Scenario: Verify Fields on Multi-Chain Wallet Screen
+    Given the app is launched
+    When I enter a new PIN "123456"
+    And I confirm the PIN "123456"
+    Then I verify "Import Wallet" button on screen
+    When I click Import Wallet button
+    And I should see "Import Wallet" header
+    And I should see "Multi-Chain Wallet" section
+    When I click on "Multi-Chain Wallet"
+    Then I should see "Multi-Chain Wallet" header
+    When I enter name "Sam" in the input field with label "Name"
+    And I enter phrase "lend wreck slogan shrimp cradle december piece gallery limit blind south misery" in the input field with label "Phrase"
+    And I should see "Import" button is enabled on multiwallet Page
+
+
+@VerifyBinanceWalletPageElements
+  Scenario: Verify Elements on Binance Smart Chain Wallet Screen
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "Import Wallet" button on screen
+  When I click Import Wallet button
+  And I should see "Import Wallet" header
+  And I should see "Binance Smart Chain" option
+  When I click on "Binance Smart Chain"
+  And I should see Privatekey option
+  And I should see Mnemonic option
+  And I should see JSON key option
+      
+
+@VerifyBinanceWalletPageElement
+  Scenario: Verify Elements on Binance Smart Chain Wallet Screen
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "Import Wallet" button on screen
+  When I click Import Wallet button
+  And I should see "Import Wallet" header
+  And I should see "Binance Smart Chain" option
+  When I click on "Binance Smart Chain"
+  And I should see Privatekey option is selected by default
   
 
-
-
-
-
-
+  @VerifyBinanceWalletPagePasteButton
+  Scenario: Verify Elements on Binance Smart Chain Wallet Screen
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "Import Wallet" button on screen
+  When I click Import Wallet button
+  And I should see "Import Wallet" header
+  And I should see "Binance Smart Chain" option
+  When I click on "Binance Smart Chain"
+  And I should see Paste button on the Phrase input field
   
+@VerifyBackNavigationFromImportWalletScreen
+  Scenario: Verify Back Navigation from Import Wallet Screen
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "Import Wallet" button on screen
+  When I click Import Wallet button
+  And I should see "Import Wallet" header
+  When I click on back button on Import Wallet screen
+  Then I verify "Import Wallet" button on screen
+
+
+@VerifyNavigationToEthereumWalletScreen
+Scenario: TC-065 Verify Navigation to Ethereum Import Wallet Screen
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "Import Wallet" button on screen
+  When I click Import Wallet button
+  And I should see "Import Wallet" header
+  And I should see "Ethereum" option
+  When I click on "Ethereum"
+  And I should see Privatekey option
+  And I should see Mnemonic option
+  And I should see JSON key option
+
+
+  @VerifySpaceIsNotConsideredAsInput
+  Scenario: TC-071 Verify Spaces Are Not Considered as Input
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "Import Wallet" button on screen
+  When I click Import Wallet button
+  And I should see "Import Wallet" header
+  And I should see "Ethereum" option
+  When I click on "Ethereum"
+  And I enter name "   " in the input field
+  And I enter phrase "     " in the input field with label "Phrase"
+  Then I should see error message "Please enter a valid private key"
+  And I should see "Import" button is disabled on Ethereum Wallet Page
 
 
 
-
+  @VerifyPasteButtonIsPresentInEthereumMnemonicField
+  Scenario: TC-078 Verify Paste Button is Present in the Mnemonic Field
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I verify "Import Wallet" button on screen
+  When I click Import Wallet button
+  And I should see "Import Wallet" header
+  And I should see "Ethereum" option
+  When I click on "Ethereum"
+  And I should see Paste button on the Phrase input field

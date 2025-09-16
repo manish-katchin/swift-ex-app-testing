@@ -176,4 +176,72 @@ public class ImportWalletStep extends BaseStep {
                 importWalletPage.isHomeScreenWithWalletDisplayed());
     }
 
+  
+        @Then("I should see \"Name\" input field on multiwallet Page")
+        public void iShouldSeeNameInputFieldOnMultiwalletPage() {
+            Assert.assertTrue(importWalletPage.isWalletNameInputDisplayed());
+        }
+
+
+    
+    @Then("I should see \"Phrase\" input field on multiwallet Page")
+    public void iShouldSeePhraseInputFieldOnMultiwalletPage() {
+            Assert.assertTrue(importWalletPage.isMnemonicPhraseInputDisplayed());
+    }
+    
+        @Then("I should see \"Import\" button on multiwallet Page")
+        public void iShouldSeeImportButtonOnMultiwalletPage() {
+            Assert.assertTrue(importWalletPage.isImportWalletButtonDisplayed());
+        }
+
+    @Then("I should see \"Import\" button is disabled on multiwallet Page")
+    public void iShouldSeeImportButtonIsDisabledOnMultiwalletPage() {
+        Assert.assertTrue("Import button should be disabled!", importWalletPage.isImportWalletButtonDisabled());
+    }
+    @Then("I should see \"Import\" button is enabled on multiwallet Page")
+    public void iShouldSeeImportButtonIsEnabledOnMultiwalletPage() {
+        Assert.assertTrue("Import button should be enabled!", importWalletPage.isImportWalletButtonEnabled());
+    }
+
+    @And("I should see Privatekey option")
+public void iShouldSeePrivatekeyOption() {
+    Assert.assertTrue("Privatekey option should be displayed!", importWalletPage.isPrivateKeyOptionDisplayed());
+}
+
+@And("I should see Mnemonic option")
+public void iShouldSeeMnemonicOption() {
+    Assert.assertTrue("Mnemonic option should be displayed!", importWalletPage.isMnemonicOptionDisplayed());
+}
+
+@And("I should see JSON key option")
+public void iShouldSeeJsonKeyOption() {
+    Assert.assertTrue("JSON key option should be displayed!", importWalletPage.isJsonKeyOptionDisplayed());
+}
+
+@And("I should see \"Binance Smart Chain\" header")
+public void iShouldSeeBinanceSmartChainHeader() {
+    Assert.assertTrue("Binance Smart Chain header should be displayed!",
+            importWalletPage.isBinanceSmartChainHeaderDisplayed());
+}
+
+@And("I should see Privatekey option is selected by default")
+public void iShouldSeePrivatekeyOptionIsSelectedByDefault() {
+    Assert.assertTrue("Privatekey option should be selected by default!",
+            importWalletPage.isPrivateKeyOptionSelectedByDefault());
+}
+@And("I should see Paste button on the Phrase input field")
+public void iShouldSeePasteButtonOnPhraseInputField() {
+    Assert.assertTrue(
+            "Paste button on the Phrase input field should be displayed!",
+            importWalletPage.isPasteButtonOnPhraseInputDisplayed());
+}
+    @When("I click on back button on Import Wallet screen")
+    public void iClickOnBackButtonOnImportWalletScreen() {
+        importWalletPage.clickImportWalletBackButton();
+    }
+
+       @Then("I should see \"Import\" button is disabled on Ethereum Wallet Page")
+    public void iShouldSeeImportButtonIsDisabledOnEthereumWalletPage() {
+        Assert.assertTrue("Import button should be disabled!", importWalletPage.isImportWalletButtonDisabled());
+    }
 }

@@ -1,6 +1,8 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,9 +123,11 @@ public class LoginPage extends BasePage {
         logger.info("InvalidSubscriptionMessage displayed: {}", displayed);
         return displayed;
     }
-     public boolean isLoginErrorMessageDisplayed() {
+
+    public boolean isLoginErrorMessageDisplayed() {
         boolean displayed = isDisplayed("BothFieldsRequiredError");
         logger.info("Login error message displayed: {}", displayed);
         return displayed;
     }
+
 }

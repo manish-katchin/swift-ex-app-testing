@@ -3,6 +3,7 @@ package com.swiftEx.mobileAutomationFramework.pages;
 import io.appium.java_client.AppiumDriver;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,4 +136,85 @@ public class ImportWalletPage extends BasePage {
         logger.info("Home screen with Selected wallet visibility: {}", displayed);
         return displayed;
     }
+
+    public boolean isWalletNameInputDisplayed() {
+        boolean displayed = isDisplayed("wallet_name_input");
+        logger.info("Wallet Name input displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isMnemonicPhraseInputDisplayed() {
+        boolean displayed = isDisplayed("mnemonic_phrase_input");
+        logger.info("Mnemonic Phrase input displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isImportWalletButtonDisplayed() {
+        boolean displayed = isDisplayed("import_wallet_button");
+        logger.info("Import Wallet button displayed: {}", displayed);
+        return displayed;
+    }
+    public boolean isImportWalletButtonDisabled() {
+        try {
+            WebElement importButton = driver.findElement(getBy("import_wallet_button"));
+            boolean disabled = !importButton.isEnabled();
+            logger.info("Import Wallet button disabled: {}", disabled);
+            return disabled;
+        } catch (Exception e) {
+            logger.error("Error checking Import Wallet button disabled state: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean isImportWalletButtonEnabled() {
+        try {
+            WebElement importButton = driver.findElement(getBy("import_wallet_button"));
+            boolean enabled = importButton.isEnabled();
+            logger.info("Import Wallet button enabled: {}", enabled);
+            return enabled;
+        } catch (Exception e) {
+            logger.error("Error checking Import Wallet button enabled state: {}", e.getMessage());
+            return false;
+        }
+    }
+    public boolean isPrivateKeyOptionDisplayed() {
+    return isDisplayed("private_key_option");
+    }
+
+    public boolean isMnemonicOptionDisplayed() {
+    return isDisplayed("mnemonic_key_option");
+    }
+
+public boolean isJsonKeyOptionDisplayed() {
+    return isDisplayed("json_key_option");
+    }
+
+    public boolean isBinanceSmartChainHeaderDisplayed() {
+        return isDisplayed("binance_smart_chain_header");
+    }
+
+    public boolean isPrivateKeyOptionSelectedByDefault() {
+        try {
+            Thread.sleep(2000); // Wait for UI to stabilize
+            WebElement privateKeyOption = driver.findElement(getBy("private_key_option"));
+            String bgColor = privateKeyOption.getCssValue("background-color");
+            String color = privateKeyOption.getCssValue("color");
+            logger.info("Privatekey option background-color: {}", bgColor);
+            logger.info("Privatekey option color: {}", color);
+            // Accept either property if it matches expected blue
+            return "rgba(147, 200, 242, 1)".equals(bgColor) || "#93c8f2".equals(color);
+        } catch (Exception e) {
+            logger.error("Error checking Privatekey option selected state: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean isPasteButtonOnPhraseInputDisplayed() {
+        return isDisplayed("paste_button");
+    }
+
+    public void clickImportWalletBackButton() {
+        tap("imp_wallet_back_btn");
+    }
 }
+
