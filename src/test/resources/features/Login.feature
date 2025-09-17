@@ -1,3 +1,4 @@
+@LoginScenarios
 Feature: Login
 As a user I want to log in to the app and access my wallet
 

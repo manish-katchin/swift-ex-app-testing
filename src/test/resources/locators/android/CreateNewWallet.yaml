@@ -1,6 +1,6 @@
 create_wallet_button:
   strategy: accessibility
-  value: CREATE A NEW WALLET
+  value: create_new_wallet_btn
 
 import_wallet_button:
   strategy: xpath

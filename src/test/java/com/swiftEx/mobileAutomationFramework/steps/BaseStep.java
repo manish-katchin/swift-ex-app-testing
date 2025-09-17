@@ -43,6 +43,7 @@ public class BaseStep {
         }
     }
 
+
     private <T extends BasePage> T createPage(Class<T> pageClass, AppiumDriver driver) {
         try {
             if (driver == null) {
@@ -77,7 +78,7 @@ public class BaseStep {
         }
     }
 
-    protected void clearPageCache() {
+    public static  void clearPageCache() {
         pageCache.clear();
         logger.debug("🧹 Page cache cleared");
     }

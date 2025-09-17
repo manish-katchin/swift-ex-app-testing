@@ -28,6 +28,7 @@ public class Hooks {
 
         try {
             // Clear static data only
+            BaseStep.clearPageCache();
             BaseStep.quitDriver();
             logger.debug("Scenario cleanup completed");
 
