@@ -13,3 +13,9 @@ thirdwallet_card:
 All_walletheader:
  strategy: xpath
  value: //android.widget.TextView[@text='All Wallets']
+
+All_Wallets_List:
+  strategy: xpath
+  value: //android.widget.TextView[@text='All Wallets']/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true']
+  
+  #//*[@clickable='true' and @content-desc and not(contains(@content-desc, 'all_wallets_back'))]

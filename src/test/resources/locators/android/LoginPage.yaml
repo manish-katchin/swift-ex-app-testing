@@ -62,3 +62,81 @@ BothFieldsRequiredError:
   strategy: id
   value: com.app.swiftEx.app:id/snackbar_text
 
+
+Register_Now_Option:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Don't have an account? Register now")
+
+CreateAccountHeader:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Create your exchange account']
+
+FirstNameLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='First Name']
+
+FirstNameInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="firstNameInput"]
+
+LastNameLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Last Name']
+
+LastNameInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="lastNameInput"]
+
+EmailAddressLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Email Address']
+
+EmailInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="emailInput"]
+
+PasswordLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Password']
+
+PasswordInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="passwordInput"]
+
+RePasswordLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Re-Password']
+
+RePasswordInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="rePasswordInput"]
+
+CreateAccountButton:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Create my account")
+
+CreateAccountButtonText:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Create my account']
+
+AlreadyHaveAccountButton:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Already have an account? login now")
+
+AlreadyHaveAccountButtonText:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Already have an account? login now'] 
+
+
+EmailValidationError:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Email must be a valid email.")
+
+VerificationCodeInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="verificationCodeInput"]
+
+
+Verify_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Verify")

@@ -1,9 +1,9 @@
-Feature: Swap Wallet
-As a user
-I want to Swap wallet
+@SwapWalletFeature
+Feature: Swap Wallet 
+As a user I want to Swap wallet
     
     @SwappingCryptoCurrencyfromEthereumToUSDC
-    Scenario: Import wallet with valid private key 
+    Scenario: Verify successful Crypto Swap from Ether to USDC
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -27,7 +27,7 @@ I want to Swap wallet
     Then I should see "Swap Success" message on the screen
  
     @SwappingCryptoCurrencyfromUSDCToEthereum
-    Scenario: Import wallet with valid private key
+    Scenario: Verify successful Crypto Swap from USDC to Ethereum
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -52,7 +52,7 @@ I want to Swap wallet
     Then I should see "Swap Success" message on the screen
 
 @sendCryptoCurrency
-Scenario: Create a new wallet and proceed to the private key page
+Scenario:To verify user is able to perform transaction
 Given the app is launched
 When I enter a new PIN "123456"
 And I confirm the PIN "123456"

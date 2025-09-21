@@ -2,6 +2,7 @@ package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -146,4 +147,49 @@ public abstract class BasePage {
         args.put("duration", 100); // duration in ms
         driver.executeScript("mobile: clickGesture", args);
     }
+
+
+    public boolean scrollDownUntilVisible(String locatorKey, int maxScrolls) {
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+HashMap<String, String> scrollObject = new HashMap<String, String>();
+scrollObject.put("direction", "down");
+scrollObject.put("strategy", "-android uiautomator");
+scrollObject.put("selector", "new UiSelector().text(\"Help Center\")");
+js.executeScript("mobile: scroll", scrollObject);
+    By locator = getBy(locatorKey);
+    Map<String, Object> rect = (Map<String, Object>) driver.executeScript("mobile: viewportRect");
+
+    int left = ((Number) rect.get("left")).intValue();
+    int top = ((Number) rect.get("top")).intValue();
+    int width = ((Number) rect.get("width")).intValue();
+    int height = ((Number) rect.get("height")).intValue();
+
+    for (int i = 0; i < maxScrolls; i++) {
+        if (isDisplayed(locator, 2)) {
+            logger.info("Element '{}' found after {} scrolls", locatorKey, i);
+            return true;
+        }
+
+        if (isAndroid()) {
+            Map<String, Object> args = new HashMap<>();
+            args.put("left", left/2);
+            args.put("top", top/2);
+            args.put("width", width/2);
+            args.put("height", height/2);
+            args.put("direction", "up");
+            args.put("percent", 0.7);
+            driver.executeScript("mobile: swipeGesture", args);
+        } else if (isIOS()) {
+            Map<String, Object> args = new HashMap<>();
+            args.put("direction", "down");
+            driver.executeScript("mobile: scroll", args);
+        }
+
+        logger.debug("Scrolled down (attempt {}) for locator '{}'", i + 1, locatorKey);
+    }
+
+    logger.warn("Element '{}' not found after {} scrolls", locatorKey, maxScrolls);
+    return false;
+}
+
 }

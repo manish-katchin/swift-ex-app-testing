@@ -70,7 +70,9 @@ public class HomePage extends BasePage {
         }
 
         public boolean isHelpCenterOptionDisplayed() {
+            boolean scroll = scrollDownUntilVisible("help_center_option", 0);
             boolean displayed = isDisplayed("help_center_option");
+
             logger.info("Help Center option visibility: {}", displayed);
             return displayed;
         }

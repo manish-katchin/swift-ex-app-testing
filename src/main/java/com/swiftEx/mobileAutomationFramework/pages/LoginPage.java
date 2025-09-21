@@ -1,8 +1,11 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.cucumber.java.en.Then;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,11 +32,20 @@ public class LoginPage extends BasePage {
     }
 
     // Guest user header
-    public boolean isGuestUserHeaderDisplayed() {
-        boolean displayed = isDisplayed("GuestUserLabel");
+  public boolean isGuestUserHeaderDisplayed() {
+    try {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebElement guestUserLabel = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(getBy("GuestUserLabel"))
+        );
+        boolean displayed = guestUserLabel.isDisplayed();
         logger.info("Guest user header displayed: {}", displayed);
         return displayed;
+    } catch (Exception e) {
+        logger.error("Error waiting for Guest user header: {}", e.getMessage());
+        return false;
     }
+}
 
     // Login option
     public boolean isLoginOptionDisplayed() {
@@ -43,9 +55,13 @@ public class LoginPage extends BasePage {
     }
 
     public void clickLoginOption() {
-        tap("Login_Option");
-        logger.info("Tapped Login option");
-    }
+    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+    WebElement loginOption = wait.until(
+        ExpectedConditions.elementToBeClickable(getBy("Login_Option"))
+    );
+    loginOption.click();
+    logger.info("Tapped Login option");
+}
 
     // Hi, Welcome back! header
     public boolean isWelcomeBackHeaderDisplayed() {
@@ -98,9 +114,18 @@ public class LoginPage extends BasePage {
     }
 
         // Get displayed email value (for verification)
-        public String getDisplayedEmailValue() {
+    // Get displayed email value (for verification) with dynamic wait
+    public String getDisplayedEmailValue() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("Email_Value")));
             return getText("Email_Value");
+        } catch (Exception e) {
+            logger.error("Email value not visible: {}", e.getMessage());
+            return null;
         }
+    }
+
          public boolean isMyWalletLabelDisplayed() {
         boolean displayed = isDisplayed("MyWalletLabel");
         logger.info("MyWalletLabel displayed: {}", displayed);
@@ -129,5 +154,97 @@ public class LoginPage extends BasePage {
         logger.info("Login error message displayed: {}", displayed);
         return displayed;
     }
+ public void clickRegisterNowOption() {
+        tap("Register_Now_Option");
+        logger.info("Tapped Register Now option");
+    }
 
+    public boolean isCreateAccountHeaderDisplayed() {
+        boolean displayed = isDisplayed("CreateAccountHeader");
+        logger.info("Create account header displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isFirstNameInputDisplayed() {
+        boolean displayed = isDisplayed("FirstNameInput");
+        logger.info("First name input displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isLastNameInputDisplayed() {
+        boolean displayed = isDisplayed("LastNameInput");
+        logger.info("Last name input displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isEmailInputDisplayed() {
+        boolean displayed = isDisplayed("EmailInput");
+        logger.info("Email input displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isPasswordInputDisplayed() {
+        boolean displayed = isDisplayed("PasswordInput");
+        logger.info("Password input displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isRePasswordInputDisplayed() {
+        boolean displayed = isDisplayed("RePasswordInput");
+        logger.info("Re-Password input displayed: {}", displayed);
+        return displayed;
+    }
+
+    public void enterFirstName(String firstName) {
+        sendKeys("FirstNameInput", firstName);
+        logger.info("Entered first name: {}", firstName);
+    }
+
+    public void enterLastName(String lastName) {
+        sendKeys("LastNameInput", lastName);
+        logger.info("Entered last name: {}", lastName);
+    }
+
+    public void enterEmailOnRegister(String email) {
+        sendKeys("EmailInput", email);
+        logger.info("Entered email: {}", email);
+    }
+
+    public void enterPasswordOnRegister(String password) {
+        sendKeys("PasswordInput", password);
+        logger.info("Entered password: {}", password);
+    }
+
+    public void enterRePassword(String rePassword) {
+        sendKeys("RePasswordInput", rePassword);
+        logger.info("Entered re-password: {}", rePassword);
+    }
+
+    public void clickCreateAccountButton() {
+        tap("CreateAccountButton");
+        logger.info("Tapped Create my Account button");
+    }
+        // Checks if the email validation error is displayed
+        public boolean isEmailValidationErrorDisplayed() {
+            try {
+                WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(20));
+                WebElement errorElement = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(getBy("EmailValidationError")));
+                boolean displayed = errorElement.isDisplayed();
+                logger.info("Email validation error displayed: {}", displayed);
+                return displayed;
+            } catch (Exception e) {
+                logger.error("Email validation error not found: {}", e.getMessage());
+                return false;
+            }
+        }
+    public void enterVerificationCode(String code) {
+    sendKeys("VerificationCodeInput", code);
+    logger.info("Entered verification code: {}", code);
+    }
+    public void clickVerifyButtonOnVerifyPage() {
+    tap("Verify_button"); 
+    logger.info("Clicked on Verify Button on Verify Page");
 }
+}
+

@@ -3,6 +3,9 @@ package com.swiftEx.mobileAutomationFramework.steps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.swiftEx.mobileAutomationFramework.pages.HomePage;
 import com.swiftEx.mobileAutomationFramework.pages.LoginPage;
@@ -12,9 +15,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class LoginStep extends BaseStep {
+   
     private static final Logger logger = LoggerFactory.getLogger(LoginStep.class);
     private final LoginPage loginPage = page(LoginPage.class);
-
 
     @When("I click on the \"Profile\" icon on Trade Wallet page")
     public void iClickOnProfileIcon() {
@@ -66,7 +69,7 @@ public class LoginStep extends BaseStep {
         Assert.assertTrue("Login button is not displayed!", loginPage.isLoginButtonDisplayed());
     }
 
-  @When("I enter {string} into the Email input field")
+    @When("I enter {string} into the Email input field")
     public void iEnterEmailIntoEmailInputField(String email) {
         loginPage.enterEmail(email);
     }
@@ -100,16 +103,100 @@ public class LoginStep extends BaseStep {
 
     @And("I should see \"ActivatedSubscriptionLabel\" on Profile page")
     public void iShouldSeeActivatedSubscriptionLabel() {
-        Assert.assertTrue("ActivatedSubscriptionLabel is not displayed!", loginPage.isActivatedSubscriptionLabelDisplayed());
+        Assert.assertTrue("ActivatedSubscriptionLabel is not displayed!",
+                loginPage.isActivatedSubscriptionLabelDisplayed());
     }
 
     @And("I should see \"InvalidSubscriptionMessage\" on Profile page")
     public void iShouldSeeInvalidSubscriptionMessage() {
-        Assert.assertTrue("InvalidSubscriptionMessage is not displayed!", loginPage.isInvalidSubscriptionMessageDisplayed());
+        Assert.assertTrue("InvalidSubscriptionMessage is not displayed!",
+                loginPage.isInvalidSubscriptionMessageDisplayed());
     }
 
     @Then("I should see login \"Error\" message")
     public void iShouldSeeLoginErrorMessage() {
         Assert.assertTrue("Login error message is not displayed!", loginPage.isLoginErrorMessageDisplayed());
     }
+
+    @When("I click on register now option")
+    public void iClickOnRegisterNowOption() {
+        loginPage.clickRegisterNowOption();
+    }
+
+    @Then("I should see \"Create your exchange account\" header on Register page")
+    public void iShouldSeeCreateAccountHeader() {
+        Assert.assertTrue("Create account header is not displayed!", loginPage.isCreateAccountHeaderDisplayed());
+    }
+
+    @And("I should see the First name input field")
+    public void iShouldSeeFirstNameInputField() {
+        Assert.assertTrue("First name input field is not displayed!", loginPage.isFirstNameInputDisplayed());
+    }
+
+    @And("I should see the Last name input field")
+    public void iShouldSeeLastNameInputField() {
+        Assert.assertTrue("Last name input field is not displayed!", loginPage.isLastNameInputDisplayed());
+    }
+
+    @And("I should see the Email input field on registration page")
+    public void iShouldSeeEmailInputFieldOnRegister() {
+        Assert.assertTrue("Email input field is not displayed!", loginPage.isEmailInputDisplayed());
+    }
+
+    @And("I should see the Password input field on registration page")
+    public void iShouldSeePasswordInputFieldOnRegister() {
+        Assert.assertTrue("Password input field is not displayed!", loginPage.isPasswordInputDisplayed());
+    }
+
+    @And("I should see the Re-Password input field on registration page")
+    public void iShouldSeeRePasswordInputField() {
+        Assert.assertTrue("Re-Password input field is not displayed!", loginPage.isRePasswordInputDisplayed());
+    }
+
+    @When("I enter {string} into the First name input field")
+    public void iEnterFirstName(String firstName) {
+        loginPage.enterFirstName(firstName);
+    }
+
+    @And("I enter {string} into the Last name input field")
+    public void iEnterLastName(String lastName) {
+        loginPage.enterLastName(lastName);
+    }
+
+   @And("I enter a random email into the Email input field on registration page")
+public void iEnterRandomEmailIntoEmailInputFieldOnRegistrationPage() {
+    String randomEmail = "user" + System.currentTimeMillis() + "@example.com";
+    loginPage.enterEmailOnRegister(randomEmail);
+    logger.info("Entered random email: {}", randomEmail);
+}
+
+    @And("I enter {string} into the Password input field on registration page")
+    public void iEnterPasswordOnRegister(String password) {
+        loginPage.enterPasswordOnRegister(password);
+    }
+
+    @And("I enter {string} into the Re-Password input field on registration page")
+    public void iEnterRePassword(String rePassword) {
+        loginPage.enterRePassword(rePassword);
+    }
+
+    @Then("I click on the \"Create my Account\" button")
+    public void iClickCreateMyAccountButton() {
+        loginPage.clickCreateAccountButton();
+    }
+    @Then("I should see error \"Email must be a valid Email\" on registration page")
+    public void iShouldSeeErrorEmailMustBeAValidEmailOnRegistrationPage() {
+        String expectedError = "Email must be a valid Email";
+        Assert.assertTrue("Expected error message not displayed: " + expectedError,
+                loginPage.isEmailValidationErrorDisplayed());
+    }
+    @And("I enter the verification code {string} on verification page")
+    public void iEnterTheVerificationCodeOnVerificationPage(String code) {
+        loginPage.enterVerificationCode(code);
+    }
+@Then("I click on Verify Button on Verify Page")
+public void iClickOnVerifyButtonOnVerifyPage() {
+    loginPage.clickVerifyButtonOnVerifyPage();
+}
+
 }

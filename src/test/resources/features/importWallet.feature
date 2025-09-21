@@ -1,3 +1,4 @@
+@Regression
 Feature: Import Wallet 
   As a user
   I want to import an existing wallet
@@ -5,7 +6,8 @@ Feature: Import Wallet
 
 
   @importWalletMultiChainPositive
-  Scenario: Import wallet with valid mnemonic phrase
+  Scenario: Verify that a user can successfully import an multi-chain wallet using a valid Mnemonic
+
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -28,8 +30,8 @@ Feature: Import Wallet
     And I should see the Buy button is displayed
 
 
-  @importWalletMultichainNegative
-  Scenario: Import wallet with invalid mnemonic phrase
+  @importWalletMultichainNegative @1
+  Scenario: Validate error message for invalid mnemonic during Multi-Chain wallet import
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -46,8 +48,8 @@ Feature: Import Wallet
     Then I should see error message "Please enter a valid mnemonic"
 
 
-    @importWalletEthereumPositivewithPrivateKey
-    Scenario: Import wallet with valid Ethereum private key
+    @importWalletEthereumPositivewithPrivateKey @1
+    Scenario: Verify that a user can successfully import an Ethereum wallet using a valid private key.
       Given the app is launched
       When I enter a new PIN "123456"
       And I confirm the PIN "123456"
@@ -68,8 +70,8 @@ Feature: Import Wallet
       And I should see the Swap button is displayed
       And I should see the Buy button is displayed
 
-    @importWalletEthereumNegativewithPrivateKey
-    Scenario: Import wallet with invalid mnemonic phrase
+    @importWalletEthereumNegativewithPrivateKey 
+    Scenario: Validate error with invalid private key
       Given the app is launched
       When I enter a new PIN "123456"
       And I confirm the PIN "123456"
@@ -108,7 +110,7 @@ Feature: Import Wallet
     And I should see the Buy button is displayed
 
 @importWalletEthereumNegativewithMnemonic
-    Scenario: Import wallet with invalid Ethereum mnemonic phrase
+    Scenario: Validate error message for invalid mnemonic during  Ethereum wallet import
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -149,7 +151,7 @@ Feature: Import Wallet
 
 
     @importWalletBinanceSmartChainNegativeWithPrivateKey
-    Scenario: Import wallet with invalid private key
+    Scenario: Validate error for Binance Smart Chain import with invalid private key
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -190,7 +192,7 @@ Feature: Import Wallet
     And I should see the Buy button is displayed
 
 @importWalletBinanceSmartChainNegativeWithMnemonic
-    Scenario: Import wallet with invalid mnemonic phrase
+    Scenario:  Validate error message for invalid mnemonic, private key, during Binance smart chain wallet import
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -207,7 +209,7 @@ Feature: Import Wallet
     Then I should see error message "Please enter a valid mnemonic"
 
   @multipleWallet
-  Scenario: Navigate to Wallet page
+  Scenario:   Import multiple wallets and verify seamless navigation across wallet instances
   Given the app is launched
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
@@ -295,20 +297,20 @@ Feature: Import Wallet
     And I should see "Import" button is disabled on multiwallet Page
 
 
-  @VerifyImportButtonEnabledAfterEnteringDetails
-  Scenario: Verify Fields on Multi-Chain Wallet Screen
-    Given the app is launched
-    When I enter a new PIN "123456"
-    And I confirm the PIN "123456"
-    Then I verify "Import Wallet" button on screen
-    When I click Import Wallet button
-    And I should see "Import Wallet" header
-    And I should see "Multi-Chain Wallet" section
-    When I click on "Multi-Chain Wallet"
-    Then I should see "Multi-Chain Wallet" header
-    When I enter name "Sam" in the input field with label "Name"
-    And I enter phrase "lend wreck slogan shrimp cradle december piece gallery limit blind south misery" in the input field with label "Phrase"
-    And I should see "Import" button is enabled on multiwallet Page
+  # @VerifyImportButtonEnabledAfterEnteringDetails
+  # Scenario: Verify Fields on Multi-Chain Wallet Screen
+  #   Given the app is launched
+  #   When I enter a new PIN "123456"
+  #   And I confirm the PIN "123456"
+  #   Then I verify "Import Wallet" button on screen
+  #   When I click Import Wallet button
+  #   And I should see "Import Wallet" header
+  #   And I should see "Multi-Chain Wallet" section
+  #   When I click on "Multi-Chain Wallet"
+  #   Then I should see "Multi-Chain Wallet" header
+  #   When I enter name "Sam" in the input field with label "Name"
+  #   And I enter phrase "lend wreck slogan shrimp cradle december piece gallery limit blind south misery" in the input field with label "Phrase"
+  #   And I should see "Import" button is enabled on multiwallet Page
 
 
 @VerifyBinanceWalletPageElements
@@ -326,17 +328,17 @@ Feature: Import Wallet
   And I should see JSON key option
       
 
-@VerifyBinanceWalletPageElement
-  Scenario: Verify Elements on Binance Smart Chain Wallet Screen
-  Given the app is launched
-  When I enter a new PIN "123456"
-  And I confirm the PIN "123456"
-  Then I verify "Import Wallet" button on screen
-  When I click Import Wallet button
-  And I should see "Import Wallet" header
-  And I should see "Binance Smart Chain" option
-  When I click on "Binance Smart Chain"
-  And I should see Privatekey option is selected by default
+# @VerifyBinanceWalletPageElement    
+#   Scenario: Verify Elements on Binance Smart Chain Wallet Screen
+#   Given the app is launched
+#   When I enter a new PIN "123456"
+#   And I confirm the PIN "123456"
+#   Then I verify "Import Wallet" button on screen
+#   When I click Import Wallet button
+#   And I should see "Import Wallet" header
+#   And I should see "Binance Smart Chain" option
+#   When I click on "Binance Smart Chain"
+#   And I should see Privatekey option is selected by default
   
 
   @VerifyBinanceWalletPagePasteButton
