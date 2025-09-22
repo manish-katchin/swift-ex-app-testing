@@ -241,7 +241,7 @@ public void iShouldSeePasteButtonOnPhraseInputField() {
     }
 
        @Then("I should see \"Import\" button is disabled on Ethereum Wallet Page")
-    public void iShouldSeeImportButtonIsDisabledOnEthereumWalletPage() {
-        Assert.assertTrue("Import button should be disabled!", importWalletPage.isImportWalletButtonDisabled());
-    }
+       public void iShouldSeeImportButtonIsDisabledOnEthereumWalletPage() {
+           Assert.assertTrue("Import button should be disabled!", importWalletPage.isImportWalletButtonDisabled());
+       }
 }

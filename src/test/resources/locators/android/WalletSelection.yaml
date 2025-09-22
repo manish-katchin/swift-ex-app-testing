@@ -17,5 +17,20 @@ All_walletheader:
 All_Wallets_List:
   strategy: xpath
   value: //android.widget.TextView[@text='All Wallets']/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true']
-  
-  #//*[@clickable='true' and @content-desc and not(contains(@content-desc, 'all_wallets_back'))]
+
+All_Wallets_BackButton:
+  strategy: accessibility
+  value: all_wallets_back
+
+wallet_header_title:  
+  strategy: androiduiautomator
+  value: new UiSelector().text("Wallet") 
+
+my_wallet_option:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("My Wallet")  
+
+warning_message:
+  strategy: xpath
+  value: //*[@text="If you lose access to this device,your funds will be lost,unless you back up!"]
+

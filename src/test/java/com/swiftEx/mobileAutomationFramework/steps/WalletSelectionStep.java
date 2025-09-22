@@ -40,4 +40,47 @@ public class WalletSelectionStep extends BaseStep {
         Assert.assertTrue("All wallets are not displayed!", walletSelectionPage.isAllWalletsDisplayed());
         logger.info("All available wallet elements are displayed");
     }
+
+        @And("I see the popup with message \"Wallet Selected '{word}'\"")
+        public void iSeeThePopupWithMessageWalletSelected(String walletName) {
+            Assert.assertTrue("Wallet Selected popup for '" + walletName + "' is not displayed!",
+                    walletSelectionPage.isWalletSelectedPopupDisplayed(walletName));
+            logger.info("Verified Wallet Selected popup for wallet: {}", walletName);
+        }
+
+            @Then("I verify {string} area of wallet {string} is clickable")
+            public void iVerifyWalletAreaIsClickable(String areaType, String walletName) {
+                Assert.assertTrue(String.format("%s area of wallet '%s' is not clickable!", areaType, walletName),
+                        walletSelectionPage.isWalletAreaClickable(walletName, areaType));
+                logger.info("Verified {} area of wallet '{}' is clickable", areaType, walletName);
+            }
+
+            @Then("I click \"Back Button\" on All Wallets screen")
+            public void iClickBackButtonOnAllWalletsScreen() {
+                walletSelectionPage.clickBackButtonOnAllWalletsScreen();
+                logger.info("Clicked Back Button on All Wallets screen");
+            }
+            @Then("I click on My Wallet option")
+            public void iClickOnMyWalletOption() {
+                walletSelectionPage.clickMyWalletOption();
+                logger.info("Clicked on My Wallet option");
+            }
+
+    @Then("I should see \"Wallet\" header on the screen")
+    public void iShouldSeeWalletHeaderOnScreen() {
+        Assert.assertTrue("Wallet header is not displayed!", walletSelectionPage.isWalletHeaderDisplayed());
+        logger.info("Verified Wallet header is displayed");
+    }
+    @Then("I verify Active wallet card with name {string} is Present")
+    public void iVerifyWalletCardIsActive(String walletName) {
+        Assert.assertTrue("Wallet card '" + walletName + "' is not active!",
+                walletSelectionPage.isWalletNameDisplayedOnMyWallet(walletName));
+        logger.info("Verified wallet card '{}' is active", walletName);
+    }
+
+    @And("I verify warning message is displayed")
+public void iVerifyWarningMessageIsDisplayed() {
+    Assert.assertTrue("Warning message is not displayed!", walletSelectionPage.isWarningMessageDisplayed());
+    logger.info("Verified warning message is displayed");
+}
 }

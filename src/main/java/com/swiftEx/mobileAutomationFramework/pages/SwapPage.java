@@ -41,7 +41,7 @@ public class SwapPage extends BasePage {
 
     // Enters amount in the input field below WETH
     public void enterSwapAmount(String amount) throws InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(15000);
         // sendKeys("swap_amount_input", amount);
         driver.findElement(By.xpath("//android.widget.EditText[contains(@text, '0.0')]")).click();
         Thread.sleep(2000);
