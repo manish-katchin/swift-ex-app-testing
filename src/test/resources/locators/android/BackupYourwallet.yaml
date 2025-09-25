@@ -1,16 +1,20 @@
 
 backup_title:
   strategy: xpath
-  value: //android.widget.TextView[contains(@text,'Back up your wallet now')]
+  value: //android.widget.TextView[contains(@text,'Back up you wallet now')]
 
 lose_private_key_option:
   strategy: xpath
-  value: //android.widget.TextView[@text='If I lose my private key, my funds will be lost']
+  value: //android.widget.TextView[@text='If I loose my private key, my funds will be lost']
 
 share_private_key_option:
-  strategy: xpath
-  value: //android.widget.TextView[@text='If I share my private key, my funds can get stolen']
+ strategy: xpath
+ value: //android.widget.TextView[@text='If I share my private key, my funds can get stolen']
 
 continue_button:
-  strategy: xpath
-  value: //android.widget.TextView[@text='Continue']
+ strategy: xpath
+ value: //android.widget.TextView[@text='Continue']
+
+backup_mnemonic_phrase:
+ strategy: androiduiautomator
+ value: new UiSelector().text("Backup Mnemonic Phrase")

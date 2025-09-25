@@ -1,6 +1,5 @@
 package com.swiftEx.mobileAutomationFramework.utils;
 
-import com.swiftEx.mobileAutomationFramework.utils.ConfigLoader;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
@@ -29,11 +28,11 @@ public class LocatorLoader {
     public static Map<String, Map<String, String>> loadForPlatform(String fileName) {
         // Use ConfigLoader to get platform from framework.properties
         String platform = ConfigLoader.getPlatformName();
-        
+
         // Construct platform-specific path
         String platformPath = platform.equals("ios") ? "ios" : "android";
         String resourcePath = "/locators/" + platformPath + "/" + fileName;
-        
+
         return load(resourcePath);
     }
 
@@ -42,12 +41,12 @@ public class LocatorLoader {
      */
     @SuppressWarnings("unchecked")
     public static Map<String, Map<String, String>> loadWithFallback(String fileName) {
-        // Use ConfigLoader to get platform from framework.properties  
+        // Use ConfigLoader to get platform from framework.properties
         String platform = ConfigLoader.getPlatformName();
-        
+
         String platformPath = platform.equals("ios") ? "ios" : "android";
         String resourcePath = "/locators/" + platformPath + "/" + fileName;
-        
+
         try {
             return load(resourcePath);
         } catch (RuntimeException e) {

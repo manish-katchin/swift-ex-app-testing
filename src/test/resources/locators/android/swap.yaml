@@ -1,0 +1,68 @@
+swap_button:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap")
+      
+swap_header:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap")
+
+swap_amount_input:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.EditText").text("0.0")
+
+from_token:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("WETH, Balance")
+
+to_token:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("USDC, Balance")
+
+  SwapSuccessMessage:
+    strategy: androiduiautomator
+    value: new UiSelector().text("Swap Success")
+
+  swap_button_on_swap_page:
+    strategy: xpath
+    value: //android.view.ViewGroup[@content-desc="Swap"]
+
+  currency_switch_arrow:
+    strategy: xpath
+    value: (//*[@text='To']/parent::android.view.ViewGroup/android.view.ViewGroup)[3]
+
+send_header:
+  strategy: xpath
+  value: //android.view.ViewGroup[@text='Send']
+
+recipient_address_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Recipient Address"]
+
+amount_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Amount"]
+
+send_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Send')]
+
+
+ethereum_wallet_card:
+  strategy: xpath
+  value: //*[@text="Ethereum"]
+
+  first_transaction:
+    strategy: xpath
+    value: (//*[@text="ETH"])[position()=2]
+
+  
+Insufficient_balance_message:
+    strategy: xpath
+    value: //*[contains(@content-desc,'Insufficient Balance')]
+
+Transactions_header:
+    strategy: xpath
+    value: //*[@text="Transactions"]
+    
+    
+

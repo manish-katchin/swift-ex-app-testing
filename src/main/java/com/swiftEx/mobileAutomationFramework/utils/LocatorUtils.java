@@ -8,8 +8,15 @@ import org.openqa.selenium.By;
 import java.util.Map;
 
 public class LocatorUtils {
+    public static By getUIAutomatorTextLocatorBy(String text) {
+        String selector = "new UiSelector().textContains(\"" + text + "\")";
+        return AppiumBy.androidUIAutomator(selector);
+    }
+    
+
     public static By toBy(Map<String, String> locator) {
-        if (locator == null) return null;
+        if (locator == null)
+            return null;
         String strategy = locator.getOrDefault("strategy", "id").toLowerCase().replaceAll("[^a-z0-9]", "");
         String value = locator.get("value");
         switch (strategy) {

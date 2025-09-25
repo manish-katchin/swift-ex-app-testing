@@ -8,11 +8,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
-
 public class AllureUtils {
     private static final Logger logger = LoggerFactory.getLogger(AllureUtils.class);
-    
+
     /**
      * Attach screenshot to Allure report
      */
@@ -29,7 +27,7 @@ public class AllureUtils {
         }
         return new byte[0];
     }
-    
+
     /**
      * Add text attachment to Allure report
      */
@@ -38,7 +36,7 @@ public class AllureUtils {
         logger.info("INFO: Text attachment added to Allure report: {}", name);
         return content;
     }
-    
+
     /**
      * Add step to Allure report
      */
@@ -46,7 +44,7 @@ public class AllureUtils {
     public static void addStep(String stepName) {
         logger.info("INFO: Allure step: {}", stepName);
     }
-    
+
     /**
      * Add step with parameter to Allure report
      */
@@ -54,7 +52,7 @@ public class AllureUtils {
     public static void addStepWithParameter(String stepName, String parameter) {
         logger.info("INFO: Allure step: {} - {}", stepName, parameter);
     }
-    
+
     /**
      * Add environment information to Allure
      */

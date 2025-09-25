@@ -1,64 +1,148 @@
 # Balance Section
 balance_amount:
-  strategy: xpath
-  value: //android.widget.TextView[starts-with(@text,'$')]
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.TextView").textMatches("\\$ [0-9]+\\.[0-9]+")
 
 balance_currency:
-  strategy: xpath
-  value: //android.widget.TextView[contains(@text,'X.XX')]
+  strategy: androiduiautomator  
+  value: new UiSelector().className("android.widget.TextView").text("X.XX")
 
 # Action Buttons
 receive_button:
   strategy: xpath
-  value: //android.view.ViewGroup[@content-desc=", Recive"]
+  value: //*[contains(@text,'Receive')]
 
 send_button:
-  strategy: xpath
-  value: //android.view.ViewGroup[@content-desc=", Send"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Send")
 
 swap_button:
-  strategy: xpath
-  value: //android.view.ViewGroup[@content-desc=", Swap"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap")
 
 buy_button:
-  strategy: xpath
-  value: //android.view.ViewGroup[@content-desc=", Buy"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Buy")
 
 # Asset Tab Section
 assets_tab:
-  strategy: xpath
-  value: //android.view.ViewGroup[@content-desc="Assets"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Assets")
 
 add_assets_tab:
-  strategy: xpath
-  value: //android.view.ViewGroup[@content-desc="Add Assets"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Add Assets")
 
 # Navigation Bar
 home_tab:
-  strategy: xpath
-  value: //android.view.View[@content-desc=", Home"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Home")
 
 wallet_tab:
-  strategy: xpath
-  value: //android.view.View[@content-desc=", Wallet"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Wallet")
 
 market_tab:
-  strategy: xpath
-  value: //android.view.View[@content-desc=", Market"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Market")
 
 exchange_tab:
-  strategy: xpath
-  value: //android.view.View[@content-desc=", Exchange"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Exchange")
 
 settings_tab:
-  strategy: xpath
-  value: //android.view.View[@content-desc=", Settings"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Settings")
 
-# Asset Action Buttons
+# Asset List
+bitcoin_asset:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Bitcoin")
+
+usdc_asset:
+  strategy: androiduiautomator
+  value: new UiSelector().text("USDC")
+
+usdt_asset:
+  strategy: androiduiautomator
+  value: new UiSelector().text("USDT")
+
+# Asset Action Buttons (context-dependent)
 trade_button:
-  strategy: xpath
-  value: //android.view.ViewGroup[@content-desc="Trade"]
+  strategy: androiduiautomator
+  value: new UiSelector().text("Trade")
 
 asset_buy_button:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Buy")
+
+# Exchange Page Locators
+trade_wallet_header:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Trade Wallet")
+
+home_icon:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Home")
+
+offers_icon:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Offers")
+
+transactions_icon:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Transactions")
+
+on_off_ramp_icon:
+  strategy: androiduiautomator
+  value: new UiSelector().text("On/Off Ramp")
+
+profile_icon:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Profile")
+
+# Settings Page Locators
+settings_header:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Settings")
+
+choose_wallet_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Choose Wallet")
+
+dark_mode_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Dark Mode")
+
+exchange_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Exchange")
+
+transactions_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Transactions")
+
+biometric_authentication_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Biometric Authenticaton")
+
+preference_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Preference")
+
+push_notification_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Push Notification")
+
+help_center_option:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Help Center")
+
+logout_option:
   strategy: xpath
-  value: //android.view.ViewGroup[@content-desc="Buy"]
+  value: //android.view.ViewGroup[contains(@content-desc="Log Out")]
+
+  back_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Navigate up")
+
