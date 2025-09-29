@@ -408,3 +408,40 @@ Scenario: TC-065 Verify Navigation to Ethereum Import Wallet Screen
   And I should see "Ethereum" option
   When I click on "Ethereum"
   And I should see Paste button on the Phrase input field
+
+
+
+@importWalletBinanceSmartChainNegativeWithJSONkey
+    Scenario:  Validate error message for invalid mnemonic, JSON key, during Binance smart chain wallet import
+    Given the app is launched
+    When I enter a new PIN "123456"
+    And I confirm the PIN "123456"
+    Then I verify "Import Wallet" button on screen
+    When I click Import Wallet button
+    And I should see "Import Wallet" header
+    And I should see "Multi-Chain Wallet" section
+    And I should see "Binance Smart Chain" option
+    And I should see "Ethereum" option
+    When I click on "Binance Smart Chain"
+    When I click on "JSON Key" button after import wallet Screen
+    When I enter name "XYZ" in the input field 
+    And I enter phrase "random invalid phrase" in the input field with label "Phrase"
+    Then I should see error message "Please enter a valid mnemonic"
+
+
+    @VerifyPastebuttonFunctionality
+    Scenario: "User has copied a valid mnemonic phrase to the clipboard User is on the Binance Smart Chain Import Wallet screen, with Mnemonic selected."
+      Given the app is launched
+      When I enter a new PIN "123456"
+      And I confirm the PIN "123456"
+      Then I verify "Import Wallet" button on screen
+      When I click Import Wallet button
+      And I should see "Import Wallet" header
+      And I should see "Multi-Chain Wallet" section
+      And I should see "Binance Smart Chain" option
+      And I should see "Ethereum" option
+      When I click on "Binance Smart Chain"
+      When I enter name "Sam" in the input field
+      And I copy phrase "0xd6d71ef95d22f96910d50a6d878f3bf2b1907838291247a3819f02c20eca7697" in the input field with label Phrase using Paste button
+      And I click on "Import" button
+    

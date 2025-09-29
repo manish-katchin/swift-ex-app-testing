@@ -150,46 +150,70 @@ public abstract class BasePage {
 
 
     public boolean scrollDownUntilVisible(String locatorKey, int maxScrolls) {
-    JavascriptExecutor js = (JavascriptExecutor) driver;
-HashMap<String, String> scrollObject = new HashMap<String, String>();
-scrollObject.put("direction", "down");
-scrollObject.put("strategy", "-android uiautomator");
-scrollObject.put("selector", "new UiSelector().text(\"Help Center\")");
-js.executeScript("mobile: scroll", scrollObject);
-    By locator = getBy(locatorKey);
-    Map<String, Object> rect = (Map<String, Object>) driver.executeScript("mobile: viewportRect");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        HashMap<String, String> scrollObject = new HashMap<String, String>();
+        scrollObject.put("direction", "down");
+        scrollObject.put("strategy", "-android uiautomator");
+        scrollObject.put("selector", "new UiSelector().text(\"Help Center\")");
+        js.executeScript("mobile: scroll", scrollObject);
+        By locator = getBy(locatorKey);
+        Map<String, Object> rect = (Map<String, Object>) driver.executeScript("mobile: viewportRect");
 
-    int left = ((Number) rect.get("left")).intValue();
-    int top = ((Number) rect.get("top")).intValue();
-    int width = ((Number) rect.get("width")).intValue();
-    int height = ((Number) rect.get("height")).intValue();
+        int left = ((Number) rect.get("left")).intValue();
+        int top = ((Number) rect.get("top")).intValue();
+        int width = ((Number) rect.get("width")).intValue();
+        int height = ((Number) rect.get("height")).intValue();
 
-    for (int i = 0; i < maxScrolls; i++) {
-        if (isDisplayed(locator, 2)) {
-            logger.info("Element '{}' found after {} scrolls", locatorKey, i);
-            return true;
+        for (int i = 0; i < maxScrolls; i++) {
+            if (isDisplayed(locator, 2)) {
+                logger.info("Element '{}' found after {} scrolls", locatorKey, i);
+                return true;
+            }
+
+            if (isAndroid()) {
+                Map<String, Object> args = new HashMap<>();
+                args.put("left", left / 2);
+                args.put("top", top / 2);
+                args.put("width", width / 2);
+                args.put("height", height / 2);
+                args.put("direction", "up");
+                args.put("percent", 0.7);
+                driver.executeScript("mobile: swipeGesture", args);
+            } else if (isIOS()) {
+                Map<String, Object> args = new HashMap<>();
+                args.put("direction", "down");
+                driver.executeScript("mobile: scroll", args);
+            }
+
+            logger.debug("Scrolled down (attempt {}) for locator '{}'", i + 1, locatorKey);
         }
 
+        logger.warn("Element '{}' not found after {} scrolls", locatorKey, maxScrolls);
+        return false;
+    }
+/**
+     * Sets clipboard text on the device (Android/iOS).
+     * @param text The text to set in clipboard
+     */
+    public void setClipboardText(String text) {
         if (isAndroid()) {
-            Map<String, Object> args = new HashMap<>();
-            args.put("left", left/2);
-            args.put("top", top/2);
-            args.put("width", width/2);
-            args.put("height", height/2);
-            args.put("direction", "up");
-            args.put("percent", 0.7);
-            driver.executeScript("mobile: swipeGesture", args);
+            // Use Appium Java client API for clipboard
+            try {
+                io.appium.java_client.clipboard.HasClipboard clipboardDriver = (io.appium.java_client.clipboard.HasClipboard) driver;
+                clipboardDriver.setClipboardText(text);
+                logger.info("Set clipboard text on Android: {}", text);
+            } catch (Exception e) {
+                logger.error("Failed to set clipboard text on Android: {}", e.getMessage());
+            }
         } else if (isIOS()) {
             Map<String, Object> args = new HashMap<>();
-            args.put("direction", "down");
-            driver.executeScript("mobile: scroll", args);
+            args.put("content", text);
+            args.put("label", "text clipboard");
+            driver.executeScript("mobile: setPasteboard", args);
+            logger.info("Set clipboard text on iOS: {}", text);
+        } else {
+            logger.warn("Clipboard set not supported for this platform");
         }
-
-        logger.debug("Scrolled down (attempt {}) for locator '{}'", i + 1, locatorKey);
     }
-
-    logger.warn("Element '{}' not found after {} scrolls", locatorKey, maxScrolls);
-    return false;
-}
 
 }

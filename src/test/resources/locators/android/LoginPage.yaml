@@ -130,7 +130,7 @@ AlreadyHaveAccountButtonText:
 
 EmailValidationError:
   strategy: androiduiautomator
-  value: new UiSelector().text("Email must be a valid email.")
+  value: new UiSelector().text("Email is required")
 
 VerificationCodeInput:
   strategy: xpath
@@ -140,3 +140,19 @@ VerificationCodeInput:
 Verify_button:
   strategy: androiduiautomator
   value: new UiSelector().description("Verify")
+
+ForgotPasscodeEmailInputField:
+  strategy: androiduiautomator
+  value: new UiSelector().description("textInputId")
+
+RecoverToYourAccountHeader:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Recover to your account")
+
+VerificationCodeField:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id='verificationCodeInput']
+
+Verification_Password_Field:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id='verificationCodePass']

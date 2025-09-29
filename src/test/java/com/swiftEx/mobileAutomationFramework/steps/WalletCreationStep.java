@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class WalletCreationStep extends BaseStep {
-
     private final WalletScreenPage walletScreenPage = page(WalletScreenPage.class);
 
     private static final Logger logger = LoggerFactory.getLogger(WalletCreationStep.class);
@@ -32,119 +31,120 @@ public class WalletCreationStep extends BaseStep {
     private final MarketScreenPage marketPage = page(MarketScreenPage.class);
     private final SettingsScreenPage settingsScreenPage = page(SettingsScreenPage.class);
 
-        @And("I click on the Settings tab in bottom navigation")
-        public void iClickOnSettingsTab() {
-            logger.info("Clicking on Settings tab in bottom navigation");
-            homePage.clickSettingsTab();
-        }
+    @And("I click on the Settings tab in bottom navigation")
+    public void iClickOnSettingsTab() {
+        logger.info("Clicking on Settings tab in bottom navigation");
+        homePage.clickSettingsTab();
+    }
 
-        @Then("I should see the Settings header")
-        public void iShouldSeeSettingsHeader() {
-            logger.info("Verifying Settings header is displayed");
-            Assert.assertTrue("Settings header is not displayed!", homePage.isSettingsHeaderDisplayed());
-        }
+    @Then("I should see the Settings header")
+    public void iShouldSeeSettingsHeader() {
+        logger.info("Verifying Settings header is displayed");
+        Assert.assertTrue("Settings header is not displayed!", homePage.isSettingsHeaderDisplayed());
+    }
 
-        @And("I should see the Choose Wallet option")
-        public void iShouldSeeChooseWalletOption() {
-            logger.info("Verifying Choose Wallet option is displayed");
-            Assert.assertTrue("Choose Wallet option is not displayed!", homePage.isChooseWalletOptionDisplayed());
-        }
+    @And("I should see the Choose Wallet option")
+    public void iShouldSeeChooseWalletOption() {
+        logger.info("Verifying Choose Wallet option is displayed");
+        Assert.assertTrue("Choose Wallet option is not displayed!", homePage.isChooseWalletOptionDisplayed());
+    }
 
-        @And("I should see the Dark Mode option")
-        public void iShouldSeeDarkModeOption() {
-            logger.info("Verifying Dark Mode option is displayed");
-            Assert.assertTrue("Dark Mode option is not displayed!", homePage.isDarkModeOptionDisplayed());
-        }
+    @And("I should see the Dark Mode option")
+    public void iShouldSeeDarkModeOption() {
+        logger.info("Verifying Dark Mode option is displayed");
+        Assert.assertTrue("Dark Mode option is not displayed!", homePage.isDarkModeOptionDisplayed());
+    }
 
-        @And("I should see the Exchange option")
-        public void iShouldSeeExchangeOption() {
-            logger.info("Verifying Exchange option is displayed");
-            Assert.assertTrue("Exchange option is not displayed!", homePage.isExchangeOptionDisplayed());
-        }
+    @And("I should see the Exchange option")
+    public void iShouldSeeExchangeOption() {
+        logger.info("Verifying Exchange option is displayed");
+        Assert.assertTrue("Exchange option is not displayed!", homePage.isExchangeOptionDisplayed());
+    }
 
-        @And("I should see the Transactions option")
-        public void iShouldSeeTransactionsOption() {
-            logger.info("Verifying Transactions option is displayed");
-            Assert.assertTrue("Transactions option is not displayed!", homePage.isTransactionsOptionDisplayed());
-        }
+    @And("I should see the Transactions option")
+    public void iShouldSeeTransactionsOption() {
+        logger.info("Verifying Transactions option is displayed");
+        Assert.assertTrue("Transactions option is not displayed!", homePage.isTransactionsOptionDisplayed());
+    }
 
-        @And("I should see the Biometric Authentication option")
-        public void iShouldSeeBiometricAuthenticationOption() {
-            logger.info("Verifying Biometric Authentication option is displayed");
-            Assert.assertTrue("Biometric Authentication option is not displayed!", homePage.isBiometricAuthenticationOptionDisplayed());
-        }
+    @And("I should see the Biometric Authentication option")
+    public void iShouldSeeBiometricAuthenticationOption() {
+        logger.info("Verifying Biometric Authentication option is displayed");
+        Assert.assertTrue("Biometric Authentication option is not displayed!",
+                homePage.isBiometricAuthenticationOptionDisplayed());
+    }
 
-        @And("I should see the Preference option")
-        public void iShouldSeePreferenceOption() {
-            logger.info("Verifying Preference option is displayed");
-            Assert.assertTrue("Preference option is not displayed!", homePage.isPreferenceOptionDisplayed());
-        }
+    @And("I should see the Preference option")
+    public void iShouldSeePreferenceOption() {
+        logger.info("Verifying Preference option is displayed");
+        Assert.assertTrue("Preference option is not displayed!", homePage.isPreferenceOptionDisplayed());
+    }
 
-        @And("I should see the Push Notification option")
-        public void iShouldSeePushNotificationOption() {
-            logger.info("Verifying Push Notification option is displayed");
-            Assert.assertTrue("Push Notification option is not displayed!", homePage.isPushNotificationOptionDisplayed());
-        }
+    @And("I should see the Push Notification option")
+    public void iShouldSeePushNotificationOption() {
+        logger.info("Verifying Push Notification option is displayed");
+        Assert.assertTrue("Push Notification option is not displayed!", homePage.isPushNotificationOptionDisplayed());
+    }
 
-        @And("I should see the Help Center option")
-        public void iShouldSeeHelpCenterOption() {
-            logger.info("Verifying Help Center option is displayed");
-            Assert.assertTrue("Help Center option is not displayed!", homePage.isHelpCenterOptionDisplayed());
-        }
+    @And("I should see the Help Center option")
+    public void iShouldSeeHelpCenterOption() {
+        logger.info("Verifying Help Center option is displayed");
+        Assert.assertTrue("Help Center option is not displayed!", homePage.isHelpCenterOptionDisplayed());
+    }
 
-        @And("I should see the Logout option")
-        public void iShouldSeeLogoutOption() {
-            logger.info("Verifying Logout option is displayed");
-            Assert.assertTrue("Logout option is not displayed!", homePage.isLogoutOptionDisplayed());
-        }
+    @And("I should see the Logout option")
+    public void iShouldSeeLogoutOption() {
+        logger.info("Verifying Logout option is displayed");
+        Assert.assertTrue("Logout option is not displayed!", homePage.isLogoutOptionDisplayed());
+    }
 
-        @And("I click on the back button")
-        public void iClickOnBackButton() {
-            logger.info("Clicking on back button");
-            homePage.clickBackButton();
-        }
+    @And("I click on the back button")
+    public void iClickOnBackButton() {
+        logger.info("Clicking on back button");
+        homePage.clickBackButton();
+    }
 
-        @And("I click on the Exchange tab in bottom navigation")
-        public void iClickOnExchangeTab() {
-            logger.info("Clicking on Exchange tab in bottom navigation");
-            homePage.clickExchangeTab();
-        }
+    @And("I click on the Exchange tab in bottom navigation")
+    public void iClickOnExchangeTab() {
+        logger.info("Clicking on Exchange tab in bottom navigation");
+        homePage.clickExchangeTab();
+    }
 
-        @Then("I should see the Trade Wallet header")
-        public void iShouldSeeTradeWalletHeader() {
-            logger.info("Verifying Trade Wallet header is displayed");
-            Assert.assertTrue("Trade Wallet header is not displayed!", homePage.isTradeWalletHeaderDisplayed());
-        }
+    @Then("I should see the Trade Wallet header")
+    public void iShouldSeeTradeWalletHeader() {
+        logger.info("Verifying Trade Wallet header is displayed");
+        Assert.assertTrue("Trade Wallet header is not displayed!", homePage.isTradeWalletHeaderDisplayed());
+    }
 
-        @And("I should see the Home icon")
-        public void iShouldSeeHomeIcon() {
-            logger.info("Verifying Home icon is displayed");
-            Assert.assertTrue("Home icon is not displayed!", homePage.isHomeIconDisplayed());
-        }
+    @And("I should see the Home icon")
+    public void iShouldSeeHomeIcon() {
+        logger.info("Verifying Home icon is displayed");
+        Assert.assertTrue("Home icon is not displayed!", homePage.isHomeIconDisplayed());
+    }
 
-        @And("I should see the Offers icon")
-        public void iShouldSeeOffersIcon() {
-            logger.info("Verifying Offers icon is displayed");
-            Assert.assertTrue("Offers icon is not displayed!", homePage.isOffersIconDisplayed());
-        }
+    @And("I should see the Offers icon")
+    public void iShouldSeeOffersIcon() {
+        logger.info("Verifying Offers icon is displayed");
+        Assert.assertTrue("Offers icon is not displayed!", homePage.isOffersIconDisplayed());
+    }
 
-        @And("I should see the Transactions icon")
-        public void iShouldSeeTransactionsIcon() {
-            logger.info("Verifying Transactions icon is displayed");
-            Assert.assertTrue("Transactions icon is not displayed!", homePage.isTransactionsIconDisplayed());
-        }
+    @And("I should see the Transactions icon")
+    public void iShouldSeeTransactionsIcon() {
+        logger.info("Verifying Transactions icon is displayed");
+        Assert.assertTrue("Transactions icon is not displayed!", homePage.isTransactionsIconDisplayed());
+    }
 
-        @And("I should see the On-Off Ramp icon")
-        public void iShouldSeeOnOffRampIcon() {
-            logger.info("Verifying On/Off Ramp icon is displayed");
-            Assert.assertTrue("On/Off Ramp icon is not displayed!", homePage.isOnOffRampIconDisplayed());
-        }
+    @And("I should see the On-Off Ramp icon")
+    public void iShouldSeeOnOffRampIcon() {
+        logger.info("Verifying On/Off Ramp icon is displayed");
+        Assert.assertTrue("On/Off Ramp icon is not displayed!", homePage.isOnOffRampIconDisplayed());
+    }
 
-        @And("I should see the Profile icon")
-        public void iShouldSeeProfileIcon() {
-            logger.info("Verifying Profile icon is displayed");
-            Assert.assertTrue("Profile icon is not displayed!", homePage.isProfileIconDisplayed());
-        }
+    @And("I should see the Profile icon")
+    public void iShouldSeeProfileIcon() {
+        logger.info("Verifying Profile icon is displayed");
+        Assert.assertTrue("Profile icon is not displayed!", homePage.isProfileIconDisplayed());
+    }
 
     @Then("I should be on Create A new wallet Page")
     public void iShouldBeOnCreateANewWalletPage() {
@@ -447,7 +447,8 @@ public class WalletCreationStep extends BaseStep {
     }
 
     @And("I click on Wallet tab")
-    public void iClickOnWalletTab() {
+    public void iClickOnWalletTab() throws InterruptedException {
+        Thread.sleep(2000);
         logger.info("Clicking on Wallet tab");
         homePage.tapWalletTab();
     }
@@ -478,20 +479,52 @@ public class WalletCreationStep extends BaseStep {
         logger.info("Clicking on Logout option in Settings");
         settingsScreenPage.clickLogoutOption();
     }
-    
+
     @Then("I click on Create Wallet option")
     public void iClickOnCreateWalletOption() {
         logger.info("Clicking on Create Wallet option");
         walletScreenPage.clickCreateWalletOption();
     }
-     @Then("I see \"Continue\" button is disabled on the screen")
-     public void iSeeContinueButtonIsDisabledOnScreen() {
-         logger.info("Verifying Continue button is disabled on the screen");
-         Assert.assertTrue("Continue button should be disabled!", backupYourWalletPage.isContinueButtonDisabled());
-     }
-        @Then("I should be on \"Backup Mnemonic Phrase\" page")
-        public void iShouldBeOnBackupMnemonicPhrasePage() {
-            logger.info("Verifying Backup Mnemonic Phrase page");
-            Assert.assertTrue("Backup Mnemonic Phrase page not displayed", backupYourWalletPage.isBackupMnemonicPhrasePageDisplayed());
-        }
+
+    @Then("I see \"Continue\" button is disabled on the screen")
+    public void iSeeContinueButtonIsDisabledOnScreen() {
+        logger.info("Verifying Continue button is disabled on the screen");
+        Assert.assertTrue("Continue button should be disabled!", backupYourWalletPage.isContinueButtonDisabled());
+    }
+
+    @Then("I should be on \"Backup Mnemonic Phrase\" page")
+    public void iShouldBeOnBackupMnemonicPhrasePage() {
+        logger.info("Verifying Backup Mnemonic Phrase page");
+        Assert.assertTrue("Backup Mnemonic Phrase page not displayed",
+                backupYourWalletPage.isBackupMnemonicPhrasePageDisplayed());
+    }
+
+    @When("I click the Receive button")
+    public void iClickTheReceiveButton() {
+        logger.info("Clicking the Receive button");
+        homePage.clickReceiveButton();
+    }
+
+    @Then("I should be on the Receive screen")
+    public void iShouldBeOnTheReceiveScreen() {
+        logger.info("Verifying Receive screen is displayed");
+        Assert.assertTrue("Not on the Receive screen!", homePage.isOnReceiveScreen());
+    }
+
+    @Then("I should be on homePage")
+    public void iShouldBeOnTheHomePage() {
+        logger.info("Verifying Home page is displayed");
+        Assert.assertTrue("Not on the Home page!", homePage.isOnHomePage());
+    }
+
+    @Then("I click on Home Tab")
+    public void iClickOnHomeTab() {
+        logger.info("Clicking on Home Tab");
+        homePage.tapHomeTab();
+    }
+@Then("I click Back button of trade Wallet Page")
+    public void iClickBackButtonOfTradeWalletPage() {
+        logger.info("Clicking Back button of Trade Wallet Page");
+        homePage.clickTradeWalletBackButton();
+    }
 }

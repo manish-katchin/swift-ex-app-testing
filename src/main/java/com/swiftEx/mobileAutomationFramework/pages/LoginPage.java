@@ -3,6 +3,7 @@ package com.swiftEx.mobileAutomationFramework.pages;
 import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.en.Then;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,10 +20,12 @@ public class LoginPage extends BasePage {
 
    
     // Profile icon
-    public void clickProfileIcon() {
-        tap("ProfileTab");
-        logger.info("Tapped Profile icon");
-    }
+  public void clickProfileIcon() {
+    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+    WebElement profileTab = wait.until(ExpectedConditions.elementToBeClickable(getBy("ProfileTab")));
+    profileTab.click();
+    logger.info("Tapped Profile icon");
+}
 
     // Profile header
     public boolean isProfileHeaderDisplayed() {
@@ -34,7 +37,7 @@ public class LoginPage extends BasePage {
     // Guest user header
   public boolean isGuestUserHeaderDisplayed() {
     try {
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(25));
         WebElement guestUserLabel = wait.until(
             ExpectedConditions.visibilityOfElementLocated(getBy("GuestUserLabel"))
         );
@@ -83,11 +86,18 @@ public class LoginPage extends BasePage {
     }
 
     // Password input field
-    public boolean isPasswordInputFieldDisplayed() {
-        boolean displayed = isDisplayed("PasswordInputField");
+   public boolean isPasswordInputFieldDisplayed() {
+    try {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("PasswordInputField")));
+        boolean displayed = passwordField.isDisplayed();
         logger.info("Password input field displayed: {}", displayed);
         return displayed;
+    } catch (Exception e) {
+        logger.error("Password input field not visible: {}", e.getMessage());
+        return false;
     }
+}
 
     public void enterPassword(String password) {
         sendKeys("PasswordInputField", password);
@@ -242,9 +252,48 @@ public class LoginPage extends BasePage {
     sendKeys("VerificationCodeInput", code);
     logger.info("Entered verification code: {}", code);
     }
-    public void clickVerifyButtonOnVerifyPage() {
-    tap("Verify_button"); 
+
+   public void clickVerifyButtonOnVerifyPage() {
+    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+    WebElement verifyButton = wait.until(ExpectedConditions.elementToBeClickable(getBy("Verify_button")));
+    verifyButton.click();
     logger.info("Clicked on Verify Button on Verify Page");
+}
+public void enterNewPasswordOnVerificationPage(String password) {
+    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+    WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("Verification_Password_Field")));
+    emailField.clear();
+    emailField.sendKeys(password);
+    logger.info("Entered email in Forgot Password field: {}", password);
+}
+
+public void enterVerificationCodeOnVerificationPage(String code) {
+    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+    WebElement codeField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//android.widget.EditText[@resource-id='verificationCodeInput']")));
+    codeField.clear();
+    codeField.sendKeys(code);
+    logger.info("Entered verification code on verification page: {}", code);
+}
+public void clickForgotPasswordOption() {
+    WebElement forgotPasswordOption = driver.findElement(getBy("ForgotPasswordOption"));
+    forgotPasswordOption.click();
+    logger.info("Clicked on Forgot Password? option");
+}
+
+public boolean isRecoverToYourAccountHeaderVisible() throws InterruptedException {
+    Thread.sleep(5000); // Wait for 5 seconds to ensure the header is loaded
+    WebElement header = driver.findElement(getBy("RecoverToYourAccountHeader"));
+    boolean displayed = header.isDisplayed();
+    logger.info("Recover to your account header displayed: {}", displayed);
+    return displayed;
+}
+
+public void enterEmailonForgotPasscodePage(String email) {
+    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+    WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("ForgotPasscodeEmailInputField")));
+    emailField.clear();
+    emailField.sendKeys(email);
+    logger.info("Entered email in Forgot Password field: {}", email);
 }
 }
 

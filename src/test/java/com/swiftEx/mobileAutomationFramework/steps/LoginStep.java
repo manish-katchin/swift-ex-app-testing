@@ -15,7 +15,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class LoginStep extends BaseStep {
-   
+
     private static final Logger logger = LoggerFactory.getLogger(LoginStep.class);
     private final LoginPage loginPage = page(LoginPage.class);
 
@@ -163,12 +163,12 @@ public class LoginStep extends BaseStep {
         loginPage.enterLastName(lastName);
     }
 
-   @And("I enter a random email into the Email input field on registration page")
-public void iEnterRandomEmailIntoEmailInputFieldOnRegistrationPage() {
-    String randomEmail = "user" + System.currentTimeMillis() + "@example.com";
-    loginPage.enterEmailOnRegister(randomEmail);
-    logger.info("Entered random email: {}", randomEmail);
-}
+    @And("I enter a random email into the Email input field on registration page")
+    public void iEnterRandomEmailIntoEmailInputFieldOnRegistrationPage() {
+        String randomEmail = "user" + System.currentTimeMillis() + "@example.com";
+        loginPage.enterEmailOnRegister(randomEmail);
+        logger.info("Entered random email: {}", randomEmail);
+    }
 
     @And("I enter {string} into the Password input field on registration page")
     public void iEnterPasswordOnRegister(String password) {
@@ -184,19 +184,45 @@ public void iEnterRandomEmailIntoEmailInputFieldOnRegistrationPage() {
     public void iClickCreateMyAccountButton() {
         loginPage.clickCreateAccountButton();
     }
+
     @Then("I should see error \"Email must be a valid Email\" on registration page")
     public void iShouldSeeErrorEmailMustBeAValidEmailOnRegistrationPage() {
         String expectedError = "Email must be a valid Email";
         Assert.assertTrue("Expected error message not displayed: " + expectedError,
                 loginPage.isEmailValidationErrorDisplayed());
     }
+
     @And("I enter the verification code {string} on verification page")
     public void iEnterTheVerificationCodeOnVerificationPage(String code) {
         loginPage.enterVerificationCode(code);
     }
-@Then("I click on Verify Button on Verify Page")
-public void iClickOnVerifyButtonOnVerifyPage() {
-    loginPage.clickVerifyButtonOnVerifyPage();
+
+    @Then("I click on Verify Button on Verify Page")
+    public void iClickOnVerifyButtonOnVerifyPage() {
+        loginPage.clickVerifyButtonOnVerifyPage();
+    }
+    
+@When("I click on Forgot Password? option")
+public void iClickOnForgotPasswordOption() {
+    loginPage.clickForgotPasswordOption();
 }
 
+@Then("I should see {string} header on Forgot Password page")
+public void iShouldSeeHeaderOnForgotPasswordPage(String expectedHeader) throws InterruptedException {
+    Assert.assertTrue("Recover to your account header not visible!", loginPage.isRecoverToYourAccountHeaderVisible());
+}
+    @When("I enter a new Password {string} into the New Password input field on Verification Page")
+    public void iEnterNewPasswordIntoNewPasswordInputFieldOnVerificationPage(String password) {
+        loginPage.enterNewPasswordOnVerificationPage(password);
+    }
+
+    @And("I enter the verification code {string} on verification step")
+    public void iEnterVerificationCodeOnVerificationPage(String code) {
+        loginPage.enterVerificationCodeOnVerificationPage(code);
+    }
+
+    @And("I enter {string} into the Email input field on Forgot Password page")
+    public void iEnterEmailIntoEmailInputFieldOnForgotPasswordPage(String email) {
+    loginPage.enterEmailonForgotPasscodePage(email);
+}
 }

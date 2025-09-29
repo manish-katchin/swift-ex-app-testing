@@ -119,6 +119,10 @@ public class ImportWalletPage extends BasePage {
         logger.info("Clicked Mnemonic button");
     }
 
+    public void clickJsonKeyButton() {
+        tapElement("json_key_button");
+        logger.info("Clicked JSON Key button");
+    }
     public void clickAnyWalletCard() {
         driver.findElement(By.xpath(
                 "(//android.widget.TextView[@text=\"All Wallets\"]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true'])[position()=1]"))
@@ -212,6 +216,23 @@ public boolean isJsonKeyOptionDisplayed() {
     public boolean isPasteButtonOnPhraseInputDisplayed() {
         return isDisplayed("paste_button");
     }
+
+        /**
+         * Copies the given phrase to clipboard and pastes it into the input field with label "Phrase" using the paste button.
+         * @param phrase The phrase to copy and paste
+         */
+        public void copyPhraseInPhraseInputField(String phrase) {
+            // Set clipboard content
+        setClipboardText(phrase);
+        logger.info("Copied phrase '{}' to clipboard", phrase);
+            // Click the paste button if present
+            if (isPasteButtonOnPhraseInputDisplayed()) {
+                tap("paste_button");
+                logger.info("Clicked Paste button on Phrase input field");
+            } else {
+                logger.warn("Paste button not displayed on Phrase input field");
+            }
+        }
 
     public void clickImportWalletBackButton() {
         tap("imp_wallet_back_btn");

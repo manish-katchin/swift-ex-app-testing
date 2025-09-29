@@ -245,7 +245,7 @@ public class CheckMnemonicPage extends BasePage {
         public boolean areMnemonicPhrasesVisible() {
             try {
                 WebElement mnemonicPhrase = driver.findElement(By.xpath(
-                        "//android.view.ViewGroup[contains(@content-desc, ', ')]/android.widget.TextView[position()=2]"));
+                        "//android.widget.ScrollView//android.view.ViewGroup[starts-with(@content-desc, 'word_')]/android.widget.TextView[2]"));
                 boolean displayed = mnemonicPhrase.isDisplayed();
                 logger.info("Mnemonic phrase element displayed: {}", displayed);
                 return displayed;

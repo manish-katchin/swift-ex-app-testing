@@ -1,20 +1,18 @@
 package com.swiftEx.mobileAutomationFramework.steps;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import io.cucumber.messages.types.Duration;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.swiftEx.mobileAutomationFramework.pages.PinCreationPage;
-
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.swiftEx.mobileAutomationFramework.pages.PinCreationPage;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 public class PinCreationStep extends BaseStep {
     private static final Logger logger = LoggerFactory.getLogger(PinCreationStep.class);
@@ -55,7 +53,7 @@ public class PinCreationStep extends BaseStep {
         logger.info("Using XPath: {}", dynamicXPath);
 
         // Wait for element to be present (with timeout) 
-      WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(30));
+      WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(60));
 
         // Wait until the button is visible
         WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dynamicXPath)));

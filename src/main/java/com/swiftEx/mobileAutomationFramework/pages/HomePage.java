@@ -1,6 +1,10 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -427,7 +431,9 @@ public class HomePage extends BasePage {
     }
     // Click Exchange tab in bottom navigation
 public void clickExchangeTab() {
-    tap("exchange_tab");
+    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+    WebElement exchangeTab = wait.until(ExpectedConditions.elementToBeClickable(getBy("exchange_tab")));
+    exchangeTab.click();
     logger.info("Clicked Exchange tab in bottom navigation");
 }
 
@@ -470,6 +476,40 @@ return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Profile"), 20);
             tap("back_button");
             logger.info("Clicked back button");
         }
+  // Click the Receive button
+    public void clickReceiveButton() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebElement receiveBtn = wait.until(ExpectedConditions.elementToBeClickable(getBy("receive_button")));
+        receiveBtn.click();
+        logger.info("Clicked Receive button");
+    }
 
+    // Verify Receive screen is displayed (can be customized with a header or unique element)
+    public boolean isOnReceiveScreen() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+            WebElement receiveBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("receive_button")));
+            boolean displayed = receiveBtn.isDisplayed();
+            logger.info("Receive screen displayed: {}", displayed);
+            return displayed;
+        } catch (Exception e) {
+            logger.error("Receive screen not displayed: {}", e.getMessage());
+            return false;
+        }
+    }
 
+    // Click the Home tab
+    public void tapHomeTab() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebElement homeTab = wait.until(ExpectedConditions.elementToBeClickable(getBy("home_tab")));
+        homeTab.click();
+        logger.info("Clicked Home tab");
+    }
+       // Click Back button of Trade Wallet Page
+    public void clickTradeWalletBackButton() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebElement backBtn = wait.until(ExpectedConditions.elementToBeClickable(getBy("TradeWallet_back_button")));
+        backBtn.click();
+        logger.info("Clicked Back button of Trade Wallet Page");
+    }
 }

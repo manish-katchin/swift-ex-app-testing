@@ -142,7 +142,10 @@ logout_option:
   strategy: xpath
   value: //android.view.ViewGroup[contains(@content-desc="Log Out")]
 
-  back_button:
+back_button:
   strategy: androiduiautomator
   value: new UiSelector().description("Navigate up")
 
+TradeWallet_back_button:
+  strategy: accessibility
+  value: trade_wallet_back

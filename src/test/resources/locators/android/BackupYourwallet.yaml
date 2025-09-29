@@ -20,8 +20,8 @@ backup_mnemonic_phrase:
  value: new UiSelector().text("Backup Mnemonic Phrase")
 
 backup_screen_back_button:
-  strategy: xpath
-  value: //android.widget.ImageView[@content-desc='Back']
+  strategy: accessibility
+  value: backup_wallet_back_btn
 
 
 mnemonic_instruction_1:

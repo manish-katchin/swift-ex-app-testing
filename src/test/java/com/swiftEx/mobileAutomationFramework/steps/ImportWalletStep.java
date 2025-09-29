@@ -156,6 +156,11 @@ public class ImportWalletStep extends BaseStep {
         importWalletPage.clickMnemonicButton();
     }
 
+@When("I click on \"JSON Key\" button after import wallet Screen")
+    public void iClickOnJsonKeyButton() {
+        logger.info("Clicking on 'JSON Key' button");
+        importWalletPage.clickJsonKeyButton();
+    }
     @Then("I should see \"All Wallets\" header on the screen")
     public void iShouldSeeAllWalletsHeader() {
         logger.info("Verifying 'All Wallets' header is displayed");
@@ -235,6 +240,12 @@ public void iShouldSeePasteButtonOnPhraseInputField() {
             "Paste button on the Phrase input field should be displayed!",
             importWalletPage.isPasteButtonOnPhraseInputDisplayed());
 }
+
+    @When("I copy phrase {string} in the input field with label Phrase using Paste button")
+    public void iCopyPhraseUsingPasteButton(String phrase) {
+        logger.info("Copying phrase '{}' into Phrase input field using Paste button", phrase);
+        importWalletPage.copyPhraseInPhraseInputField(phrase);
+    }
     @When("I click on back button on Import Wallet screen")
     public void iClickOnBackButtonOnImportWalletScreen() {
         importWalletPage.clickImportWalletBackButton();
