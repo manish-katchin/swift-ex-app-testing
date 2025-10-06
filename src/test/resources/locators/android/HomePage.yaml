@@ -24,15 +24,6 @@ buy_button:
   strategy: androiduiautomator
   value: new UiSelector().text("Buy")
 
-# Asset Tab Section
-assets_tab:
-  strategy: androiduiautomator
-  value: new UiSelector().text("Assets")
-
-add_assets_tab:
-  strategy: androiduiautomator
-  value: new UiSelector().text("Add Assets")
-
 # Navigation Bar
 home_tab:
   strategy: androiduiautomator
@@ -53,19 +44,6 @@ exchange_tab:
 settings_tab:
   strategy: androiduiautomator
   value: new UiSelector().text("Settings")
-
-# Asset List
-bitcoin_asset:
-  strategy: androiduiautomator
-  value: new UiSelector().text("Bitcoin")
-
-usdc_asset:
-  strategy: androiduiautomator
-  value: new UiSelector().text("USDC")
-
-usdt_asset:
-  strategy: androiduiautomator
-  value: new UiSelector().text("USDT")
 
 # Asset Action Buttons (context-dependent)
 trade_button:
@@ -149,3 +127,105 @@ back_button:
 TradeWallet_back_button:
   strategy: accessibility
   value: trade_wallet_back
+
+# Locator for homepage
+
+ethereum:
+  strategy: xpath
+  value: //android.view.ViewGroup[contains(@content-desc,'Ethereum')]
+
+xlm:
+  strategy: xpath
+  value: //android.view.ViewGroup[contains(@content-desc,'XLM')]
+
+binance:
+  strategy: xpath
+  value: //android.view.ViewGroup[contains(@content-desc,'Binance')]
+
+bitcoin:
+  strategy: xpath
+  value: //android.view.ViewGroup[contains(@content-desc,'Bitcoin')]
+
+
+xlm_trade_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'XLM')]/parent::*//android.widget.TextView[@text='Trade']
+
+xlm_buy_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'XLM')]/parent::*//android.widget.TextView[@text='Buy']
+
+binance_trade_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Binance')]/parent::*//android.widget.TextView[@text='Trade']
+
+binance_buy_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Binance')]/parent::*//android.widget.TextView[@text='Buy']
+
+bitcoin_arrivingsoon_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Bitcoin')]/parent::android.view.ViewGroup//*[@text='Arriving soon']
+
+ethereum_trade_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Ethereum')]/parent::*//android.widget.TextView[@text='Trade']
+
+ethereum_buy_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Ethereum')]/parent::*//android.widget.TextView[@text='Buy']
+
+# Asset Tab Section
+assets_tab:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Assets")
+
+add_assets_tab:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Add Assets")
+
+# Asset List
+bitcoin_asset:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Bitcoin")
+
+usdc_asset:
+  strategy: androiduiautomator
+  value: new UiSelector().text("USDC")
+
+usdt_asset:
+  strategy: androiduiautomator
+  value: new UiSelector().text("USDT")
+
+# Buy Page header
+buy_page_header:
+  strategy: xpath
+  value: //*[@text="Deposit/Withdrawal"]
+
+eyeball_icon:
+  strategy: xpath
+  value: //android.view.ViewGroup[@resource-id='eye ball icon']
+
+wallet_balance_hidden:  
+  strategy: xpath
+  value: //android.widget.TextView[@text="$ X.XX "]
+
+wallet_balance_visible:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text, "$ 0")]
+
+dropdown_icon:
+  strategy: xpath
+  value: //android.view.ViewGroup[@resource-id="drop down"]
+
+choose_wallet_header:
+  strategy: xpath
+  value: //android.widget.TextView[@text="Choose wallet"] 
+
+Add_Wallet_button:
+  strategy: xpath
+  value: //*[@content-desc="Add Wallet"]
+
+all_wallets_in_dropdown:
+  strategy: xpath
+  value: //android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[android.widget.TextView]

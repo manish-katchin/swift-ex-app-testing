@@ -313,6 +313,7 @@ Feature: Import Wallet
   #   And I should see "Import" button is enabled on multiwallet Page
 
 
+
 @VerifyBinanceWalletPageElements
   Scenario: Verify Elements on Binance Smart Chain Wallet Screen
   Given the app is launched

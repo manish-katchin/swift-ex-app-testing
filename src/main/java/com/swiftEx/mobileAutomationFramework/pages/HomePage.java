@@ -1,6 +1,6 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
-import io.appium.java_client.AppiumDriver;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 
+import io.appium.java_client.AppiumDriver;
+
 public class HomePage extends BasePage {
     private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
@@ -18,74 +20,73 @@ public class HomePage extends BasePage {
         logger.info("✅ HomePage ready for platform: {}", getPlatform().toUpperCase());
     }
 
-        // Action to click on Settings tab
-        public void clickSettingsTab() {
-            tap("settings_tab");
-            logger.info("Clicked Settings tab in bottom navigation");
-        }
+    // Action to click on Settings tab
+    public void clickSettingsTab() {
+        tap("settings_tab");
+        logger.info("Clicked Settings tab in bottom navigation");
+    }
 
-        // Verifications for Settings page elements
-        public boolean isSettingsHeaderDisplayed() {
-            boolean displayed = isDisplayed("settings_header");
-            logger.info("Settings header visibility: {}", displayed);
-            return displayed;
-        }
+    // Verifications for Settings page elements
+    public boolean isSettingsHeaderDisplayed() {
+        boolean displayed = isDisplayed("settings_header");
+        logger.info("Settings header visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isChooseWalletOptionDisplayed() {
-            boolean displayed = isDisplayed("choose_wallet_option");
-            logger.info("Choose Wallet option visibility: {}", displayed);
-            return displayed;
-        }
+    public boolean isChooseWalletOptionDisplayed() {
+        boolean displayed = isDisplayed("choose_wallet_option");
+        logger.info("Choose Wallet option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isDarkModeOptionDisplayed() {
-            boolean displayed = isDisplayed("dark_mode_option");
-            logger.info("Dark Mode option visibility: {}", displayed);
-            return displayed;
-        }
+    public boolean isDarkModeOptionDisplayed() {
+        boolean displayed = isDisplayed("dark_mode_option");
+        logger.info("Dark Mode option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isExchangeOptionDisplayed() {
-            boolean displayed = isDisplayed("exchange_option");
-            logger.info("Exchange option visibility: {}", displayed);
-            return displayed;
-        }
+    public boolean isExchangeOptionDisplayed() {
+        boolean displayed = isDisplayed("exchange_option");
+        logger.info("Exchange option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isTransactionsOptionDisplayed() {
-            boolean displayed = isDisplayed("transactions_option");
-            logger.info("Transactions option visibility: {}", displayed);
-            return displayed;
-        }
+    public boolean isTransactionsOptionDisplayed() {
+        boolean displayed = isDisplayed("transactions_option");
+        logger.info("Transactions option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isBiometricAuthenticationOptionDisplayed() {
-            boolean displayed = isDisplayed("biometric_authentication_option");
-            logger.info("Biometric Authentication option visibility: {}", displayed);
-            return displayed;
-        }
+    public boolean isBiometricAuthenticationOptionDisplayed() {
+        boolean displayed = isDisplayed("biometric_authentication_option");
+        logger.info("Biometric Authentication option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isPreferenceOptionDisplayed() {
-            boolean displayed = isDisplayed("preference_option");
-            logger.info("Preference option visibility: {}", displayed);
-            return displayed;
-        }
+    public boolean isPreferenceOptionDisplayed() {
+        boolean displayed = isDisplayed("preference_option");
+        logger.info("Preference option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isPushNotificationOptionDisplayed() {
-            boolean displayed = isDisplayed("push_notification_option");
-            logger.info("Push Notification option visibility: {}", displayed);
-            return displayed;
-        }
+    public boolean isPushNotificationOptionDisplayed() {
+        boolean displayed = isDisplayed("push_notification_option");
+        logger.info("Push Notification option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isHelpCenterOptionDisplayed() {
-            boolean scroll = scrollDownUntilVisible("help_center_option", 0);
-            boolean displayed = isDisplayed("help_center_option");
+    public boolean isHelpCenterOptionDisplayed() {
+        boolean scroll = scrollDownUntilVisible("help_center_option", 0);
+        boolean displayed = isDisplayed("help_center_option");
 
-            logger.info("Help Center option visibility: {}", displayed);
-            return displayed;
-        }
+        logger.info("Help Center option visibility: {}", displayed);
+        return displayed;
+    }
 
-        public boolean isLogoutOptionDisplayed() {
-            return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Log Out"), 20);      
-          }
+    public boolean isLogoutOptionDisplayed() {
+        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Log Out"), 20);
+    }
 
-     
     // Balance Section
     public String getBalanceAmount() {
         String balance = getText("balance_amount");
@@ -429,54 +430,57 @@ public class HomePage extends BasePage {
             return false;
         }
     }
+
     // Click Exchange tab in bottom navigation
-public void clickExchangeTab() {
-    WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
-    WebElement exchangeTab = wait.until(ExpectedConditions.elementToBeClickable(getBy("exchange_tab")));
-    exchangeTab.click();
-    logger.info("Clicked Exchange tab in bottom navigation");
-}
+    public void clickExchangeTab() {
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebElement exchangeTab = wait.until(ExpectedConditions.elementToBeClickable(getBy("exchange_tab")));
+        exchangeTab.click();
+        logger.info("Clicked Exchange tab in bottom navigation");
+    }
 
-// Verifications for Exchange page elements
-public boolean isTradeWalletHeaderDisplayed() {
-    boolean displayed = isDisplayed(getBy("trade_wallet_header"),30);
-    logger.info("Trade Wallet header visibility: {}", displayed);
-    return displayed;
-}
+    // Verifications for Exchange page elements
+    public boolean isTradeWalletHeaderDisplayed() {
+        boolean displayed = isDisplayed(getBy("trade_wallet_header"), 30);
+        logger.info("Trade Wallet header visibility: {}", displayed);
+        return displayed;
+    }
 
-public boolean isHomeIconDisplayed() {
-    boolean displayed = isDisplayed("home_icon");
-    logger.info("Home icon visibility: {}", displayed);
-    return displayed;
-}
+    public boolean isHomeIconDisplayed() {
+        boolean displayed = isDisplayed("home_icon");
+        logger.info("Home icon visibility: {}", displayed);
+        return displayed;
+    }
 
-public boolean isOffersIconDisplayed() {
-    boolean displayed = isDisplayed("offers_icon");
-    logger.info("Offers icon visibility: {}", displayed);
-    return displayed;
-}
+    public boolean isOffersIconDisplayed() {
+        boolean displayed = isDisplayed("offers_icon");
+        logger.info("Offers icon visibility: {}", displayed);
+        return displayed;
+    }
 
-public boolean isTransactionsIconDisplayed() {
-    boolean displayed = isDisplayed("transactions_icon");
-    logger.info("Transactions icon visibility: {}", displayed);
-    return displayed;
-}
+    public boolean isTransactionsIconDisplayed() {
+        boolean displayed = isDisplayed("transactions_icon");
+        logger.info("Transactions icon visibility: {}", displayed);
+        return displayed;
+    }
 
-public boolean isOnOffRampIconDisplayed() {
-    boolean displayed = isDisplayed("on_off_ramp_icon");
-    logger.info("On/Off Ramp icon visibility: {}", displayed);
-    return displayed;
-}
+    public boolean isOnOffRampIconDisplayed() {
+        boolean displayed = isDisplayed("on_off_ramp_icon");
+        logger.info("On/Off Ramp icon visibility: {}", displayed);
+        return displayed;
+    }
 
-public boolean isProfileIconDisplayed() {
-return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Profile"), 20);
-}
-   // Action to click on back button
-        public void clickBackButton() {
-            tap("back_button");
-            logger.info("Clicked back button");
-        }
-  // Click the Receive button
+    public boolean isProfileIconDisplayed() {
+        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Profile"), 20);
+    }
+
+    // Action to click on back button
+    public void clickBackButton() {
+        tap("back_button");
+        logger.info("Clicked back button");
+    }
+
+    // Click the Receive button
     public void clickReceiveButton() {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
         WebElement receiveBtn = wait.until(ExpectedConditions.elementToBeClickable(getBy("receive_button")));
@@ -505,11 +509,168 @@ return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Profile"), 20);
         homeTab.click();
         logger.info("Clicked Home tab");
     }
-       // Click Back button of Trade Wallet Page
+
+    // Click Back button of Trade Wallet Page
     public void clickTradeWalletBackButton() {
         WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
         WebElement backBtn = wait.until(ExpectedConditions.elementToBeClickable(getBy("TradeWallet_back_button")));
         backBtn.click();
         logger.info("Clicked Back button of Trade Wallet Page");
     }
+
+    public void tapBuyButton() {
+        tap("buy_button");
+    }
+
+    // isBuyHeaderDisplayed
+    public boolean isBuyHeaderDisplayed() {
+        boolean displayed = isDisplayed(getBy("buy_button"), 30);
+        logger.info("Buy header visibility: {}", displayed);
+        return displayed;
+    }
+
+    // Verifications for asset options on HomePage
+    public boolean isEthereumOptionDisplayed() {
+        boolean displayed = isDisplayed("ethereum");
+        logger.info("Ethereum option visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isXLMOptionDisplayed() {
+        boolean displayed = isDisplayed("xlm");
+        logger.info("XLM option visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isBinanceOptionDisplayed() {
+        boolean displayed = isDisplayed("binance");
+        logger.info("Binance option visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isBitcoinOptionDisplayed() {
+        boolean displayed = isDisplayed("bitcoin");
+        logger.info("Bitcoin option visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isEthereumTradeButtonDisplayed() {
+        boolean displayed = isDisplayed("ethereum_trade_button");
+        logger.info("Ethereum Trade button visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isEthereumBuyButtonDisplayed() {
+        boolean displayed = isDisplayed("ethereum_buy_button");
+        logger.info("Ethereum Buy button visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isXLMTradeButtonDisplayed() {
+        boolean displayed = isDisplayed("xlm_trade_button");
+        logger.info("XLM Trade button visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isXLMBuyButtonDisplayed() {
+        boolean displayed = isDisplayed("xlm_buy_button");
+        logger.info("XLM Buy button visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isBinanceTradeButtonDisplayed() {
+        boolean displayed = isDisplayed("binance_trade_button");
+        logger.info("Binance Trade button visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isBinanceBuyButtonDisplayed() {
+        boolean displayed = isDisplayed("binance_buy_button");
+        logger.info("Binance Buy button visibility: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isBitcoinArrivingSoonButtonDisplayed() {
+        boolean displayed = isDisplayed("bitcoin_arrivingsoon_button");
+        logger.info("Bitcoin Arriving soon button visibility: {}", displayed);
+        return displayed;
+    }
+
+    public void clickOnAddAssetsTab() {
+        tap("add_assets_tab");
+        logger.info("Clicked on Add Assets tab");
+    }
+
+    public boolean isUSDCOptionDisplayed() {
+        boolean displayed = isDisplayed("usdc_asset");
+        logger.info("USDC option visibility: {}", displayed);
+        return displayed;
+    }
+
+    public void clickOnAssetsTab() {
+        tap("assets_tab");
+        logger.info("Clicked on Assets tab");
+    }
+
+    public void tapOnEthereumBuyButton() {
+        tap("ethereum_buy_button");
+        logger.info("Tapped on Buy button for Ethereum");
+    }
+
+    public boolean isDepositWithdrawalHeaderDisplayed() {
+        boolean displayed = isDisplayed("buy_page_header");
+        logger.info("Deposit/Withdrawal header visibility: {}", displayed);
+        return displayed;
+    }
+
+    public void tapEyeballIcon() {
+        tap("eyeball_icon");
+        logger.info("Tapped on eyeball icon");
+    }
+
+    public boolean isWalletBalanceHidden() {
+        boolean hidden = isDisplayed("wallet_balance_hidden");
+        logger.info("Wallet balance hidden: {}", hidden);
+        return hidden;
+    }
+
+    public boolean isWalletBalanceVisible() {
+        boolean visible = isDisplayed("wallet_balance_visible");
+        logger.info("Wallet balance visible: {}", visible);
+        return visible;
+    }
+
+    public void tapDropdownIcon() {
+        tap("dropdown_icon");
+        logger.info("Tapped on dropdown icon next to wallet name");
+    }
+
+    public boolean isChooseWalletHeaderDisplayed() {
+        boolean displayed = isDisplayed("choose_wallet_header");
+        logger.info("Choose wallet header displayed: {}", displayed);
+        return displayed;
+    }
+
+    public boolean isAddWalletOptionDisplayed() {
+        boolean displayed = isDisplayed("Add_Wallet_button");
+        logger.info("Add Wallet option displayed in dropdown: {}", displayed);
+        return displayed;
+    }
+
+    public boolean areAllWalletsPresentInDropdown() {
+        boolean displayed = isDisplayed("all_wallets_in_dropdown");
+        logger.info("All wallets option displayed in dropdown: {}", displayed);
+        return displayed;
+    }
+
+    public void tapAddWalletOption() {
+        tap("Add_Wallet_button");
+        logger.info("Tapped on Add Wallet option");
+    }
+        // Clicks the Swap button specifically on the Swap page
+    public void clickRandomCoordinate() throws InterruptedException {
+        tapOnCoordinates(driver, 200, 500);
+        logger.info("Clicked random coordinate on Swap page via coordinates");
+    }
+
 }

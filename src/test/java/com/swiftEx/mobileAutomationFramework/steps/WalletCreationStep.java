@@ -522,9 +522,174 @@ public class WalletCreationStep extends BaseStep {
         logger.info("Clicking on Home Tab");
         homePage.tapHomeTab();
     }
-@Then("I click Back button of trade Wallet Page")
+
+    @Then("I click Back button of trade Wallet Page")
     public void iClickBackButtonOfTradeWalletPage() {
         logger.info("Clicking Back button of Trade Wallet Page");
         homePage.clickTradeWalletBackButton();
     }
+
+    @And("I click on the Buy button")
+    public void iClickOnBuyButton() {
+        logger.info("Clicking Buy button");
+        homePage.tapBuyButton();
+    }
+
+    @Then("I should see the Buy header and buy button on the screen")
+    public void iShouldSeeBuyHeader() {
+        logger.info("Verifying Buy header is displayed");
+        Assert.assertTrue("Buy header is not displayed!",
+                homePage.isBuyHeaderDisplayed());
+    }
+
+    @Then("I should see Ethereum option on homePage")
+    public void iShouldSeeEthereumOptionOnHomePage() {
+        logger.info("Verifying Ethereum option is displayed on HomePage");
+        Assert.assertTrue("Ethereum option is not displayed!", homePage.isEthereumOptionDisplayed());
+    }
+
+    @And("I should see XLM option on homePage")
+    public void iShouldSeeXLMOptionOnHomePage() {
+        logger.info("Verifying XLM option is displayed on HomePage");
+        Assert.assertTrue("XLM option is not displayed!", homePage.isXLMOptionDisplayed());
+    }
+
+    @And("I should see Binance option on homePage")
+    public void iShouldSeeBinanceOptionOnHomePage() {
+        logger.info("Verifying Binance option is displayed on HomePage");
+        Assert.assertTrue("Binance option is not displayed!", homePage.isBinanceOptionDisplayed());
+    }
+
+    @And("I should see Bitcoin option on homePage")
+    public void iShouldSeeBitcoinOptionOnHomePage() {
+        logger.info("Verifying Bitcoin option is displayed on HomePage");
+        Assert.assertTrue("Bitcoin option is not displayed!", homePage.isBitcoinOptionDisplayed());
+    }
+
+    @And("I should see Trade button for ethereum")
+    public void iShouldSeeTradeButtonForEthereum() {
+        logger.info("Verifying Trade button for Ethereum is displayed");
+        Assert.assertTrue("Trade button for Ethereum is not displayed!", homePage.isEthereumTradeButtonDisplayed());
+    }
+
+    @And("I should see buy button for ethereum")
+    public void iShouldSeeBuyButtonForEthereum() {
+        logger.info("Verifying Buy button for Ethereum is displayed");
+        Assert.assertTrue("Buy button for Ethereum is not displayed!", homePage.isEthereumBuyButtonDisplayed());
+    }
+
+    @And("I should see Trade button for xlm")
+    public void iShouldSeeTradeButtonForXLM() {
+        logger.info("Verifying Trade button for XLM is displayed");
+        Assert.assertTrue("Trade button for XLM is not displayed!", homePage.isXLMTradeButtonDisplayed());
+    }
+
+    @And("I should see buy button for xlm")
+    public void iShouldSeeBuyButtonForXLM() {
+        logger.info("Verifying Buy button for XLM is displayed");
+        Assert.assertTrue("Buy button for XLM is not displayed!", homePage.isXLMBuyButtonDisplayed());
+    }
+
+    @And("I should see Trade button for binance")
+    public void iShouldSeeTradeButtonForBinance() {
+        logger.info("Verifying Trade button for Binance is displayed");
+        Assert.assertTrue("Trade button for Binance is not displayed!", homePage.isBinanceTradeButtonDisplayed());
+    }
+
+    @And("I should see buy button for binance")
+    public void iShouldSeeBuyButtonForBinance() {
+        logger.info("Verifying Buy button for Binance is displayed");
+        Assert.assertTrue("Buy button for Binance is not displayed!", homePage.isBinanceBuyButtonDisplayed());
+    }
+
+    @And("I should see Arriving soon button for bitcoin")
+    public void iShouldSeeArrivingSoonButtonForBitcoin() {
+        logger.info("Verifying Arriving soon button for Bitcoin is displayed");
+        Assert.assertTrue("Arriving soon button for Bitcoin is not displayed!",
+                homePage.isBitcoinArrivingSoonButtonDisplayed());
+    }
+
+    @When("I click on the Add Assets tab")
+    public void iClickOnAddAssetsTab() {
+        logger.info("Clicking on Add Assets tab");
+        homePage.clickOnAddAssetsTab();
+    }
+
+    @Then("I should see the USDC option")
+    public void iShouldSeeTheUSDCOption() {
+        logger.info("Verifying USDC option is displayed");
+        Assert.assertTrue("USDC option is not displayed!", homePage.isUSDCOptionDisplayed());
+    }
+
+    @When("I click on the Assets tab")
+    public void iClickOnAssetsTab() {
+        logger.info("Clicking on Assets tab");
+        homePage.clickOnAssetsTab();
+    }
+
+    @When("I click on the Buy button for ethereum")
+    public void iClickOnTheBuyButtonForEthereum() {
+        logger.info("Tapping on the Buy button for Ethereum");
+        homePage.tapOnEthereumBuyButton();
+    }
+
+    @Then("I should see Deposit\\/Withdrawal header")
+    public void iShouldSeeDepositWithdrawalHeader() {
+        logger.info("Verifying Deposit/Withdrawal header is displayed");
+        Assert.assertTrue("Deposit/Withdrawal header is not displayed!", homePage.isDepositWithdrawalHeaderDisplayed());
+    }
+
+    @Then("I click on eye ball icon")
+    public void iClickOnEyeballIcon() {
+        logger.info("Clicking on eyeball icon");
+        homePage.tapEyeballIcon();
+    }
+
+    @Then("I should see the wallet balance is hidden")
+    public void iShouldSeeWalletBalanceIsHidden() {
+        logger.info("Verifying wallet balance is hidden");
+        Assert.assertTrue("Wallet balance is not hidden!", homePage.isWalletBalanceHidden());
+    }
+
+    @Then("I should see the wallet balance is visible")
+    public void iShouldSeeWalletBalanceIsVisible() {
+        logger.info("Verifying wallet balance is visible");
+        Assert.assertTrue("Wallet balance is not visible!", homePage.isWalletBalanceVisible());
+    }
+
+    @Then("I click on dropdown icon next to wallet name")
+    public void iClickOnDropdownIconNextToWalletName() {
+        logger.info("Clicking on dropdown icon next to wallet name");
+        homePage.tapDropdownIcon();
+    }
+
+    @Then("I should see choose wallet header")
+    public void iShouldSeeChooseWalletHeader() {
+        logger.info("Verifying Choose Wallet header is displayed");
+        Assert.assertTrue("Choose Wallet header is not displayed!", homePage.isChooseWalletHeaderDisplayed());
+    }
+
+    @Then("I should see Add Wallet option in the dropdown")
+    public void iShouldSeeAddWalletOptionInTheDropdown() {
+        logger.info("Verifying Add Wallet option is displayed in the dropdown");
+        Assert.assertTrue("Add Wallet option is not displayed in the dropdown!", homePage.isAddWalletOptionDisplayed());
+    }
+
+    @And("I should see All Present Wallets in the dropdown")
+    public void iShouldSeeAllPresentWalletsInTheDropdown() {
+        logger.info("Verifying all present wallets are displayed in the dropdown");
+        Assert.assertTrue("No wallets are displayed in the dropdown!", homePage.areAllWalletsPresentInDropdown());
+    }
+
+    @When("I tap on Add Wallet option")
+    public void iTapOnAddWalletOption() {
+        logger.info("Tapping on Add Wallet option");
+        homePage.tapAddWalletOption();
+    }
+
+@And("I click randomly outside the dropdown")
+public void iClickRandomlyOutsideTheDropdown() throws InterruptedException {
+    logger.info("Clicking randomly outside the dropdown");
+    homePage.clickRandomCoordinate();
+}
 }
