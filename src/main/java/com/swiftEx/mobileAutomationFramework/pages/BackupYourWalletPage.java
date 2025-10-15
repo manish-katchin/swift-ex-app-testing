@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
 
 public class BackupYourWalletPage extends BasePage {
+  
     private static final Logger logger = LoggerFactory.getLogger(BackupYourWalletPage.class);
 
     public BackupYourWalletPage(AppiumDriver driver) {
@@ -65,7 +66,55 @@ public class BackupYourWalletPage extends BasePage {
             }
         }
 
-    public boolean isBackupMnemonicPhrasePageDisplayed() {
-        return isDisplayed("backup_mnemonic_phrase");
+        public boolean isBackupMnemonicPhrasePageDisplayed() {
+            return isDisplayed("backup_mnemonic_phrase");
+        }
+
+        public boolean isContinueButtonEnabled() {
+            try {
+                WebElement continueButton = driver.findElement(getBy("continue_button"));
+                boolean enabled = continueButton.isEnabled();
+                logger.info("Continue button enabled: {}", enabled);
+                return enabled;
+            } catch (Exception e) {
+                logger.error("Error checking Continue button enabled state: {}", e.getMessage());
+                return false;
+            }
+        }
+  /**
+     * Taps the Back button on the Backup Your Wallet screen
+     */
+  public void clickBackButtonOnBackupScreen() {
+      tap("backup_screen_back_button");
+      logger.info("Tapped Back button on Backup Your Wallet screen");
+  }
+      /**
+     * Verifies the first mnemonic instruction is displayed with correct text
+     */
+    public boolean isMnemonicInstruction1Displayed(String expectedText) {
+        try {
+            WebElement instruction = driver.findElement(getBy("mnemonic_instruction_1"));
+            boolean displayed = instruction.isDisplayed() && instruction.getText().trim().equals(expectedText.trim());
+            logger.info("Mnemonic instruction 1 displayed: {} | Text matches: {}", instruction.isDisplayed(), displayed);
+            return displayed;
+        } catch (Exception e) {
+            logger.error("Error verifying mnemonic instruction 1: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Verifies the second mnemonic instruction is displayed with correct text
+     */
+    public boolean isMnemonicInstruction2Displayed(String expectedText) {
+        try {
+            WebElement instruction = driver.findElement(getBy("mnemonic_instruction_2"));
+            boolean displayed = instruction.isDisplayed() && instruction.getText().trim().equals(expectedText.trim());
+            logger.info("Mnemonic instruction 2 displayed: {} | Text matches: {}", instruction.isDisplayed(), displayed);
+            return displayed;
+        } catch (Exception e) {
+            logger.error("Error verifying mnemonic instruction 2: {}", e.getMessage());
+            return false;
+        }
     }
 }

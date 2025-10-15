@@ -13,3 +13,40 @@ thirdwallet_card:
 All_walletheader:
  strategy: xpath
  value: //android.widget.TextView[@text='All Wallets']
+
+All_Wallets_List:
+  strategy: xpath
+  value: //android.widget.TextView[@text='All Wallets']/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[@clickable='true']
+
+All_Wallets_BackButton:
+  strategy: accessibility
+  value: all_wallets_back
+
+wallet_header_title:  
+  strategy: androiduiautomator
+  value: new UiSelector().text("Wallet") 
+
+my_wallet_option:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("My Wallet")  
+
+warning_message:
+  strategy: xpath
+  value: //*[@text="If you lose access to this device,your funds will be lost,unless you back up!"]
+
+show_secret_phrase_option:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("Show Secret Phrase")
+
+
+copy_mnemonic_button:
+ strategy: xpath
+ value: //android.view.ViewGroup[.//android.widget.TextView[@text='Backup Mnemonic Phrase']]//android.widget.Button[@content-desc='Copy'][1]
+
+copy_private_key_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[.//android.widget.TextView[@text='Stellar Private Key']]//android.widget.Button[@content-desc='Copy'][2]
+
+copied_toast:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Copied']

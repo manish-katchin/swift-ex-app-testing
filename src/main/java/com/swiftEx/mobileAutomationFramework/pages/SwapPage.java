@@ -41,9 +41,9 @@ public class SwapPage extends BasePage {
 
     // Enters amount in the input field below WETH
     public void enterSwapAmount(String amount) throws InterruptedException {
+        Thread.sleep(15000);
         // sendKeys("swap_amount_input", amount);
-        WebElement amountField = driver.findElement(By.xpath("//android.widget.EditText[contains(@text, '0.0')]"));
-        amountField.click();
+        driver.findElement(By.xpath("//android.widget.EditText[contains(@text, '0.0')]")).click();
         Thread.sleep(2000);
         ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
         Thread.sleep(1000);
@@ -56,6 +56,8 @@ public class SwapPage extends BasePage {
         ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
         Thread.sleep(1000);
         ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_1));
+        Thread.sleep(1000);
+        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ENTER));
         logger.info("Entered swap amount: {}", amount);
     }
 
@@ -67,7 +69,7 @@ public class SwapPage extends BasePage {
                 if (isDisplayed("SwapSuccessMessage")) {
                     return true;
                 }
-                Thread.sleep(1500); // Wait 1.5 seconds before retry
+                Thread.sleep(500); // Wait 1.5 seconds before retry
             } catch (Exception e) {
                 // Optionally log or handle exception
             }

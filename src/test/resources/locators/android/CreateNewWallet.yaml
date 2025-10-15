@@ -1,10 +1,10 @@
 create_wallet_button:
   strategy: accessibility
-  value: CREATE A NEW WALLET
+  value: create_new_wallet_btn
 
 import_wallet_button:
-  strategy: accessibility
-  value: Import Wallet
+  strategy: xpath
+  value: //*[contains(@content-desc,'import_wallet_btn')]
 
 use_default_wallet_button:
   strategy: accessibility

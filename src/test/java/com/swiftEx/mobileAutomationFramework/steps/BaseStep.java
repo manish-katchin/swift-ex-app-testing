@@ -4,13 +4,17 @@ import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.swiftEx.mobileAutomationFramework.pages.BasePage;
+import com.swiftEx.mobileAutomationFramework.pages.CheckMnemonicPage;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.cucumber.java.en.Then;
 
 public class BaseStep {
     private static final Logger logger = LoggerFactory.getLogger(BaseStep.class);
@@ -42,6 +46,7 @@ public class BaseStep {
             logger.info("Driver quit successfully");
         }
     }
+
 
     private <T extends BasePage> T createPage(Class<T> pageClass, AppiumDriver driver) {
         try {
@@ -77,7 +82,7 @@ public class BaseStep {
         }
     }
 
-    protected void clearPageCache() {
+    public static  void clearPageCache() {
         pageCache.clear();
         logger.debug("🧹 Page cache cleared");
     }
@@ -146,5 +151,4 @@ public class BaseStep {
             logger.error("Error launching app with noReset=false: {}", e.getMessage());
         }
     }
-
 }

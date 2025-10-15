@@ -6,7 +6,12 @@ import io.cucumber.java.en.When;
 
 import com.swiftEx.mobileAutomationFramework.pages.CheckMnemonicPage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,10 +94,16 @@ public class CheckMnemonicStep extends BaseStep {
         do {
             actualText = privateKeyPage.getAccountNameFieldText();
             isEmptyOrPlaceholder = actualText == null || actualText.trim().isEmpty() || actualText.equals(placeholder);
-            if (isEmptyOrPlaceholder) break;
-            try { Thread.sleep(intervalMs); } catch (InterruptedException ignored) {}
+            if (isEmptyOrPlaceholder)
+                break;
+            try {
+                Thread.sleep(intervalMs);
+            } catch (InterruptedException ignored) {
+            }
         } while (System.currentTimeMillis() - start < maxWaitMs);
         logger.info("Account Name field value after wait: '{}'", actualText);
-        Assert.assertTrue("Account Name field should be empty or show only placeholder, but was: '" + actualText + "'", isEmptyOrPlaceholder);
+        Assert.assertTrue("Account Name field should be empty or show only placeholder, but was: '" + actualText + "'",
+                isEmptyOrPlaceholder);
     }
+  
 }

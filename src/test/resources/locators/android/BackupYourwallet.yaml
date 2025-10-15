@@ -18,3 +18,16 @@ continue_button:
 backup_mnemonic_phrase:
  strategy: androiduiautomator
  value: new UiSelector().text("Backup Mnemonic Phrase")
+
+backup_screen_back_button:
+  strategy: accessibility
+  value: backup_wallet_back_btn
+
+
+mnemonic_instruction_1:
+  strategy: xpath
+  value: //*[@text="Keep your mnemonic in a safe place, isolated from any network."]    
+
+mnemonic_instruction_2:
+  strategy: xpath
+  value: //*[@text="Do not share it through email, photos, social media, apps, etc."]

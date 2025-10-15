@@ -1,9 +1,9 @@
-Feature: Swap Wallet
-As a user
-I want to Swap wallet
+@SwapWalletFeature
+Feature: Swap Wallet 
+As a user I want to Swap wallet
     
     @SwappingCryptoCurrencyfromEthereumToUSDC
-    Scenario: Import wallet with valid private key 
+    Scenario: Verify successful Crypto Swap from Ether to USDC
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -27,7 +27,7 @@ I want to Swap wallet
     Then I should see "Swap Success" message on the screen
  
     @SwappingCryptoCurrencyfromUSDCToEthereum
-    Scenario: Import wallet with valid private key
+    Scenario: Verify successful Crypto Swap from USDC to Ethereum
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -52,7 +52,7 @@ I want to Swap wallet
     Then I should see "Swap Success" message on the screen
 
 @sendCryptoCurrency
-Scenario: Create a new wallet and proceed to the private key page
+Scenario:To verify user is able to perform transaction
 Given the app is launched
 When I enter a new PIN "123456"
 And I confirm the PIN "123456"
@@ -163,4 +163,16 @@ Then I should see the "Transactions" header on the screen
 And I should see "0.0001" amount on the screen
 And I should see "0x05cBb7CbEEE7C8f1B2DBf0Bb4bb820ac918D7c0e" recipient address on the screen
 
+#Test sheet test cases
 
+@VerifySendButtonOnHomePage
+Scenario: Verify the presence of the Send button on the homepage.
+Given the app is launched
+When I enter a new PIN "123456"
+And I confirm the PIN "123456"
+Then I should be on Create A new wallet Page
+When I click Create a new wallet button
+Then I should see the biometric authentication popup
+When I handle the biometric authentication
+Then I should be on homePage
+And I should see the Send button is displayed

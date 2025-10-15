@@ -1,16 +1,18 @@
 package com.swiftEx.mobileAutomationFramework.steps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.swiftEx.mobileAutomationFramework.pages.PinCreationPage;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.swiftEx.mobileAutomationFramework.pages.PinCreationPage;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 public class PinCreationStep extends BaseStep {
     private static final Logger logger = LoggerFactory.getLogger(PinCreationStep.class);
@@ -27,8 +29,8 @@ public class PinCreationStep extends BaseStep {
         logger.info("Verifying user is on pin page");
         pinPage = page(PinCreationPage.class);
         assertThat(pinPage.isEnterYourPinTextVisible())
-            .as("'Please enter your pin' text should be visible on pin page")
-            .isTrue();
+                .as("'Please enter your pin' text should be visible on pin page")
+                .isTrue();
     }
 
     @When("I enter a new PIN {string}")
@@ -44,14 +46,17 @@ public class PinCreationStep extends BaseStep {
     }
 
     @Then("I verify {string} button on screen")
-    public void i_verify_button_on_screen(String buttonText) {
+    public void i_verify_button_on_screen(String buttonText) throws InterruptedException {
         logger.info("Verifying button: {}", buttonText);
-
+        Thread.sleep(3000); // Wait for UI to update
         String dynamicXPath = String.format("//*[@text='%s']", buttonText);
         logger.info("Using XPath: {}", dynamicXPath);
 
-        // Wait for element to be present (with timeout)
-        WebElement buttonElement = getDriver().findElement(By.xpath(dynamicXPath));
+        // Wait for element to be present (with timeout) 
+      WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(60));
+
+        // Wait until the button is visible
+        WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dynamicXPath)));
 
         assertThat(buttonElement.isDisplayed())
                 .as("Button with text '%s' should be visible on screen", buttonText)

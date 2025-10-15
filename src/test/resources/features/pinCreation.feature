@@ -1,4 +1,4 @@
-@Arjun
+@Regression
 Feature: Create PIN
 
   Verify the app launches and forces the user to set a PIN before using the app

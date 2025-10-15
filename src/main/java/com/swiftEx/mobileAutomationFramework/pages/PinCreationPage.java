@@ -20,7 +20,7 @@ public class PinCreationPage extends BasePage {
         logger.info("📝 Entering PIN: {}", pin);
 
         for (char digit : pin.toCharArray()) {
-            Thread.sleep(1000); // Small delay to mimic user input speed
+            Thread.sleep(500); // Small delay to mimic user input speed
             tapDigit(String.valueOf(digit));
         }
 

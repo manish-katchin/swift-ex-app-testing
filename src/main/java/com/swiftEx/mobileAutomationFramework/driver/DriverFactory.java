@@ -19,8 +19,8 @@ public class DriverFactory {
     private DriverCreator creator;
 
     public AppiumDriver getDriver() {
-        if (driver == null) {
-            driver = createDriver();
+        {
+            driver = createNewDriver();
         }
         return driver;
     }
@@ -29,6 +29,7 @@ public class DriverFactory {
         try {
             if (driver != null) {
                 driver.quit();
+                driver = null;
             }
         } catch (Exception e) {
             log.error("Error quitting driver: {}", e.getMessage());
@@ -81,4 +82,34 @@ public class DriverFactory {
             throw new IllegalArgumentException("Unsupported platform: " + PlatformConfig.getCurrentPlatform());
         }
     }
+
+ private AppiumDriver createNewDriver() {
+    log.info("=== CREATING NEW APPIUM DRIVER ===");
+    PlatformConfig.printConfigurationSummary();
+
+    try {
+        creator = getDriverCreator();
+
+        DesiredCapabilities capabilities = creator.buildCapabilities();
+        URL serverUrl = new URL(creator.getServerUrl());
+
+        log.info("Platform capabilities: {}", capabilities.asMap());
+
+        AppiumDriver newDriver = creator.createDriver(serverUrl, capabilities);
+
+        log.info("Driver created successfully!");
+        log.info("Session ID: {}", newDriver.getSessionId());
+        log.info("Platform: {}", PlatformConfig.getCurrentPlatform());
+        log.info("Device: {}", newDriver.getCapabilities().getCapability("deviceName"));
+
+        return newDriver;
+
+    } catch (MalformedURLException e) {
+        log.error("Invalid server URL", e);
+        throw new RuntimeException("Invalid server URL", e);
+    } catch (Exception e) {
+        log.error("Failed to create driver for platform: {}", PlatformConfig.getCurrentPlatform(), e);
+        throw new RuntimeException("Driver creation failed", e);
+    }
+}
 }

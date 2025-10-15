@@ -32,5 +32,10 @@ public class WalletScreenPage extends BasePage {
         tap("create_wallet_card");
         logger.info("Clicked on Create Wallet option");
     }
-    
+
+    public void clickChooseWalletOption() {
+        tap("choose_wallet_card");
+        logger.info("Clicked on Choose Wallet option");
+    }
+        
 }

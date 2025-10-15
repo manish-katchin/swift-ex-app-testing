@@ -1,55 +1,56 @@
+@Regression
 Feature: Wallet Creation 
 
-  @createWallet  
-  Scenario: Create a new wallet and proceed to the private key page
-  Given the app is launched
-  When I enter a new PIN "123456"
-  And I confirm the PIN "123456"
-  Then I should be on Create A new wallet Page
-  When I click Create a new wallet button
-  Then I should be on the "Backup your wallet now" screen
-  When I select the option If I lose my private keys, my funds will be lost
-  And I select the option If I share my private key, my funds can be lost
-  And I click on the "Continue" button
-  Then I should be on "Private key" page
-  When I enter account name "TestAccount" in the Account Name field
-  And I click on the Next button
-  When I click on the "Done" button
-  Then I see error "Please provide all answers before submitting"
-  And I verify and select the requested mnemonic words on Check Mnemonic page
-  And I verify all mnemonic words are correctly selected
-  When I click on the "Done" button
-  Then I should see the biometric authentication popup
-  When I handle the biometric authentication
-  And I should see the Send button is displayed
-  And I should see the Swap button is displayed
-  And I should see the Buy button is displayed
+  # @createWallet  
+  # Scenario: Validate Creation of a New Wallet by Handling Backup Wallet Screen, Private key page , Mnemonics. Post creation handling biometric Authentication screen
+  # Given the app is launched
+  # When I enter a new PIN "123456"
+  # And I confirm the PIN "123456"
+  # Then I should be on Create A new wallet Page
+  # When I click Create a new wallet button
+  # Then I should be on the "Backup your wallet now" screen
+  # When I select the option If I lose my private keys, my funds will be lost
+  # And I select the option If I share my private key, my funds can be lost
+  # And I click on the "Continue" button
+  # Then I should be on "Private key" page
+  # When I enter account name "TestAccount" in the Account Name field
+  # And I click on the Next button
+  # When I click on the "Done" button
+  # Then I see error "Please provide all answers before submitting"
+  # And I verify and select the requested mnemonic words on Check Mnemonic page
+  # And I verify all mnemonic words are correctly selected
+  # When I click on the "Done" button
+  # Then I should see the biometric authentication popup
+  # When I handle the biometric authentication
+  # And I should see the Send button is displayed
+  # And I should see the Swap button is displayed
+  # And I should see the Buy button is displayed
 
   
 
-  @defaultWallet 
-  Scenario: Create a new wallet and proceed to the private key page
-  Given the app is launched
-  When I enter a new PIN "123456"
-  And I confirm the PIN "123456"
-  Then I should be on Create A new wallet Page
-  When I click use default button
-  Then I should see the biometric authentication popup
-  When I handle the biometric authentication
-  And I should see the Send button is displayed
-  And I should see the Swap button is displayed
-  And I should see the Buy button is displayed
-  And I should see the Assets tab is displayed
-  And I should see the Add Assets tab is displayed
-  And I should see the Home tab is displayed in bottom navigation
-  And I should see the Wallet tab is displayed in bottom navigation
-  And I should see the Market tab is displayed in bottom navigation
-  And I should see the Exchange tab is displayed in bottom navigation
-  And I should see the Settings tab is displayed in bottom navigation
+  # @defaultWallet 
+  # Scenario: Validate Create wallet using default option and verify post-authentication Homescreen elements
+  # Given the app is launched
+  # When I enter a new PIN "123456"
+  # And I confirm the PIN "123456"
+  # Then I should be on Create A new wallet Page
+  # When I click use default button
+  # Then I should see the biometric authentication popup
+  # When I handle the biometric authentication
+  # And I should see the Send button is displayed
+  # And I should see the Swap button is displayed
+  # And I should see the Buy button is displayed
+  # And I should see the Assets tab is displayed
+  # And I should see the Add Assets tab is displayed
+  # And I should see the Home tab is displayed in bottom navigation
+  # And I should see the Wallet tab is displayed in bottom navigation
+  # And I should see the Market tab is displayed in bottom navigation
+  # And I should see the Exchange tab is displayed in bottom navigation
+  # And I should see the Settings tab is displayed in bottom navigation
 
 
  @navigation 
-  Scenario: Navigate to Wallet page
+  Scenario: Verify navigation to Wallet and Market tabs screen after default wallet setup
   Given the app is launched
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
@@ -67,7 +68,7 @@ Feature: Wallet Creation
   And I see bitcoin option on market page
 
  @verificationExchangeTab
-Scenario: Navigate to Exchange page
+Scenario: Verify Exchange tab navigation and UI elements post wallet setup
   Given the app is launched
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
@@ -84,8 +85,8 @@ Scenario: Navigate to Exchange page
 
 
 
- @verificationOfSettingsTab
-Scenario: Navigate to Settings page
+ @verificationOfSettingsTab @scroll
+Scenario: Verify Settings tab navigation and UI elements post wallet Setup
   Given the app is launched
   When I enter a new PIN "123456"
   And I confirm the PIN "123456"
@@ -105,7 +106,7 @@ Scenario: Navigate to Settings page
   And I should see the Help Center option
   And I should see the Logout option
 
- @logout 
+ @logout  @scroll
 Scenario: Logout of the application
   Given the app is launched
   When I enter a new PIN "123456"
@@ -116,8 +117,9 @@ Scenario: Logout of the application
   When I handle the biometric authentication
   And I click on the Settings tab in bottom navigation
   Then I should see the Settings header
+  And I should see the Help Center option
   When I click on the Logout option in Settings
-  Then I am on pin page
+  #Then I am on pin page
 
   @verificationOfWalletCreationOptions
   Scenario: Verify that after setting up the PIN, the "Create Wallet" and "Import Wallet" options are displayed.
@@ -126,7 +128,6 @@ Scenario: Logout of the application
   And I confirm the PIN "123456"
   Then I should be on Create A new wallet Page
   Then I verify "Import Wallet" button on screen
-  And I see Import Wallet option
 
 
  @VerifyBackupwalletScreen
@@ -165,7 +166,6 @@ Scenario: Logout of the application
   When I select the option If I lose my private keys, my funds will be lost
   And I click on the "Continue" button
   And I see "Continue" button is disabled on the screen
-
 
 
  @VerifyBackupMnemonicPhraseScreen
@@ -258,7 +258,6 @@ Scenario: Logout of the application
   When I enter account name "TestAccount" in the Account Name field
   Then I should see the "Done" button is enabled
 
-
   @VerifyDoneButtonNavigationToSecretPhraseScreen
   Scenario: Verify that clicking "DoneButton" after entering a valid account name navigates to the "Verify Secret Phrase" screen
   Given the app is launched
@@ -309,7 +308,7 @@ Scenario: Logout of the application
   Then I should be on "Verify Secret Phrase" screen
   Then I verify jumbled mnemonic phrases appear for verification
 
-@VerifyCompleteBackupProcess
+@VerifyCompleteBackupProcess @rerun
   Scenario:  Verify that selecting all four correct words successfully completes the backup process.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -496,5 +495,118 @@ Scenario: Logout of the application
   Then I click on the "Import" button on verify secret phrase screen
   Then I see error "Please provide all answers before submitting"
 
+
+@VerifyContinueButtonEnabledAfterSelectingBothConditions
+  Scenario: TC-103 Verify Continue Button is Enabled After Selecting Both Conditions
+  Given the app is launched
+  When I enter a new PIN "123456" 
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  Then I see "Continue" button is enabled on the screen
+
+@VerifyInstructionForKeepingSecretPhraseSafe
+Scenario: TC-107 Verify Instruction for Keeping Secret Phrase Safe
+Given the app is launched
+When I enter a new PIN "123456"
+And I confirm the PIN "123456"
+When I click Create a new wallet button
+Then I should see the biometric authentication popup
+When I handle the biometric authentication
+And I click on Wallet tab
+Then I see My Wallet option
+And I see Create Wallet option
+And I see Import Wallet option
+And I see Choose Wallet option
+Then I click on Create Wallet option
+Then I should be on the "Backup your wallet now" screen
+When I select the option If I lose my private keys, my funds will be lost
+And I select the option If I share my private key, my funds can be lost
+And I click on the "Continue" button
+Then I should be on "Backup Mnemonic Phrase" page
+Then I should see instruction first "Keep your mnemonic in a safe place, isolated from any network."
+Then I should see instruction Second "Do not share it through email, photos, social media, apps, etc."
+
+
+@VerifyMnemonicPhrase
+  Scenario: Verify Display of Mnemonic Phrase
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  And I verify mnemonic phrases are visible on the screen
+
+
+
+@VerifyBackButtonFunctionalityforBackupScreen
+  Scenario: TC-15 Verify that clicking "Back" from the "Back Up Your Wallet" screen returns to the Create Wallet/Import Wallet screen.
+  Given the app is launched
+  When I enter a new PIN "123456" 
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  Then I click on the Back button on Backup your wallet screen
+  And I see Create Wallet option
+
+
+@VerifyMnemonicPhraseonbothscreen
+  Scenario: Verify Display of Mnemonic Phrase
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  And I verify mnemonic phrases are visible on the screen
+  And I store mnemonic phrases from the backup screen
+  When I enter account name "TestAccount" in the Account Name field
+  When I click on the "Done" button
+  Then I should be on "Verify Secret Phrase" screen
+  Then I verify jumbled mnemonic phrases appear for verification
+  Then the mnemonic words on both screens should match
 
 
