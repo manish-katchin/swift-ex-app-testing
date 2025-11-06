@@ -25,3 +25,7 @@ confirmPinBtn:
 homeIndicator:
   strategy: id
   value: com.example.app:id/home_root
+
+fingerprint_option:
+  strategy: xpath
+  value: (//android.view.ViewGroup[@content-desc='0']/preceding-sibling::android.view.ViewGroup)[last()]

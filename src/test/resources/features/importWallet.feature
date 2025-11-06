@@ -1,13 +1,10 @@
 @Regression
 Feature: Import Wallet 
-  As a user
-  I want to import an existing wallet
-  So that I can access my funds securely
+  As a userI want to import an existing wallet So,that I can access my funds securely
 
 
   @importWalletMultiChainPositive
   Scenario: Verify that a user can successfully import an multi-chain wallet using a valid Mnemonic
-
     Given the app is launched
     When I enter a new PIN "123456"
     And I confirm the PIN "123456"
@@ -431,7 +428,7 @@ Scenario: TC-065 Verify Navigation to Ethereum Import Wallet Screen
 
 
     @VerifyPastebuttonFunctionality
-    Scenario: "User has copied a valid mnemonic phrase to the clipboard User is on the Binance Smart Chain Import Wallet screen, with Mnemonic selected."
+    Scenario: User has copied a valid mnemonic phrase to the clipboard User is on the Binance Smart Chain Import Wallet screen, with Mnemonic selected.
       Given the app is launched
       When I enter a new PIN "123456"
       And I confirm the PIN "123456"

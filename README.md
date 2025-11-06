@@ -1,5 +1,8 @@
 # 📱 SwiftEx Mobile Test Automation Framework
 
+# Track SwiftEx Mobile Test Cases
+https://docs.google.com/spreadsheets/d/1s3QgrtJFB_j5VdeQqt7d44Q2dybhtOP5W_j6c5gMBDE/edit?pli=1&gid=0#gid=0
+
 A comprehensive mobile test automation framework supporting both Android and iOS platforms with local execution and SauceLabs cloud testing integration.
 
 ## 🚀 Quick Start

@@ -29,7 +29,7 @@ public class PinCreationStep extends BaseStep {
         logger.info("Verifying user is on pin page");
         pinPage = page(PinCreationPage.class);
         assertThat(pinPage.isEnterYourPinTextVisible())
-                .as("'Please enter your pin' text should be visible on pin page")
+                .as("'Please create a pin' text should be visible on pin page")
                 .isTrue();
     }
 
@@ -53,7 +53,7 @@ public class PinCreationStep extends BaseStep {
         logger.info("Using XPath: {}", dynamicXPath);
 
         // Wait for element to be present (with timeout) 
-      WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(60));
+        WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(60));
 
         // Wait until the button is visible
         WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dynamicXPath)));
@@ -81,4 +81,80 @@ public class PinCreationStep extends BaseStep {
 
         logger.info("Error message verified successfully");
     }
+
+    @Then("I click {string} button on screen")
+    public void i_click_button_on_screen(String buttonText) throws InterruptedException {
+        logger.info("Clicking button: {}", buttonText);
+        Thread.sleep(3000); // Wait for UI to update
+        String dynamicXPath = String.format("//*[@text='%s']", buttonText);
+        logger.info("Using XPath: {}", dynamicXPath);
+
+        // Wait for element to be present (with timeout)
+        WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(60));
+
+        // Wait until the button is visible
+        WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dynamicXPath)));
+
+        assertThat(buttonElement.isDisplayed())
+                .as("Button with text '%s' should be visible on screen", buttonText)
+                .isTrue();
+
+        assertThat(buttonElement.getText())
+                .as("Button text should match expected value")
+                .isEqualTo(buttonText);
+
+        buttonElement.click();
+        logger.info("Button clicked successfully");
+    }
+  @Then("I see {string} popup on screen")
+    public void i_see_popup_on_screen(String popupText) throws InterruptedException {
+        logger.info("Verifying popup: {}", popupText);
+        Thread.sleep(3000); // Wait for UI to update
+        String dynamicXPath = String.format("//*[@text='%s']", popupText);
+        logger.info("Using XPath: {}", dynamicXPath);
+
+        // Wait for element to be present (with timeout) 
+        WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(60));
+
+        // Wait until the button is visible
+        WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dynamicXPath)));
+
+        assertThat(buttonElement.isDisplayed())
+                .as("Popup with text '%s' should be visible on screen", popupText)
+                .isTrue();
+
+        assertThat(buttonElement.getText())
+                .as("Popup text should match expected value")
+                .isEqualTo(popupText);
+
+        logger.info("Popup verified successfully");
+    }
+   @When("I click on FingerPrint Sensor")
+   public void i_click_on_fingerprint_sensor() {
+       logger.info("Clicking on FingerPrint Sensor");
+       pinPage.tapFingerPrintSensor();
+   }
+@Then("I see {string} text on screen")
+    public void i_see_text_on_screen(String text) throws InterruptedException {
+        logger.info("Verifying text: {}", text);
+        String dynamicXPath = String.format("//*[@text='%s']", text);
+        logger.info("Using XPath: {}", dynamicXPath);
+
+        // Wait for element to be present (with timeout) 
+        WebDriverWait wait = new WebDriverWait(getDriver(), java.time.Duration.ofSeconds(10));
+
+        // Wait until the button is visible
+        WebElement buttonElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dynamicXPath)));
+
+        assertThat(buttonElement.isDisplayed())
+                .as("text '%s' should be visible on screen", text)
+                .isTrue();
+
+        assertThat(buttonElement.getText())
+                .as("text should match expected value")
+                .isEqualTo(text);
+
+        logger.info("text verified successfully");
+    }
+
 }

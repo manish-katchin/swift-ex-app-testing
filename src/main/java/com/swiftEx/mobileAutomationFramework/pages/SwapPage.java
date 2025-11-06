@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
+import io.cucumber.java.en.Then;
 
 import java.time.Duration;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.swiftEx.mobileAutomationFramework.utils.ElementActions;
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 //import io.appium.java_client.MobileElement;
 
@@ -40,27 +43,33 @@ public class SwapPage extends BasePage {
     }
 
     // Enters amount in the input field below WETH
-    public void enterSwapAmount(String amount) throws InterruptedException {
-        Thread.sleep(15000);
-        // sendKeys("swap_amount_input", amount);
-        driver.findElement(By.xpath("//android.widget.EditText[contains(@text, '0.0')]")).click();
-        Thread.sleep(2000);
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
-        Thread.sleep(1000);
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.PERIOD));
-        Thread.sleep(1000);
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
-        Thread.sleep(1000);
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
-        Thread.sleep(1000);
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
-        Thread.sleep(1000);
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_1));
-        Thread.sleep(1000);
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ENTER));
-        logger.info("Entered swap amount: {}", amount);
-    }
-
+  public void enterSwapAmount(String amount) throws InterruptedException {
+    // Wait dynamically until Swap_Page_Balance is displayed (max 50 seconds)
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("Swap_Page_Balance")));
+    // Find the input field below the token label (e.g., "WETH")
+    String xpath = String.format("//android.widget.EditText[contains(@text, '0.0')]");
+    WebElement inputField = driver.findElement(By.xpath(xpath));
+    inputField.clear();
+    inputField.sendKeys(amount);
+    // // Now proceed with entering the amount
+    // driver.findElement(By.xpath("//android.widget.EditText[contains(@text, '0.0')]")).click();
+    // Thread.sleep(2000);
+    // ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+    // Thread.sleep(1000);
+    // ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.PERIOD));
+    // Thread.sleep(1000);
+    // ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+    // Thread.sleep(1000);
+    // ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+    // Thread.sleep(1000);
+    // ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
+    // Thread.sleep(1000);
+    // ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_1));
+    // Thread.sleep(1000);
+    // ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ENTER));
+    logger.info("Entered swap amount: {}", amount);
+}
     // Verifies the Swap Success message is displayed
     public boolean isSwapSuccessMessageDisplayed() {
         long endTime = System.currentTimeMillis() + 80000; // 80 seconds from now
@@ -184,7 +193,102 @@ public class SwapPage extends BasePage {
 
         // Gets the actual recipient address displayed on the screen
         public String getActualRecipientAddress() {
-            return driver.findElement(By.xpath("//android.view.View[@resource-id='wrapperContent']/android.view.View/android.widget.TextView"))
+            return driver.findElement(By.xpath(
+                    "//android.view.View[@resource-id='wrapperContent']/android.view.View/android.widget.TextView"))
                     .getText();
         }
+
+        public boolean isScannerIconDisplayed() {
+            boolean displayed = isDisplayed("scanner_icon");
+            logger.info("Scanner icon displayed in Recipient Address field: {}", displayed);
+            return displayed;
+        }
+
+        public void clickScannerIcon() throws InterruptedException {
+            logger.info("Waiting for scanner screen to load");
+            Thread.sleep(20000);
+            tap("scanner_icon");
+            logger.info("Scanner icon clicked.");
+     }
+public boolean isDontAllowButtonDisplayed() {
+    boolean displayed = isDisplayed("Not_Allow_Button");
+    logger.info("'Don't allow' button displayed: {}", displayed);
+    return displayed;
 }
+
+public void clickDontAllowButton() {
+    tap("Not_Allow_Button");
+    logger.info("Clicked on 'Don't allow' button");
+}
+
+public boolean isScanQRCodeHeaderDisplayed() {
+    // Adjust the locator key if you have a specific one for the Scan QR Code header
+    return isDisplayed("scan_qr_code_header");
+}
+
+public boolean isAvailableBalanceDisplayed() {
+    return isDisplayed("wallet_balance_value");
+}
+
+public boolean isRecipientAddressInputDisplayed() {
+    return isDisplayed("recipient_address_input");
+}
+
+public boolean isAmountInputDisplayed() {
+    return isDisplayed("amount_input");
+}
+
+public void enterxlmRecipientAddress(String address) {
+    sendKeys("recipient_address_input", address);
+    logger.info("Entered recipient address: {}", address);
+}
+
+public void enterxlmAmount(String amount) {
+    sendKeys("amount_input", amount);
+    logger.info("Entered amount: {}", amount);
+}
+
+public void clickClaim5XLMNowButton() throws InterruptedException {
+    tap("claim_xlm_now_button");
+    logger.info("'Claim 5 XLM Now!' button clicked.");
+    Thread.sleep(20000);
+}
+
+public void clickXlmSendButton() {
+    logger.info("Waiting for 'Send' button on XLM send page to be clickable...");
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+    WebElement sendButton = wait.until(ExpectedConditions.elementToBeClickable(getBy("xlm_send_button")));
+    sendButton.click();
+    logger.info("'Send' button on XLM send page clicked.");
+}
+
+public boolean isTransactionHistoryDisplayed() {
+    return isDisplayed("xlm_transaction_history");
+}
+
+public boolean isReceiveHeaderDisplayed() {
+    return isDisplayed("receive_header");
+}
+
+
+public void clickCopyIconButton() throws InterruptedException {
+    tap("copy_icon_button");
+    logger.info("'Copy' icon button clicked.");
+}
+
+public void clickWrongSymbolButton() throws InterruptedException {
+    tap("Wrong_symbol");
+    logger.info("'Wrong symbol' button clicked.");
+}
+
+public void tapPasteButtonInRecipientAddressField() {
+    tap("paste_button");
+    logger.info("'Paste' button tapped in Recipient Address field");
+}
+public String getDisplayedAddress() {
+    ElementActions actions = new ElementActions(driver);
+    return actions.getText(getBy("recipient_address_input"));
+}
+}
+
+

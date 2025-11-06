@@ -106,7 +106,7 @@ Scenario: Verify Settings tab navigation and UI elements post wallet Setup
   And I should see the Help Center option
   And I should see the Logout option
 
- @logout  @scroll
+ @logout  @scroll 
 Scenario: Logout of the application
   Given the app is launched
   When I enter a new PIN "123456"
@@ -444,8 +444,8 @@ Scenario: Logout of the application
   When I enter account name "Twenty One Characters" in the Account Name field
   Then I verify only 20 characters are accepted in the Account Name field
 
-
-@VerifyEmojiNotAcceptedInAccountNameField
+ 
+@VerifyEmojiNotAcceptedInAccountNameField @rerun
   Scenario: Verify that the account name field does not accept only emojis.
   Given the app is launched
   When I enter a new PIN "123456"
