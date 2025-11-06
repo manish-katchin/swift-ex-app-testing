@@ -17,8 +17,8 @@ public class BackupWalletStep extends BaseStep {
     }
       @Then("I click on the Back button on Backup your wallet screen")
       public void iClickOnBackButtonOnBackupYourWalletScreen() {
-          logger.info("Clicking Back button on Backup Your Wallet screen");
-          backupYourWalletPage.clickBackButtonOnBackupScreen();
+      logger.info("Clicking Back button on Backup Your Wallet screen");
+       backupYourWalletPage.clickBackButtonOnBackupScreen();
       }
     @Then("I should see instruction first {string}")
     public void iShouldSeeInstructionFirst(String expectedText) {

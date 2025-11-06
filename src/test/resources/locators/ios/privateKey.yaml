@@ -1,0 +1,19 @@
+private_key_title:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text,'Private Key')]
+
+account_name_field:
+  strategy: xpath
+  value: //android.widget.EditText[@hint='Enter your account name']
+
+backup_mnemonic_phrase:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text,'Backup Mnemonic Phrase')]
+
+next_button:
+  strategy: accessibility
+  value: Next
+
+mnemonic_digit_word:
+  strategy: xpath
+  value: //android.view.ViewGroup[contains(@content-desc,',')]

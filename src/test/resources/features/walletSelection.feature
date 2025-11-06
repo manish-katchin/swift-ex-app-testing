@@ -116,7 +116,7 @@ As a user, I want to select and manage wallets in the app
 
 
   
-  @VerifyActiveWalletIndicatoronSelectedWallet
+  @VerifyActiveWalletIndicatoronSelectedWallet @J
   Scenario: Verify Selecting a Different Wallet and Ensuring the Active Wallet Indicator Updates Accordingly
   Given the app is launched
   When I enter a new PIN "123456"
@@ -150,7 +150,7 @@ As a user, I want to select and manage wallets in the app
 
 
 
-  @VerifyWalletNameUpdateonHomepage
+  @VerifyWalletNameUpdateonHomepage @J
   Scenario: Verify Wallet Name Update on Homepage
   Given the app is launched
   When I enter a new PIN "123456"

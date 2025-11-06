@@ -47,9 +47,14 @@ public class PinCreationPage extends BasePage {
     }
 
     public boolean isEnterYourPinTextVisible() {
-        By locator = LocatorUtils.getUIAutomatorTextLocatorBy("Please enter your pin");
+        By locator = LocatorUtils.getUIAutomatorTextLocatorBy("Please create a pin");
         boolean visible = isDisplayed(locator);
         logger.info("'Please enter your pin' text visibility: {}", visible);
         return visible;
     }
+   public void tapFingerPrintSensor() {
+        tap("fingerprint_option");
+        logger.info("Tapped on fingerprint sensor");
+    }
+
 }

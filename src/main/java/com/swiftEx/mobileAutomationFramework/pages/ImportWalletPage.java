@@ -1,13 +1,13 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
-import io.appium.java_client.AppiumDriver;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
+
+import io.appium.java_client.AppiumDriver;
 
 public class ImportWalletPage extends BasePage {
 

@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@appium/execute-driver-plugin": "^3.0.36"
+  }
+}

@@ -40,7 +40,7 @@ public class AndroidDriverCreator implements DriverCreator {
 
         // Improved session management capabilities
         capabilities.setCapability("appium:appWaitForLaunch", false);
-        capabilities.setCapability("appium:autoGrantPermissions", true);
+        capabilities.setCapability("appium:autoGrantPermissions", false);
         capabilities.setCapability("appium:noReset", false); // Changed to true to prevent session issues
         capabilities.setCapability("appium:fullReset", false);
         capabilities.setCapability("appium:appWaitActivity", "*");
@@ -50,8 +50,8 @@ public class AndroidDriverCreator implements DriverCreator {
         capabilities.setCapability("appium:clearSystemFiles", false); // Prevent system file cleanup
 
         // UiAutomator2 specific settings
-        capabilities.setCapability("appium:uiautomator2ServerInstallTimeout", 60000);
-        capabilities.setCapability("appium:uiautomator2ServerLaunchTimeout", 60000);
+        capabilities.setCapability("appium:uiautomator2ServerInstallTimeout", 120000);
+        capabilities.setCapability("appium:uiautomator2ServerLaunchTimeout", 120000);
 
         return capabilities;
     }
