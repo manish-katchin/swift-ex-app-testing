@@ -1,0 +1,145 @@
+# iOS PIN Creation Page Locators - Flat Structure
+# SwiftEx Mobile App - iOS Specific Elements
+
+# PIN Keypad Digits
+digit_0:
+  strategy: accessibility_id
+  value: "digit-0"
+  fallback_xpath: "//XCUIElementTypeButton[@name='0' or @label='0']"
+
+digit_1:
+  strategy: accessibility_id
+  value: "digit-1"
+  fallback_xpath: "//XCUIElementTypeButton[@name='1' or @label='1']"
+
+digit_2:
+  strategy: accessibility_id
+  value: "digit-2"
+  fallback_xpath: "//XCUIElementTypeButton[@name='2' or @label='2']"
+
+digit_3:
+  strategy: accessibility_id
+  value: "digit-3"
+  fallback_xpath: "//XCUIElementTypeButton[@name='3' or @label='3']"
+
+digit_4:
+  strategy: accessibility_id
+  value: "digit-4"
+  fallback_xpath: "//XCUIElementTypeButton[@name='4' or @label='4']"
+
+digit_5:
+  strategy: accessibility_id
+  value: "digit-5"
+  fallback_xpath: "//XCUIElementTypeButton[@name='5' or @label='5']"
+
+digit_6:
+  strategy: accessibility_id
+  value: "digit-6"
+  fallback_xpath: "//XCUIElementTypeButton[@name='6' or @label='6']"
+
+digit_7:
+  strategy: accessibility_id
+  value: "digit-7"
+  fallback_xpath: "//XCUIElementTypeButton[@name='7' or @label='7']"
+
+digit_8:
+  strategy: accessibility_id
+  value: "digit-8"
+  fallback_xpath: "//XCUIElementTypeButton[@name='8' or @label='8']"
+
+digit_9:
+  strategy: accessibility_id
+  value: "digit-9"
+  fallback_xpath: "//XCUIElementTypeButton[@name='9' or @label='9']"
+
+# PIN Actions
+backspace_button:
+  strategy: accessibility_id
+  value: "delete-button"
+  fallback_xpath: "//XCUIElementTypeButton[contains(@name,'delete') or contains(@label,'backspace')]"
+
+clear_button:
+  strategy: accessibility_id
+  value: "clear-button"
+  fallback_xpath: "//XCUIElementTypeButton[contains(@name,'clear')]"
+
+# PIN Screen Elements
+pin_dots_container:
+  strategy: accessibility_id
+  value: "pin-input-container"
+  fallback_xpath: "//XCUIElementTypeView[contains(@name,'pin') or contains(@name,'dots')]"
+
+pin_dot_1:
+  strategy: xpath
+  value: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[1]"
+
+pin_dot_2:
+  strategy: xpath
+  value: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[2]"
+
+pin_dot_3:
+  strategy: xpath
+  value: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[3]"
+
+pin_dot_4:
+  strategy: xpath
+  value: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[4]"
+
+pin_dot_5:
+  strategy: xpath
+  value: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[5]"
+
+pin_dot_6:
+  strategy: xpath
+  value: "(//XCUIElementTypeView[contains(@name,'dot') or contains(@name,'circle')])[6]"
+
+# Messages and Alerts
+success_message:
+  strategy: accessibility_id
+  value: "success-message"
+  fallback_xpath: "//XCUIElementTypeStaticText[contains(@name,'success') or contains(@value,'success')]"
+
+error_message:
+  strategy: accessibility_id
+  value: "error-message"
+  fallback_xpath: "//XCUIElementTypeStaticText[contains(@name,'error') or contains(@value,'did not match')]"
+  ios_predicate: "type == 'XCUIElementTypeStaticText' AND (name CONTAINS 'error' OR value CONTAINS 'PIN did not match')"
+
+confirmation_prompt:
+  strategy: accessibility_id
+  value: "confirm-pin-prompt"
+  fallback_xpath: "//XCUIElementTypeStaticText[contains(@value,'Confirm your PIN')]"
+
+# Navigation Elements
+create_wallet_button:
+  strategy: accessibility_id
+  value: "create-wallet-button"
+  fallback_xpath: "//XCUIElementTypeButton[@name='CREATE A NEW WALLET' or @label='CREATE A NEW WALLET']"
+  ios_predicate: "type == 'XCUIElementTypeButton' AND (name == 'CREATE A NEW WALLET' OR label == 'CREATE A NEW WALLET')"
+
+back_button:
+  strategy: accessibility_id
+  value: "back-button"
+  fallback_xpath: "//XCUIElementTypeButton[contains(@name,'back') or contains(@name,'Back')]"
+
+settings_button:
+  strategy: accessibility_id
+  value: "settings-button"
+  fallback_xpath: "//XCUIElementTypeButton[contains(@name,'settings')]"
+
+# iOS-specific system elements
+status_bar:
+  strategy: xpath
+  value: "//XCUIElementTypeStatusBar"
+
+navigation_bar:
+  strategy: xpath
+  value: "//XCUIElementTypeNavigationBar"
+
+tab_bar:
+  strategy: xpath
+  value: "//XCUIElementTypeTabBar"
+
+scroll_view:
+  strategy: xpath
+  value: "//XCUIElementTypeScrollView"

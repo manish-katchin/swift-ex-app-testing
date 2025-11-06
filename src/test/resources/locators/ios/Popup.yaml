@@ -1,0 +1,19 @@
+biometric_auth_title:
+  strategy: xpath
+  value: //android.widget.TextView[@text="Activate biometric authentication"]
+
+biometric_description:
+  strategy: xpath
+  value: //android.widget.TextView[@text="Make your wallet even more secure with biometric login."]
+
+biometric_instruction:
+  strategy: xpath
+  value: //android.widget.TextView[@text="Use your fingerprint or facial recognition for fast and secure access."]
+
+cancel_button:
+  strategy: accessibility
+  value: Cancel
+
+continue_button:
+  strategy: accessibility
+  value: Continue

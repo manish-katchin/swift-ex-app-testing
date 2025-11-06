@@ -1,0 +1,31 @@
+check_mnemonic_title:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Check Mnemonic']
+
+verify_secret_phrase_label:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Verify Secret Phrase']
+
+instruction_label:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text,'Please top on the correct answer')]
+
+word_number_label:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text,'Word #')]
+
+mnemonic_option:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc and .//android.widget.TextView]
+
+mnemonic_option_text:
+  strategy: xpath
+  value: //android.widget.TextView[@text]
+
+done_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc='Done']
+
+done_button_text:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Done']

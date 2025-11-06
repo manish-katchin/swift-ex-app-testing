@@ -1,0 +1,26 @@
+wallet_private_secure_text:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Private and Secure")
+
+
+wallet_private_keys_text:
+  strategy: androiduiautomator
+  value: new UiSelector().textContains("Private Keys never leave your device")
+
+create_wallet_card:
+  strategy: androiduiautomator 
+  value: new UiSelector().descriptionContains("Create Wallet")
+
+
+import_wallet_card:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("Import Wallet")
+
+
+choose_wallet_card:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("Choose Wallet")
+
+my_wallet_card:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("My Wallet")  

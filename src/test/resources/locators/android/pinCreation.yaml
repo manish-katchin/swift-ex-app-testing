@@ -1,0 +1,31 @@
+error_message:
+  strategy: id
+  value: com.app.swiftEx.app:id/snackbar_text
+
+password:
+  strategy: id
+  value: com.example.app:id/password
+
+welcomeBtn:
+  strategy: accessibilityId
+  value: welcome_button
+
+pinField:
+  strategy: id
+  value: com.example.app:id/pin_input
+
+confirmPinField:
+  strategy: id
+  value: com.example.app:id/pin_confirm_input
+
+confirmPinBtn:
+  strategy: id
+  value: com.example.app:id/pin_confirm_button
+
+homeIndicator:
+  strategy: id
+  value: com.example.app:id/home_root
+
+fingerprint_option:
+  strategy: xpath
+  value: (//android.view.ViewGroup[@content-desc='0']/preceding-sibling::android.view.ViewGroup)[last()]

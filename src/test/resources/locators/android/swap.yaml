@@ -1,0 +1,139 @@
+swap_button:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap")
+      
+swap_header:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap")
+
+swap_amount_input:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.EditText").text("0.0")
+
+from_token:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("WETH, Balance")
+
+to_token:
+  strategy: androiduiautomator
+  value: new UiSelector().descriptionContains("USDC, Balance")
+
+  SwapSuccessMessage:
+    strategy: androiduiautomator
+    value: new UiSelector().text("Swap Success")
+
+  swap_button_on_swap_page:
+    strategy: xpath
+    value: //android.view.ViewGroup[@content-desc="Swap"]
+
+  currency_switch_arrow:
+    strategy: xpath
+    value: (//*[@text='To']/parent::android.view.ViewGroup/android.view.ViewGroup)[3]
+
+send_header:
+  strategy: xpath
+  value: //android.view.ViewGroup[@text='Send']
+
+recipient_address_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Recipient Address"]
+
+amount_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Amount"]
+
+send_button:
+  strategy: xpath
+  value: //*[contains(@content-desc,'Send')]
+
+
+ethereum_wallet_card:
+  strategy: xpath
+  value: //*[@text="Ethereum"]
+
+  first_transaction:
+    strategy: xpath
+    value: (//*[@text="ETH"])[position()=2]
+
+  
+Insufficient_balance_message:
+    strategy: xpath
+    value: //*[contains(@content-desc,'Insufficient Balance')]
+
+Transactions_header:
+    strategy: xpath
+    value: //*[@text="Transactions"]
+
+   #Test sheet locator: XLM Page 
+scanner_icon:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Recipient Address"]/following-sibling::android.view.ViewGroup[1][@clickable='true']
+
+
+claim_xlm_now_button:
+  strategy: xpath
+  value: //android.view.ViewGroup[@content-desc="Claim 5 XLM Now!"]  
+
+Not_Allow_Button:
+  strategy: xpath
+  value: //*[@text="Don't allow"]
+    
+
+scan_qr_code_header:
+  strategy: xpath
+  value: //android.widget.TextView[@text="Scan QR Code"]
+
+wallet_balance_value:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Available balance :- ']/parent::*/android.widget.HorizontalScrollView//android.widget.TextView
+
+available_balance_label:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Available balance :- ']
+
+max_button:
+  strategy: xpath
+  value: //android.widget.TextView[@text="MAX"]
+
+activation_required_label:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text, 'Activation required for Stellar Account')]
+
+xlm_recipient_address_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Recipient Address"] 
+
+xlm_amount_input:
+  strategy: xpath
+  value: //android.widget.EditText[@text="Amount"] 
+
+xlm_send_button:
+  strategy: xpath
+  value: //*[@content-desc="Send"]
+
+
+xlm_transaction_history: 
+ strategy: xpath
+ value: //*[contains(@content-desc, "XLM")]
+
+
+Swap_Page_Balance:
+  strategy: xpath
+  value: //android.widget.TextView[contains(@text, "Balance:")]
+
+
+receive_header:
+  strategy: xpath
+  value: //android.widget.TextView[@text="Receive"]
+
+copy_icon_button:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Copy']/parent::android.view.ViewGroup/child::android.view.ViewGroup[@clickable='true'][2]
+
+Wrong_symbol:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Receive']/preceding-sibling::android.widget.TextView
+
+paste_button:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Paste")

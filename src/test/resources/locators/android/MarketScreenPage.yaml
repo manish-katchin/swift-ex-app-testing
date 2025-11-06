@@ -1,0 +1,8 @@
+market_header_title: 
+  strategy: androiduiautomator
+  value: new UiSelector().text("Market")
+
+
+bitcoin_asset: 
+  strategy: androiduiautomator
+  value: new UiSelector().text("Bitcoin")

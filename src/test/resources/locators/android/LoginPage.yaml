@@ -1,0 +1,158 @@
+ProfileHeader:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Profile")
+
+GuestUserLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Guest User")
+
+Login_Option:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Log In")
+
+GuestModeMessage:
+  strategy: androiduiautomator
+  value: new UiSelector().text("You're in Guest Mode.")
+
+MyWalletLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("My Wallet ")
+
+ConnectedLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Connected!")
+
+ActivatedSubscriptionLabel:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Activated Subcription")
+
+InvalidSubscriptionMessage:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Invalid subscription time line.")
+
+ProfileTab:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Profile")
+
+WelcomeBackHeader:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Hi, Welcome Back! 👋")
+
+EmailInputField:
+  strategy: androiduiautomator
+  value: new UiSelector().resourceId("emailLoginInput")
+
+PasswordInputField:
+  strategy: androiduiautomator
+  value: new UiSelector().className("android.widget.EditText").text("Password")
+
+ForgotPasswordOption:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Forgot Password")
+
+LogInButton:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Login")
+
+Email_Value:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Email']/following-sibling::android.widget.TextView[1]
+
+BothFieldsRequiredError:
+  strategy: id
+  value: com.app.swiftEx.app:id/snackbar_text
+
+
+Register_Now_Option:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Don't have an account? Register now")
+
+CreateAccountHeader:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Create your exchange account']
+
+FirstNameLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='First Name']
+
+FirstNameInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="firstNameInput"]
+
+LastNameLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Last Name']
+
+LastNameInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="lastNameInput"]
+
+EmailAddressLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Email Address']
+
+EmailInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="emailInput"]
+
+PasswordLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Password']
+
+PasswordInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="passwordInput"]
+
+RePasswordLabel:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Re-Password']
+
+RePasswordInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="rePasswordInput"]
+
+CreateAccountButton:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Create my account")
+
+CreateAccountButtonText:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Create my account']
+
+AlreadyHaveAccountButton:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Already have an account? login now")
+
+AlreadyHaveAccountButtonText:
+  strategy: xpath
+  value: //android.widget.TextView[@text='Already have an account? login now'] 
+
+
+EmailValidationError:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Email is required")
+
+VerificationCodeInput:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id="verificationCodeInput"]
+
+
+Verify_button:
+  strategy: androiduiautomator
+  value: new UiSelector().description("Verify")
+
+ForgotPasscodeEmailInputField:
+  strategy: androiduiautomator
+  value: new UiSelector().description("textInputId")
+
+RecoverToYourAccountHeader:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Recover to your account")
+
+VerificationCodeField:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id='verificationCodeInput']
+
+Verification_Password_Field:
+  strategy: xpath
+  value: //android.widget.EditText[@resource-id='verificationCodePass']
