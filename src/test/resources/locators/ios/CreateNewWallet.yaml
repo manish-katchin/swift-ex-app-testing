@@ -1,0 +1,11 @@
+create_wallet_button:
+  strategy: accessibility
+  value: CREATE A NEW WALLET
+
+import_wallet_button:
+  strategy: accessibility
+  value: Import Wallet
+
+use_default_wallet_button:
+  strategy: accessibility
+  value: Use default wallet
