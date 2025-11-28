@@ -1,4 +1,5 @@
-@SwapWalletFeature
+@Regression
+@SwapWalletFeature   
 Feature: Swap Wallet 
 As a user I want to Swap wallet
     

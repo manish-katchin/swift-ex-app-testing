@@ -1,3 +1,4 @@
+@Regression
 Feature: Wallet Selection
 As a user, I want to select and manage wallets in the app
 
