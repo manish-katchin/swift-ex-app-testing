@@ -1,13 +1,9 @@
 package com.swiftEx.mobileAutomationFramework.driver.creators;
 
-import static java.lang.Math.log;
-
 import com.swiftEx.mobileAutomationFramework.utils.ConfigLoader;
-
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import lombok.extern.slf4j.Slf4j;
-
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
@@ -35,7 +31,7 @@ public class AndroidDriverCreator implements DriverCreator {
         // Appium-specific capabilities (require appium: prefix for W3C compliance)
         capabilities.setCapability("appium:automationName", "UiAutomator2");
         capabilities.setCapability("appium:platformVersion",
-                ConfigLoader.getProperty("android.platform.version", "14"));
+            ConfigLoader.getProperty("android.platform.version", "13"));
         capabilities.setCapability("appium:deviceName",
                 ConfigLoader.getProperty("android.device.name", "Android Emulator"));
         capabilities.setCapability("appium:app",
@@ -44,9 +40,12 @@ public class AndroidDriverCreator implements DriverCreator {
 
         // Improved session management capabilities
         capabilities.setCapability("appium:appWaitForLaunch", false);
-        capabilities.setCapability("appium:autoGrantPermissions", false);
-        capabilities.setCapability("appium:noReset", false); // Changed to true to prevent session issues
-        capabilities.setCapability("appium:fullReset", false);
+        capabilities.setCapability("appium:autoGrantPermissions",
+            Boolean.parseBoolean(ConfigLoader.getProperty("appium.autoGrantPermissions", "true")));
+        capabilities.setCapability("appium:noReset",
+            Boolean.parseBoolean(ConfigLoader.getProperty("appium.noReset", "false")));
+        capabilities.setCapability("appium:fullReset",
+            Boolean.parseBoolean(ConfigLoader.getProperty("appium.fullReset", "false")));
         capabilities.setCapability("appium:appWaitActivity", "*");
         capabilities.setCapability("appium:appWaitDuration", 30000);
         capabilities.setCapability("appium:newCommandTimeout", 300); // Increased timeout
