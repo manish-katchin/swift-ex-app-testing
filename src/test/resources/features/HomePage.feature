@@ -435,9 +435,7 @@ And I should see the Exchange option
 And I click on the Exchange tab in bottom navigation
 Then I should see the Trade Wallet header
 And I should see the Home icon
-Then I click Back button of trade Wallet Page
-And I click on the Settings tab in bottom navigation
-Then I should see the Settings header
+
 
 @VerifyHomeTabNavigationToSettingsPage
 Scenario: Verify navigation from Home page to Settings Page

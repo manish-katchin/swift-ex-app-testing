@@ -22,7 +22,7 @@ public class ImportWalletStep extends BaseStep {
     }
 
     @Then("I should see \"Multi-Chain Wallet\" header")
-    public void iShouldSeeMultiChainWalletHeader() {
+    public void iShouldSeeMultiChainWalletHeader() throws InterruptedException {
         logger.info("Verifying Multi-Chain Wallet header is displayed");
         Assert.assertTrue("Multi-Chain Wallet header is not displayed!",
                 importWalletPage.isMultiChainWalletHeaderDisplayed());
@@ -112,7 +112,7 @@ public class ImportWalletStep extends BaseStep {
     }
 
     @And("I should see \"Multi-Chain Wallet\" section")
-    public void iShouldSeeMultiChainWalletSectionText() {
+    public void iShouldSeeMultiChainWalletSectionText() throws InterruptedException {
         logger.info("Verifying Multi-Chain Wallet section is displayed");
         Assert.assertTrue("Multi-Chain Wallet section is not displayed!",
                 importWalletPage.isMultiChainWalletSectionDisplayed());

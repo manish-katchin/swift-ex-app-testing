@@ -168,7 +168,7 @@ Scenario: Logout of the application
   And I see "Continue" button is disabled on the screen
 
 
- @VerifyBackupMnemonicPhraseScreen
+ @VerifyBackupMnemonicPhraseScreen @FC
   Scenario: Verify that clicking "Continue" after selecting both conditions navigates to the "Backup Mnemonic Phrase" screen.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -210,7 +210,7 @@ Scenario: Logout of the application
   And I see "Continue" button is disabled on the screen
 
 
-  @VerifyBackupMnemonicPhrasesonScreen
+  @VerifyBackupMnemonicPhrasesonScreen  @FC
   Scenario: Verify that the mnemonic phrases are visible on the screen.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -234,7 +234,7 @@ Scenario: Logout of the application
 
 
 
-  @VerifyDoneButtonEnabled
+  @VerifyDoneButtonEnabled  @FC
   Scenario: Verify that the "Done" button is enabled when name is entered.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -258,7 +258,7 @@ Scenario: Logout of the application
   When I enter account name "TestAccount" in the Account Name field
   Then I should see the "Done" button is enabled
 
-  @VerifyDoneButtonNavigationToSecretPhraseScreen
+  @VerifyDoneButtonNavigationToSecretPhraseScreen @FC
   Scenario: Verify that clicking "DoneButton" after entering a valid account name navigates to the "Verify Secret Phrase" screen
   Given the app is launched
   When I enter a new PIN "123456"
@@ -308,7 +308,7 @@ Scenario: Logout of the application
   Then I should be on "Verify Secret Phrase" screen
   Then I verify jumbled mnemonic phrases appear for verification
 
-@VerifyCompleteBackupProcess @rerun
+@VerifyCompleteBackupProcess @rerun @FC
   Scenario:  Verify that selecting all four correct words successfully completes the backup process.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -361,7 +361,7 @@ Scenario: Logout of the application
   Then I should be on "Backup Mnemonic Phrase" page
 
 
-@VerifyAppClosureRequiresStartingOver
+@VerifyAppClosureRequiresStartingOver @rerun @FC
   Scenario: Verify that closing the app before completing wallet creation requires starting over.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -397,7 +397,7 @@ Scenario: Logout of the application
 
 
 
-  @VerifyDoneButtonDisabledWhenSpaceEnteredInNameField
+  @VerifyDoneButtonDisabledWhenSpaceEnteredInNameField @FC
   Scenario: Verify that clicking "Done" without entering an account name does not navigate to the next screen.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -446,7 +446,7 @@ Scenario: Logout of the application
   Then I verify only 20 characters are accepted in the Account Name field
 
  
-@VerifyEmojiNotAcceptedInAccountNameField @rerun
+@VerifyEmojiNotAcceptedInAccountNameField @rerun @FC
   Scenario: Verify that the account name field does not accept only emojis.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -517,7 +517,7 @@ Scenario: Logout of the application
   And I select the option If I share my private key, my funds can be lost
   Then I see "Continue" button is enabled on the screen
 
-@VerifyInstructionForKeepingSecretPhraseSafe
+@VerifyInstructionForKeepingSecretPhraseSafe @FC
 Scenario: TC-107 Verify Instruction for Keeping Secret Phrase Safe
 Given the app is launched
 When I enter a new PIN "123456"

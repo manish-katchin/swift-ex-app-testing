@@ -1,7 +1,6 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
-import java.util.List;
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 
 public class HomePage extends BasePage {
@@ -22,7 +22,7 @@ public class HomePage extends BasePage {
 
     // Action to click on Settings tab
     public void clickSettingsTab() throws InterruptedException {
-        Thread.sleep(3000);
+        Thread.sleep(5000);
         tap("settings_tab");
         logger.info("Clicked Settings tab in bottom navigation");
     }
@@ -84,9 +84,29 @@ public class HomePage extends BasePage {
         return displayed;
     }
 
-    public boolean isLogoutOptionDisplayed() {
-        return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Log Out"), 20);
+  public boolean isLogoutOptionDisplayed() {
+    logger.info("Scrolling to find Logout option");
+    
+    try {
+        // Use UiScrollable to scroll and find the element
+        By logoutLocator = AppiumBy.androidUIAutomator(
+            "new UiScrollable(new UiSelector().scrollable(true))" +
+            ".scrollIntoView(new UiSelector().textContains(\"Log Out\"))"
+        );
+        
+        // Wait for element to be visible after scrolling
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebElement logoutElement = wait.until(ExpectedConditions.visibilityOfElementLocated(logoutLocator));
+        
+        boolean displayed = logoutElement.isDisplayed();
+        logger.info("Logout option displayed after scrolling: {}", displayed);
+        return displayed;
+        
+    } catch (Exception e) {
+        logger.error("Failed to find Logout option after scrolling: {}", e.getMessage());
+        return false;
     }
+}
 
     // Balance Section
     public String getBalanceAmount() {
@@ -513,7 +533,7 @@ public class HomePage extends BasePage {
 
     // Click Back button of Trade Wallet Page
     public void clickTradeWalletBackButton() {
-        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(15));
+        WebDriverWait wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(25));
         WebElement backBtn = wait.until(ExpectedConditions.elementToBeClickable(getBy("TradeWallet_back_button")));
         backBtn.click();
         logger.info("Clicked Back button of Trade Wallet Page");

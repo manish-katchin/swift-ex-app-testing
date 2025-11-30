@@ -35,7 +35,7 @@ public class AndroidDriverCreator implements DriverCreator {
         // Appium-specific capabilities (require appium: prefix for W3C compliance)
         capabilities.setCapability("appium:automationName", "UiAutomator2");
         capabilities.setCapability("appium:platformVersion",
-                ConfigLoader.getProperty("android.platform.version", "14"));
+                ConfigLoader.getProperty("android.platform.version", "12"));
         capabilities.setCapability("appium:deviceName",
                 ConfigLoader.getProperty("android.device.name", "Android Emulator"));
         capabilities.setCapability("appium:app",

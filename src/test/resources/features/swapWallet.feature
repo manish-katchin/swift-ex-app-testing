@@ -3,7 +3,7 @@
 Feature: Swap Wallet 
 As a user I want to Swap wallet
     
-@SwappingCryptoCurrencyfromEthereumToUSDC   
+@SwappingCryptoCurrencyfromEthereumToUSDC   @FC
 Scenario: Verify successful Crypto Swap from Ether to USDC
 Given the app is launched
 When I enter a new PIN "123456"
@@ -53,7 +53,7 @@ And I enter "1" in the input field below "WETH"
 Then I click on the "Swap" button on Swap page
 And I see "Swap Success" popup on screen
 
-@sendCryptoCurrency
+@sendCryptoCurrency @FC
 Scenario:To verify user is able to perform transaction
 Given the app is launched
 When I enter a new PIN "123456"
@@ -131,7 +131,7 @@ Then I should see "Insufficient Balance" message on the screen
     And I enter "200" in the input field below "WETH"
     Then I should see "Insufficient Balance" message on the screen
 
-@ValidateSendTransaction
+@ValidateSendTransaction @FC
 Scenario:Send ETH Transaction - Validate Amount and Recipient Details
 Given the app is launched
 When I enter a new PIN "123456"
@@ -606,7 +606,7 @@ Then I should see the Scanner icon is displayed in the Recipient Address field
 
 
 #TC-36
-@VerifyScannerPermissionRequestPopuponETH  @31
+@VerifyScannerPermissionRequestPopuponETH  @31 @FC
 Scenario: Verify scanner permission request popup on ETH
 Given the app is launched
 When I enter a new PIN "123456"
@@ -748,7 +748,7 @@ Then I verify "Share" button on screen
 
 
 #TC-48
-@VerifyCopyButtonFunctionalityforXLM
+@VerifyCopyButtonFunctionalityforXLM @31 @FC
 Scenario: Verify Copy button functionality for XLM
 Given the app is launched
 When I enter a new PIN "123456"

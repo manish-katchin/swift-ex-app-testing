@@ -1,4 +1,4 @@
-@Regression
+@Regression @WalletSelection
 Feature: Wallet Selection
 As a user, I want to select and manage wallets in the app
 
@@ -181,7 +181,7 @@ As a user, I want to select and manage wallets in the app
 
 
 #TC-95 
- @VerifyPopupOnSelectingWallet @11
+ @VerifyPopupOnSelectingWallet @11 @FC
   Scenario: Verify Popup on Selecting a Wallet
   Given the app is launched
   When I enter a new PIN "123456"
