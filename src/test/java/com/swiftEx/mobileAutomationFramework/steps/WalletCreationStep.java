@@ -14,11 +14,13 @@ import com.swiftEx.mobileAutomationFramework.pages.WalletScreenPage;
 import com.swiftEx.mobileAutomationFramework.utils.TestContext;
 import com.swiftEx.mobileAutomationFramework.pages.SettingsScreenPage;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -233,9 +235,46 @@ public class WalletCreationStep extends BaseStep {
 
     @And("I verify and select the requested mnemonic words on Check Mnemonic page")
     public void iVerifyAndSelectRequestedMnemonicWords() {
-        logger.info("Verifying and selecting mnemonic words");
-        var mnemonicMap = privateKeyPage.getMnemonicDigitWordMap();
-        checkMnemonicPage.verifyAndSelectMnemonicWords(mnemonicMap);
+        logger.info("Verifying and selecting mnemonic words on verification screen");
+        
+        // Verify TestContext has phrases
+        List<String> storedPhrases = TestContext.getMnemonicPhrases();
+        if (storedPhrases == null || storedPhrases.isEmpty()) {
+            throw new RuntimeException("❌ No mnemonic phrases in TestContext");
+        }
+        
+        logger.info("✅ Found {} phrases in TestContext", storedPhrases.size());
+        
+        CheckMnemonicPage checkMnemonicPage = page(CheckMnemonicPage.class);
+        
+        // Wait for verification screen to be ready
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(15));
+        
+        try {
+            // Wait for title
+            wait.until(driver -> checkMnemonicPage.isVerifySecretPhraseLabelVisible());
+            
+            // Wait for word options to be present
+            wait.until(driver -> {
+                try {
+                    return checkMnemonicPage.areJumbledMnemonicPhrasesVisible();
+                } catch (Exception e) {
+                    return false;
+                }
+            });
+            
+            logger.info("✅ Verification screen is ready");
+            
+            // Perform selection using stored phrases
+            var mnemonicMap = privateKeyPage.getMnemonicDigitWordMap();
+            checkMnemonicPage.verifyAndSelectMnemonicWords(mnemonicMap);
+            
+            logger.info("✅ Mnemonic words verified and selected");
+            
+        } catch (org.openqa.selenium.TimeoutException e) {
+            logger.error("❌ Verification screen not ready: {}", e.getMessage());
+            throw new RuntimeException("Verification screen not ready for word selection", e);
+        }
     }
 
     @And("I verify all mnemonic words are correctly selected")
