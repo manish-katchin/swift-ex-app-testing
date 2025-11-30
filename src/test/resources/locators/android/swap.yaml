@@ -18,17 +18,17 @@ to_token:
   strategy: androiduiautomator
   value: new UiSelector().descriptionContains("USDC, Balance")
 
-  SwapSuccessMessage:
-    strategy: androiduiautomator
-    value: new UiSelector().text("Swap Success")
+SwapSuccessMessage:
+  strategy: androiduiautomator
+  value: new UiSelector().text("Swap Success")
 
-  swap_button_on_swap_page:
-    strategy: xpath
-    value: //android.view.ViewGroup[@content-desc="Swap"]
+swap_button_on_swap_page:
+  strategy: accessibility
+  value: Swap
 
-  currency_switch_arrow:
-    strategy: xpath
-    value: (//*[@text='To']/parent::android.view.ViewGroup/android.view.ViewGroup)[3]
+currency_switch_arrow:
+  strategy: xpath
+  value: (//*[@text='To']/parent::android.view.ViewGroup/android.view.ViewGroup)[3]
 
 send_header:
   strategy: xpath
@@ -46,16 +46,14 @@ send_button:
   strategy: xpath
   value: //*[contains(@content-desc,'Send')]
 
-
 ethereum_wallet_card:
   strategy: xpath
   value: //*[@text="Ethereum"]
 
-  first_transaction:
-    strategy: xpath
-    value: (//*[@text="ETH"])[position()=2]
+first_transaction:
+  strategy: xpath
+  value: (//*[@text="ETH"])[position()=2]
 
-  
 Insufficient_balance_message:
     strategy: xpath
     value: //*[contains(@content-desc,'Insufficient Balance')]
@@ -137,3 +135,7 @@ Wrong_symbol:
 paste_button:
   strategy: androiduiautomator
   value: new UiSelector().text("Paste")
+
+quote_details:
+  strategy: xpath
+  value: //*[@text="Quote Details"]  

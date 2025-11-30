@@ -28,7 +28,8 @@ public class LoginPage extends BasePage {
 }
 
     // Profile header
-    public boolean isProfileHeaderDisplayed() {
+    public boolean isProfileHeaderDisplayed() throws InterruptedException {
+        Thread.sleep(2000);
         boolean displayed = isDisplayed("ProfileHeader");
         logger.info("Profile header displayed: {}", displayed);
         return displayed;

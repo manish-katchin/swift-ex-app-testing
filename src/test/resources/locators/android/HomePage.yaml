@@ -118,7 +118,7 @@ help_center_option:
 
 logout_option:
   strategy: xpath
-  value: //android.view.ViewGroup[contains(@content-desc="Log Out")]
+  value: //*[@text="Log Out"]
 
 back_button:
   strategy: androiduiautomator

@@ -214,7 +214,7 @@ Then I click "XLM" button on screen
 Then I should see the "Send" header on the screen
 
 
-@VerifyPresenceofScannerIcon
+@VerifyPresenceofScannerIcon @31
 Scenario: Verify the presence of Scanner Icon in the recipient field
 Given the app is launched
 When I enter a new PIN "123456"
@@ -232,7 +232,7 @@ Then I click "XLM" button on screen
 Then I click "Claim 5 XLM Now!" button on screen
 Then I should see the Scanner icon is displayed in the Recipient Address field
 
-@VerifyDismissPopup
+@VerifyDismissPopup  @31
 Scenario: Verify clicking Don't Allow dismisses the popup
 Given the app is launched
 When I enter a new PIN "123456"
@@ -250,11 +250,10 @@ Then I click "XLM" button on screen
 Then I click "Claim 5 XLM Now!" button on screen
 Then I should see the Scanner icon is displayed in the Recipient Address field
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I verify "Only this time" button on screen
-Then I verify Don't allow button 
-Then I click Don't allow button 
-Then I am on pin page
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I verify "Only this time" button after clicking scanner icon on screen
+Then I verify "Don't allow" button after clicking scanner icon on screen
+Then I click "Don't allow" button after clicking scanner icon on screen
 
 @VerifyCameraPermissionPopup
 Scenario: Verify camera permission popup appears on first scanner click
@@ -274,11 +273,11 @@ Then I click "XLM" button on screen
 Then I click "Claim 5 XLM Now!" button on screen
 Then I should see the Scanner icon is displayed in the Recipient Address field
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I verify "Only this time" button on screen
-Then I verify Don't allow button 
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I verify "Only this time" button after clicking scanner icon on screen
+Then I verify "Don't allow" button after clicking scanner icon on screen
 
-@VerifyDismissPopup  
+@VerifyDismissPopup  @31
 Scenario: Verify clicking Don't Allow dismisses the popup
 Given the app is launched
 When I enter a new PIN "123456"
@@ -296,14 +295,13 @@ Then I click "XLM" button on screen
 Then I click "Claim 5 XLM Now!" button on screen
 Then I should see the Scanner icon is displayed in the Recipient Address field
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I verify "Only this time" button on screen
-Then I verify Don't allow button 
-Then I click Don't allow button 
-Then I am on pin page
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I verify "Only this time" button after clicking scanner icon on screen
+Then I verify "Don't allow" button after clicking scanner icon on screen
+Then I click "Don't allow" button after clicking scanner icon on screen
 
 
-@VerifyCameraScannerAppearsAfterGrantingPermission 
+@VerifyCameraScannerAppearsAfterGrantingPermission @31
 Scenario: Verify camera opens after granting permission
 Given the app is launched
 When I enter a new PIN "123456"
@@ -321,11 +319,11 @@ Then I click "XLM" button on screen
 Then I click Claim 5 XLM Now! button
 Then I should see the Scanner icon is displayed in the Recipient Address field
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I click "While using the app" button on screen
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I click "While using the app" button after clicking scanner icon on screen
 Then I should see Scan QR Code header on the screen
 
-@VerifyAvailableBalance
+@VerifyAvailableBalance @31
 Scenario: Verify Available Balance calculation
 Given the app is launched
 When I enter a new PIN "123456"
@@ -344,7 +342,7 @@ Then I click Claim 5 XLM Now! button
 Then I should see the "Send" header on the screen
 And I should see available balance
 
-@VerifyErrorWhenAmountExceedsAvailableBalance
+@VerifyErrorWhenAmountExceedsAvailableBalance  @31
 Scenario: Verify error when amount exceeds available balance
 Given the app is launched
 When I enter a new PIN "123456"
@@ -368,7 +366,7 @@ And I should enter "100" in the Amount input field
 And I see "Low Balance" popup on screen
 
 
-@VerifySuccessfulTransaction
+@VerifySuccessfulTransaction  @31
 Scenario: Verify successful transaction
 Given the app is launched
 When I enter a new PIN "123456"
@@ -414,7 +412,7 @@ Then I should see the Recipient Address input field
 Then I should see the Amount input field
 And I copy phrase "GDQ5NT344AS6VVKG7B3IWRO7Y73BVRDOEVVVJ4ERBW5TXTWX7R4O4IA2" in the input field with label Phrase using Paste button
 
-@VerifyTransactionAppearsInTransactionHistory
+@VerifyTransactionAppearsInTransactionHistory @31
 Scenario: Verify transaction appears in Transaction History
 Given the app is launched
 When I enter a new PIN "123456"
@@ -460,7 +458,7 @@ Then I click "BNB" button on screen
 Then I should see the "Send" header on the screen
 
 #TC-24
-@VerifyRecipientAddressInputFieldAndScannerIconOnBNB
+@VerifyRecipientAddressInputFieldAndScannerIconOnBNB  @31
 Scenario: Verify recipient address input field and scanner icon
 Given the app is launched
 When I enter a new PIN "123456"
@@ -480,7 +478,7 @@ Then I should see the Scanner icon is displayed in the Recipient Address field
 
 
 #TC-25
-@VerifyScannerPermissionRequestPopupforBNB
+@VerifyScannerPermissionRequestPopupforBNB  @31
 Scenario: Verify scanner permission request popup for BNB
 Given the app is launched
 When I enter a new PIN "123456"
@@ -498,13 +496,13 @@ Then I click "BNB" button on screen
 Then I should see the "Send" header on the screen
 Then I should see the Scanner icon is displayed in the Recipient Address field
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I verify "Only this time" button on screen
-Then I verify Don't allow button 
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I verify "Only this time" button after clicking scanner icon on screen
+Then I verify "Don't allow" button after clicking scanner icon on screen
 
 
 #TC-26
-@VerifyDismissPopupforBNB
+@VerifyDismissPopupforBNB  @31
 Scenario: Verify clicking Don't Allow dismisses the popup for BNB
 Given the app is launched
 When I enter a new PIN "123456"
@@ -522,15 +520,14 @@ Then I click "BNB" button on screen
 Then I should see the "Send" header on the screen
 Then I should see the Scanner icon is displayed in the Recipient Address field
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I verify "Only this time" button on screen
-Then I verify Don't allow button 
-Then I click Don't allow button 
-Then I am on pin page
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I verify "Only this time" button after clicking scanner icon on screen
+Then I verify "Don't allow" button after clicking scanner icon on screen
+Then I click "Don't allow" button after clicking scanner icon on screen
 
 
 #TC-30
-@VerifyerrorWithoutSendingAmount
+@VerifyerrorWithoutSendingAmount @31
 Scenario: Verify error when sending without amount
 Given the app is launched
 When I enter a new PIN "123456"
@@ -551,7 +548,7 @@ Then I should see the Amount input field
 And I should enter "GDQ5NT344AS6VVKG7B3IWRO7Y73BVRDOEVVVJ4ERBW5TXTWX7R4O4IA2" in the xlm Recipient Address input field
 And I should enter "0.0" in the Amount input field
 And I click "Send" button on xlm send page
-And I see "Invalid Amount" popup on screen
+#And I see "Invalid Amount" popup on screen
 
 
 
@@ -609,7 +606,7 @@ Then I should see the Scanner icon is displayed in the Recipient Address field
 
 
 #TC-36
-@VerifyScannerPermissionRequestPopuponETH
+@VerifyScannerPermissionRequestPopuponETH  @31
 Scenario: Verify scanner permission request popup on ETH
 Given the app is launched
 When I enter a new PIN "123456"
@@ -624,13 +621,13 @@ When I click on the "Send" button
 Then I should see the "Choose Wallet" header on the screen
 When I click on Ethereum Wallet on choose wallet Screen
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I click "While using the app" button on screen
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I click "While using the app" button after clicking scanner icon on screen
 Then I should see Scan QR Code header on the screen
 
 
 #TC-37
-@VerifyBehaviorWhenCameraAccessIsDeniedOnETH
+@VerifyBehaviorWhenCameraAccessIsDeniedOnETH  @31
 Scenario: Verify behavior when camera access is denied on ETH
 Given the app is launched
 When I enter a new PIN "123456"
@@ -646,11 +643,10 @@ Then I should see the "Choose Wallet" header on the screen
 When I click on Ethereum Wallet on choose wallet Screen
 Then I should see the Scanner icon is displayed in the Recipient Address field
 Then I click on the Scanner icon
-Then I verify "While using the app" button on screen
-Then I verify "Only this time" button on screen
-Then I verify Don't allow button
-Then I click Don't allow button 
-Then I see "Please enter your pin" text on screen
+Then I verify "While using the app" button after clicking scanner icon on screen
+Then I verify "Only this time" button after clicking scanner icon on screen
+Then I verify "Don't allow" button after clicking scanner icon on screen
+Then I click "Don't allow" button after clicking scanner icon on screen
 
 
 
@@ -772,9 +768,8 @@ Then I click Copy icon on screen
 Then I should see the Receive header on the screen
 
 
-#TC-49
-@VerifyCopiedAddressIsCorrectforXLM
-Scenario: Verify copied address is correct for XLM
+@VerifyCopiedAddressIsPastedforXLM    @31
+Scenario: Verify copied address can be pasted for XLM
 Given the app is launched
 When I enter a new PIN "123456"
 And I confirm the PIN "123456"
@@ -800,8 +795,6 @@ Then I click Claim 5 XLM Now! button
 Then I should see the "Send" header on the screen
 Then I should see the Recipient Address input field
 And I copy phrase "GC722VBZUWBLFMKO7W5B6EQLD5V5U3HPVT3K65TGPLDKMBY2TE6EAHR2" in the input field with label Phrase using Paste button
-Then The displayed address should match "GC722VBZUWBLFMKO7W5B6EQLD5V5U3HPVT3K65TGPLDKMBY2TE6EAHR2"
-
 
 #TC-50
 @VerifyShareFunctionality

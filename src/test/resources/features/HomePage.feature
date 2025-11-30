@@ -102,9 +102,10 @@ Then I should see the biometric authentication popup
 When I handle the biometric authentication
 Then I should be on homePage
 Then I click on eye ball icon 
-Then I should see the wallet balance is hidden
-Then I click on eye ball icon
 Then I should see the wallet balance is visible
+Then I click on eye ball icon
+Then I should see the wallet balance is hidden
+
 
 @VerifyClickingWalletNameOpensDropdown
 Scenario: Verify clicking wallet name opens the wallet selection dropdown.

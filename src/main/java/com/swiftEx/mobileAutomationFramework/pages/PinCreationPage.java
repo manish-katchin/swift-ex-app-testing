@@ -1,8 +1,12 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.cucumber.java.en.When;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +56,8 @@ public class PinCreationPage extends BasePage {
         logger.info("'Please enter your pin' text visibility: {}", visible);
         return visible;
     }
-   public void tapFingerPrintSensor() {
+
+    public void tapFingerPrintSensor() {
         tap("fingerprint_option");
         logger.info("Tapped on fingerprint sensor");
     }

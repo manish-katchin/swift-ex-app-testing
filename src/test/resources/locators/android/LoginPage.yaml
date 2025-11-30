@@ -147,7 +147,7 @@ ForgotPasscodeEmailInputField:
 
 RecoverToYourAccountHeader:
   strategy: androiduiautomator
-  value: new UiSelector().text("Recover to your account")
+  value: new UiSelector().text("Recover your account")
 
 VerificationCodeField:
   strategy: xpath

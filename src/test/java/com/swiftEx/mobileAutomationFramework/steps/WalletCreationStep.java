@@ -11,7 +11,12 @@ import com.swiftEx.mobileAutomationFramework.pages.HomePage;
 import com.swiftEx.mobileAutomationFramework.pages.MarketScreenPage;
 import com.swiftEx.mobileAutomationFramework.pages.PopupPage;
 import com.swiftEx.mobileAutomationFramework.pages.WalletScreenPage;
+import com.swiftEx.mobileAutomationFramework.utils.TestContext;
 import com.swiftEx.mobileAutomationFramework.pages.SettingsScreenPage;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -32,7 +37,7 @@ public class WalletCreationStep extends BaseStep {
     private final SettingsScreenPage settingsScreenPage = page(SettingsScreenPage.class);
 
     @And("I click on the Settings tab in bottom navigation")
-    public void iClickOnSettingsTab() {
+    public void iClickOnSettingsTab() throws InterruptedException {
         logger.info("Clicking on Settings tab in bottom navigation");
         homePage.clickSettingsTab();
     }
@@ -692,4 +697,26 @@ public void iClickRandomlyOutsideTheDropdown() throws InterruptedException {
     logger.info("Clicking randomly outside the dropdown");
     homePage.clickRandomCoordinate();
 }
+@When("I store mnemonic phrases from the backup screen")
+public void iStoreMnemonicPhrasesFromBackupScreen() {
+    logger.info("📝 Storing mnemonic phrases from backup screen");
+    PrivateKeyPage privateKeyPage = page(PrivateKeyPage.class);
+    
+    // Capture phrases using existing method
+    Map<Integer, String> mnemonicMap = privateKeyPage.getMnemonicDigitWordMap();
+    
+    if (mnemonicMap.isEmpty()) {
+        throw new RuntimeException("❌ Failed to capture mnemonic phrases - map is empty");
+    }
+    
+    // Convert map to list and store in TestContext
+    List<String> phrases = new ArrayList<>();
+    for (int i = 1; i <= mnemonicMap.size(); i++) {
+        phrases.add(mnemonicMap.get(i));
+    }
+    
+    TestContext.setMnemonicPhrases(phrases);
+    logger.info("✅ Stored {} phrases in TestContext", phrases.size());
+}
+
 }

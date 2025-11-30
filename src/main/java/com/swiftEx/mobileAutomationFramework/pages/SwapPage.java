@@ -94,10 +94,13 @@ public class SwapPage extends BasePage {
 
     // Clicks the Swap button specifically on the Swap page
     public void clickSwapButtonOnSwapPage() throws InterruptedException {
-        logger.info("Waiting 10 seconds before clicking Swap button on Swap page");
-        Thread.sleep(10000);
-        tapOnCoordinates(driver, 333, 1245);
-        logger.info("Clicked Swap button on Swap page via coordinates");
+        logger.info("Waiting 30 seconds before clicking Swap button on Swap page");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("quote_details")));
+    Thread.sleep(3000);
+    tap("swap_button_on_swap_page");
+        // tapOnCoordinates(driver, 333, 1245);
+        logger.info("Clicked Swap button on Swap page");
     }
 
     // Taps the currency switch arrow symbol
@@ -119,7 +122,7 @@ public class SwapPage extends BasePage {
 
     // Verifies the Choose Wallet header is displayed
     public boolean isChooseWalletHeaderDisplayed() {
-        return isDisplayed(By.xpath("//android.widget.TextView[@text='Choose Wallet']"), 15);
+        return isDisplayed(By.xpath("//android.widget.TextView[@text='Choose Wallet']"), 20);
     }
 
     // Clicks on Ethereum Wallet on choose wallet Screen

@@ -21,7 +21,8 @@ public class HomePage extends BasePage {
     }
 
     // Action to click on Settings tab
-    public void clickSettingsTab() {
+    public void clickSettingsTab() throws InterruptedException {
+        Thread.sleep(3000);
         tap("settings_tab");
         logger.info("Clicked Settings tab in bottom navigation");
     }
@@ -76,7 +77,7 @@ public class HomePage extends BasePage {
     }
 
     public boolean isHelpCenterOptionDisplayed() {
-        boolean scroll = scrollDownUntilVisible("help_center_option", 0);
+        boolean scroll = scrollDownUntilVisible("logout_option", 0);
         boolean displayed = isDisplayed("help_center_option");
 
         logger.info("Help Center option visibility: {}", displayed);
