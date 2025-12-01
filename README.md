@@ -8,22 +8,82 @@ A comprehensive mobile test automation framework supporting both Android and iOS
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Java 17+
+- Java 17+ to 21.
 - Maven 3.6+
 - Node.js (for local Appium server)
 - Android SDK (for local Android testing)
 - Xcode (for local iOS testing - macOS only)
 
+1.⁠ ⁠Install JDK 11 or 17 → verify using:
+   java -version
+
+2.⁠ ⁠Install Android Studio (SDK + platform-tools)
+
+3.⁠ ⁠Set ANDROID_HOME Path
+  
+4.⁠ ⁠Install Node.js → verify:
+   node -v
+   npm -v
+
+5.⁠ ⁠Install Appium:
+   npm install -g appium
+   appium -v
+
+6.⁠ ⁠Install Appium Android driver:
+   appium driver install uiautomator2
+
+STEP 2 — Open Java Project in VS Code/ Any other IDE
+-------------------------------------
+1.⁠ ⁠Extract your project folder.
+2.⁠ ⁠Open VS Code → File → Open Folder → select your project.
+
+STEP 3  — Install Project Dependencies(Maven for Java, Extension Pack for Java)
+Install Project Dependencies
+Command: mvn clean install
+
+STEP 4 — Start Appium Server
+-----------------------------
+In a separate terminal:
+Command :  npx appium or appium 
+
+STEP 5 — Connect Android Device or Emulator
+--------------------------------------------
+A) Real Device:
+   - Enable USB debugging
+   - Connect phone via USB
+   - Check:
+     adb devices
+
+B) Emulator:
+   - Start from Android Studio → Virtual Device Manager
+
+STEP 6 — Configure Desired Capabilities
+Example capabilities:
+
+capabilities.setCapability("platformName", "Android");
+capabilities.setCapability("deviceName", "emulator-5554");
+capabilities.setCapability("automationName", "UiAutomator2");
+capabilities.setCapability("appPackage", "<your-app-package>");
+capabilities.setCapability("appActivity", "<your-main-activity>");
+
+Make sure deviceName matches adb devices.
+
+ABD config - 
+Platform version -12
+Device - Pixel 6 API 33
+
+
+STEP 7 — Run Your Tests
+------------------------
+Using  Maven Command
+
 ### Run Tests
 ```bash
 # Android Local
 mvn clean test -Dplatform=android -Dcucumber.filter.tags="@createPin"
+regression -
+mvn clean test -Dplatform=android -Dcucumber.filter.tags="@Regression"
 
-# Android SauceLabs Cloud
-mvn clean test -Dplatform=androidSauce -Dcucumber.filter.tags="@createPin"
-
-# iOS SauceLabs Cloud  
-mvn clean test -Dplatform=iOSSauce -Dcucumber.filter.tags="@createPin"
 ```
 
 ## 📋 Table of Contents
