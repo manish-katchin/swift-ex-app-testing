@@ -1,9 +1,13 @@
 package com.swiftEx.mobileAutomationFramework.driver.creators;
 
+import static java.lang.Math.log;
+
 import com.swiftEx.mobileAutomationFramework.utils.ConfigLoader;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import lombok.extern.slf4j.Slf4j;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
@@ -40,7 +44,7 @@ public class AndroidDriverCreator implements DriverCreator {
 
         // Improved session management capabilities
         capabilities.setCapability("appium:appWaitForLaunch", false);
-        capabilities.setCapability("appium:autoGrantPermissions", false);
+        capabilities.setCapability("appium:autoGrantPermissions", true);
         capabilities.setCapability("appium:noReset", false); // Changed to true to prevent session issues
         capabilities.setCapability("appium:fullReset", false);
         capabilities.setCapability("appium:appWaitActivity", "*");

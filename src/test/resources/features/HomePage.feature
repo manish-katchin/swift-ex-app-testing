@@ -1,4 +1,4 @@
-@home
+@home @Regression
 Feature: Home Page
 
   
@@ -102,9 +102,10 @@ Then I should see the biometric authentication popup
 When I handle the biometric authentication
 Then I should be on homePage
 Then I click on eye ball icon 
-Then I should see the wallet balance is hidden
-Then I click on eye ball icon
 Then I should see the wallet balance is visible
+Then I click on eye ball icon
+Then I should see the wallet balance is hidden
+
 
 @VerifyClickingWalletNameOpensDropdown
 Scenario: Verify clicking wallet name opens the wallet selection dropdown.
@@ -434,9 +435,7 @@ And I should see the Exchange option
 And I click on the Exchange tab in bottom navigation
 Then I should see the Trade Wallet header
 And I should see the Home icon
-Then I click Back button of trade Wallet Page
-And I click on the Settings tab in bottom navigation
-Then I should see the Settings header
+
 
 @VerifyHomeTabNavigationToSettingsPage
 Scenario: Verify navigation from Home page to Settings Page

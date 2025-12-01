@@ -60,7 +60,8 @@ public class ImportWalletPage extends BasePage {
         return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Import Wallet"), 20);
     }
 
-    public boolean isMultiChainWalletSectionDisplayed() {
+    public boolean isMultiChainWalletSectionDisplayed() throws InterruptedException {
+        Thread.sleep(2000);
         return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Multi-Chain Wallet"), 20);
     }
 
@@ -76,7 +77,8 @@ public class ImportWalletPage extends BasePage {
         return displayed;
     }
 
-    public boolean isMultiChainWalletHeaderDisplayed() {
+    public boolean isMultiChainWalletHeaderDisplayed() throws InterruptedException {
+        Thread.sleep(3000); // Wait for UI to stabilize
         return isDisplayed(LocatorUtils.getUIAutomatorTextLocatorBy("Multi-Chain Wallet"), 20);
     }
 

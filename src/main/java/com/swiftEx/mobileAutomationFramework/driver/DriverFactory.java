@@ -1,12 +1,16 @@
 package com.swiftEx.mobileAutomationFramework.driver;
 
+import static java.lang.Math.log;
+
 import com.swiftEx.mobileAutomationFramework.driver.creators.AndroidDriverCreator;
 import com.swiftEx.mobileAutomationFramework.driver.creators.DriverCreator;
 import com.swiftEx.mobileAutomationFramework.driver.creators.IOSDriverCreator;
 import com.swiftEx.mobileAutomationFramework.driver.creators.SauceLabsDriverCreator;
 import com.swiftEx.mobileAutomationFramework.utils.PlatformConfig;
+
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;

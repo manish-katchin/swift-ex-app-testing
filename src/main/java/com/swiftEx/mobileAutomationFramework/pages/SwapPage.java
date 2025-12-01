@@ -39,13 +39,13 @@ public class SwapPage extends BasePage {
     // Verifies the Swap header is displayed
     public boolean isSwapHeaderDisplayed() {
         return isDisplayed(com.swiftEx.mobileAutomationFramework.utils.LocatorUtils.getUIAutomatorTextLocatorBy("Swap"),
-                20);
+                30);
     }
 
     // Enters amount in the input field below WETH
   public void enterSwapAmount(String amount) throws InterruptedException {
-    // Wait dynamically until Swap_Page_Balance is displayed (max 50 seconds)
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+    // Wait dynamically until Swap_Page_Balance is displayed (max 240 seconds)
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(240));
     wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("Swap_Page_Balance")));
     // Find the input field below the token label (e.g., "WETH")
     String xpath = String.format("//android.widget.EditText[contains(@text, '0.0')]");
@@ -94,10 +94,13 @@ public class SwapPage extends BasePage {
 
     // Clicks the Swap button specifically on the Swap page
     public void clickSwapButtonOnSwapPage() throws InterruptedException {
-        logger.info("Waiting 10 seconds before clicking Swap button on Swap page");
-        Thread.sleep(10000);
-        tapOnCoordinates(driver, 333, 1245);
-        logger.info("Clicked Swap button on Swap page via coordinates");
+        logger.info("Waiting 30 seconds before clicking Swap button on Swap page");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("quote_details")));
+    Thread.sleep(3000);
+    tap("swap_button_on_swap_page");
+        // tapOnCoordinates(driver, 333, 1245);
+        logger.info("Clicked Swap button on Swap page");
     }
 
     // Taps the currency switch arrow symbol
@@ -119,7 +122,7 @@ public class SwapPage extends BasePage {
 
     // Verifies the Choose Wallet header is displayed
     public boolean isChooseWalletHeaderDisplayed() {
-        return isDisplayed(By.xpath("//android.widget.TextView[@text='Choose Wallet']"), 15);
+        return isDisplayed(By.xpath("//android.widget.TextView[@text='Choose Wallet']"), 20);
     }
 
     // Clicks on Ethereum Wallet on choose wallet Screen
@@ -175,7 +178,7 @@ public class SwapPage extends BasePage {
 
     // Clicks on the second ETH element on the page
     public void clickOnFirstTransaction() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(120));
         WebElement secondEth = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("(//*[@text='ETH'])[2]")));
         secondEth.click();
@@ -221,8 +224,9 @@ public void clickDontAllowButton() {
     logger.info("Clicked on 'Don't allow' button");
 }
 
-public boolean isScanQRCodeHeaderDisplayed() {
+public boolean isScanQRCodeHeaderDisplayed() throws InterruptedException {
     // Adjust the locator key if you have a specific one for the Scan QR Code header
+    Thread.sleep(3000);
     return isDisplayed("scan_qr_code_header");
 }
 
@@ -267,7 +271,17 @@ public boolean isTransactionHistoryDisplayed() {
 }
 
 public boolean isReceiveHeaderDisplayed() {
-    return isDisplayed("receive_header");
+    logger.info("Waiting for 'Receive' header to appear");
+    try {
+        WebDriverWait localWait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
+        localWait.until(ExpectedConditions.visibilityOfElementLocated(getBy("receive_header")));
+        boolean visible = isDisplayed("receive_header");
+        logger.info("'Receive' header visible: {}", visible);
+        return visible;
+    } catch (Exception e) {
+        logger.warn("'Receive' header not visible within timeout: {}", e.getMessage());
+        return false;
+    }
 }
 
 

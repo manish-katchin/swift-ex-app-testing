@@ -1,6 +1,11 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +17,22 @@ public class SettingsScreenPage extends BasePage {
         logger.info("✅ SettingsScreenPage ready for platform: {}", getPlatform().toUpperCase());
     }
 
-    public void clickLogoutOption() {
-        tap(LocatorUtils.getUIAutomatorTextLocatorBy("Log Out"));
-        logger.info("Clicked Logout option");
-    }
     private static final Logger logger = LoggerFactory.getLogger(SettingsScreenPage.class);
 
 
+    public void clickLogoutOption() {
+        logger.info("Scrolling to and clicking Logout option");
+        
+        By logoutLocator = AppiumBy.androidUIAutomator(
+            "new UiScrollable(new UiSelector().scrollable(true))" +
+            ".scrollIntoView(new UiSelector().textContains(\"Log Out\"))"
+        );
+        
+        WebElement logoutElement = wait.until(ExpectedConditions.elementToBeClickable(logoutLocator));
+        logoutElement.click();
+        
+        logger.info("✅ Logout option clicked");
+    }
 
     public boolean isSettingsHeaderDisplayed() {
         boolean displayed = isDisplayed("settings_header");

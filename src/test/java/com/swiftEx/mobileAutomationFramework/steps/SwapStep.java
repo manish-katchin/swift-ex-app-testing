@@ -156,7 +156,7 @@ public class SwapStep extends BaseStep {
     }
 
     @Then("I should see Scan QR Code header on the screen")
-    public void iShouldSeeScanQRCodeHeaderOnTheScreen() {
+    public void iShouldSeeScanQRCodeHeaderOnTheScreen() throws InterruptedException {
         logger.info("Verifying 'Scan QR Code' header is displayed on the screen");
         Assert.assertTrue("'Scan QR Code' header should be visible", swapPage.isScanQRCodeHeaderDisplayed());
     }
@@ -211,7 +211,7 @@ public class SwapStep extends BaseStep {
     }
 
     @Then("I should see the Receive header on the screen")
-    public void iShouldSeeTheReceiveHeaderOnTheScreen() {
+    public void iShouldSeeTheReceiveHeaderOnTheScreen() throws InterruptedException {
         logger.info("Verifying 'Receive' header is displayed on the screen");
         Assert.assertTrue("'Receive' header should be visible", swapPage.isReceiveHeaderDisplayed());
     }
