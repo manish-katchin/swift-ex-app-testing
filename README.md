@@ -72,6 +72,9 @@ ABD config -
 Platform version -12
 Device - Pixel 6 API 33
 
+Add APK - https://drive.google.com/file/d/1PsqJ3CQ_XHSyLRSf2j_0eoueHI_uYIvm/view?usp=sharing
+In the folder structure Repo- target- test-classes - apps - android
+rename to - android.apk
 
 STEP 7 — Run Your Tests
 ------------------------
