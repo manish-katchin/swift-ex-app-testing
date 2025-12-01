@@ -4,6 +4,8 @@ import io.appium.java_client.AppiumDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
 
 public class BackupYourWalletPage extends BasePage {
@@ -66,9 +68,20 @@ public class BackupYourWalletPage extends BasePage {
             }
         }
 
-        public boolean isBackupMnemonicPhrasePageDisplayed() {
-            return isDisplayed("backup_mnemonic_phrase");
-        }
+       public boolean isBackupMnemonicPhrasePageDisplayed() {
+    logger.info("Waiting for 'Backup Mnemonic Phrase' page to appear");
+    try {
+        // Dynamic wait up to 30s (uses BasePage's wait/getBy)
+        WebDriverWait localWait = new WebDriverWait(driver, java.time.Duration.ofSeconds(30));
+        localWait.until(ExpectedConditions.visibilityOfElementLocated(getBy("backup_mnemonic_phrase")));
+        boolean visible = isDisplayed("backup_mnemonic_phrase");
+        logger.info("Backup Mnemonic Phrase page visible: {}", visible);
+        return visible;
+    } catch (Exception e) {
+        logger.warn("Backup Mnemonic Phrase page not visible within timeout: {}", e.getMessage());
+        return false;
+    }
+}
 
         public boolean isContinueButtonEnabled() {
             try {

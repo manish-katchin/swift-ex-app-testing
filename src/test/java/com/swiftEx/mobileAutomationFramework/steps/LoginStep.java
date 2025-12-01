@@ -25,7 +25,7 @@ public class LoginStep extends BaseStep {
     }
 
     @Then("I should see the Profile header")
-    public void iShouldSeeProfileHeader() {
+    public void iShouldSeeProfileHeader() throws InterruptedException {
         Assert.assertTrue("Profile header is not displayed!", loginPage.isProfileHeaderDisplayed());
     }
 

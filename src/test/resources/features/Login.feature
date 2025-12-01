@@ -224,7 +224,7 @@ And I should see the Password input field
 And I should see the Forgot Password? option
 And I should see the Login button
 When I click on Forgot Password? option
-Then I should see "Recover to your account" header on Forgot Password page
+Then I should see "Recover your account" header on Forgot Password page
 And I enter "sonushafauddin@gmail.com" into the Email input field on Forgot Password page
 Then I click on Verify Button on Verify Page
 And I enter the verification code "987654" on verification step
@@ -258,7 +258,7 @@ And I should see the Password input field
 And I should see the Forgot Password? option
 And I should see the Login button
 When I click on Forgot Password? option
-Then I should see "Recover to your account" header on Forgot Password page
+Then I should see "Recover your account" header on Forgot Password page
 And I enter "sonushafauddin@gmail.com" into the Email input field on Forgot Password page
 Then I click on Verify Button on Verify Page
 And I enter the verification code "987654" on verification step

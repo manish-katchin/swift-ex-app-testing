@@ -13,9 +13,9 @@ Then I verify "CREATE A NEW WALLET" button on screen
 @pinValidationFailed  @11
 Scenario Outline: PIN Validation with incorrect confirmation
 Given the app is launched
-When I enter a new PIN "<pin>"
-And I confirm the PIN "<confirmPin>"
-Then I should see "<result>"
+When I enter a new PIN "123456"
+And I confirm the PIN "123465"
+Then I should see "PIN did not match. Please try again."
 
 
 #Test sheet test cases

@@ -2,6 +2,8 @@ package com.swiftEx.mobileAutomationFramework.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class to store and retrieve test context information
@@ -14,6 +16,7 @@ public class TestContext {
     private static final ThreadLocal<String> scenarioName = new ThreadLocal<>();
     private static final ThreadLocal<String> featureName = new ThreadLocal<>();
     private static final ThreadLocal<String[]> tags = new ThreadLocal<>();
+    private static final ThreadLocal<List<String>> mnemonicPhrases = new ThreadLocal<>();
     
     /**
      * Set the current scenario name
@@ -102,12 +105,39 @@ public class TestContext {
     }
     
     /**
+     * Store mnemonic phrases for later verification
+     */
+    public static void setMnemonicPhrases(List<String> phrases) {
+        if (phrases == null || phrases.isEmpty()) {
+            logger.warn("⚠️ Attempting to store empty or null mnemonic phrases");
+            mnemonicPhrases.set(new ArrayList<>());
+        } else {
+            logger.info("✅ Storing {} mnemonic phrases in TestContext", phrases.size());
+            mnemonicPhrases.set(new ArrayList<>(phrases));
+        }
+    }
+
+    /**
+     * Retrieve stored mnemonic phrases
+     */
+    public static List<String> getMnemonicPhrases() {
+        List<String> phrases = mnemonicPhrases.get();
+        if (phrases == null || phrases.isEmpty()) {
+            logger.warn("⚠️ Mnemonic phrases not found in TestContext");
+            return new ArrayList<>();
+        }
+        logger.debug("Retrieved {} mnemonic phrases from TestContext", phrases.size());
+        return new ArrayList<>(phrases);
+    }
+    
+    /**
      * Clear all test context (called after test completion)
      */
     public static void clear() {
         scenarioName.remove();
         featureName.remove();
         tags.remove();
+        mnemonicPhrases.remove();
         logger.debug("Test context cleared");
     }
     

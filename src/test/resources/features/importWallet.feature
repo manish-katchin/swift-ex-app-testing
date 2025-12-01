@@ -326,19 +326,6 @@ Feature: Import Wallet
   And I should see JSON key option
       
 
-# @VerifyBinanceWalletPageElement    
-#   Scenario: Verify Elements on Binance Smart Chain Wallet Screen
-#   Given the app is launched
-#   When I enter a new PIN "123456"
-#   And I confirm the PIN "123456"
-#   Then I verify "Import Wallet" button on screen
-#   When I click Import Wallet button
-#   And I should see "Import Wallet" header
-#   And I should see "Binance Smart Chain" option
-#   When I click on "Binance Smart Chain"
-#   And I should see Privatekey option is selected by default
-  
-
   @VerifyBinanceWalletPagePasteButton
   Scenario: Verify Elements on Binance Smart Chain Wallet Screen
   Given the app is launched

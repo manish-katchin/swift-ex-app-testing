@@ -1,4 +1,4 @@
-@Regression
+@Regression @WalletCreationFeature
 Feature: Wallet Creation 
 
   # @createWallet  
@@ -47,6 +47,36 @@ Feature: Wallet Creation
   # And I should see the Market tab is displayed in bottom navigation
   # And I should see the Exchange tab is displayed in bottom navigation
   # And I should see the Settings tab is displayed in bottom navigation
+
+
+  @VerifyCompleteBackupProcess @rerun @FC
+  Scenario:  Verify that selecting all four correct words successfully completes the backup process.
+  Given the app is launched
+  When I enter a new PIN "123456"
+  And I confirm the PIN "123456"
+  Then I should be on Create A new wallet Page
+  When I click Create a new wallet button
+  Then I should see the biometric authentication popup
+  When I handle the biometric authentication
+  And I click on Wallet tab
+  Then I see My Wallet option  
+  And I see Create Wallet option
+  And I see Import Wallet option   
+  And I see Choose Wallet option
+  Then I click on Create Wallet option
+  Then I should be on the "Backup your wallet now" screen
+  When I select the option If I lose my private keys, my funds will be lost
+  And I select the option If I share my private key, my funds can be lost
+  And I click on the "Continue" button
+  Then I should be on "Backup Mnemonic Phrase" page
+  And I store mnemonic phrases from the backup screen
+  When I enter account name "TestAccount" in the Account Name field
+  When I click on the "Done" button
+  Then I should be on "Verify Secret Phrase" screen
+  Then I verify jumbled mnemonic phrases appear for verification
+  And I verify and select the requested mnemonic words on Check Mnemonic page
+  And I verify all mnemonic words are correctly selected
+  Then I click on the "Import" button on verify secret phrase screen
 
 
  @navigation 
@@ -168,7 +198,7 @@ Scenario: Logout of the application
   And I see "Continue" button is disabled on the screen
 
 
- @VerifyBackupMnemonicPhraseScreen
+ @VerifyBackupMnemonicPhraseScreen @FC
   Scenario: Verify that clicking "Continue" after selecting both conditions navigates to the "Backup Mnemonic Phrase" screen.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -210,7 +240,7 @@ Scenario: Logout of the application
   And I see "Continue" button is disabled on the screen
 
 
-  @VerifyBackupMnemonicPhrasesonScreen
+  @VerifyBackupMnemonicPhrasesonScreen  @FC
   Scenario: Verify that the mnemonic phrases are visible on the screen.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -234,7 +264,7 @@ Scenario: Logout of the application
 
 
 
-  @VerifyDoneButtonEnabled
+  @VerifyDoneButtonEnabled  @FC
   Scenario: Verify that the "Done" button is enabled when name is entered.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -258,7 +288,7 @@ Scenario: Logout of the application
   When I enter account name "TestAccount" in the Account Name field
   Then I should see the "Done" button is enabled
 
-  @VerifyDoneButtonNavigationToSecretPhraseScreen
+  @VerifyDoneButtonNavigationToSecretPhraseScreen @FC
   Scenario: Verify that clicking "DoneButton" after entering a valid account name navigates to the "Verify Secret Phrase" screen
   Given the app is launched
   When I enter a new PIN "123456"
@@ -308,34 +338,6 @@ Scenario: Logout of the application
   Then I should be on "Verify Secret Phrase" screen
   Then I verify jumbled mnemonic phrases appear for verification
 
-@VerifyCompleteBackupProcess @rerun
-  Scenario:  Verify that selecting all four correct words successfully completes the backup process.
-  Given the app is launched
-  When I enter a new PIN "123456"
-  And I confirm the PIN "123456"
-  Then I should be on Create A new wallet Page
-  When I click Create a new wallet button
-  Then I should see the biometric authentication popup
-  When I handle the biometric authentication
-  And I click on Wallet tab
-  Then I see My Wallet option  
-  And I see Create Wallet option
-  And I see Import Wallet option   
-  And I see Choose Wallet option
-  Then I click on Create Wallet option
-  Then I should be on the "Backup your wallet now" screen
-  When I select the option If I lose my private keys, my funds will be lost
-  And I select the option If I share my private key, my funds can be lost
-  And I click on the "Continue" button
-  Then I should be on "Backup Mnemonic Phrase" page
-  When I enter account name "TestAccount" in the Account Name field
-  When I click on the "Done" button
-  Then I should be on "Verify Secret Phrase" screen
-  Then I verify jumbled mnemonic phrases appear for verification
-  And I verify and select the requested mnemonic words on Check Mnemonic page
-  And I verify all mnemonic words are correctly selected
-  Then I click on the "Import" button on verify secret phrase screen
-  
   @VerifyDoneButtonDisabledWhenNoNameEntered
   Scenario: Verify that clicking "Done" without entering an account name does not navigate to the next screen.
   Given the app is launched
@@ -360,7 +362,7 @@ Scenario: Logout of the application
   Then I should be on "Backup Mnemonic Phrase" page
 
 
-@VerifyAppClosureRequiresStartingOver
+@VerifyAppClosureRequiresStartingOver @rerun @FC
   Scenario: Verify that closing the app before completing wallet creation requires starting over.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -396,7 +398,7 @@ Scenario: Logout of the application
 
 
 
-  @VerifyDoneButtonDisabledWhenSpaceEnteredInNameField
+  @VerifyDoneButtonDisabledWhenSpaceEnteredInNameField @FC
   Scenario: Verify that clicking "Done" without entering an account name does not navigate to the next screen.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -445,7 +447,7 @@ Scenario: Logout of the application
   Then I verify only 20 characters are accepted in the Account Name field
 
  
-@VerifyEmojiNotAcceptedInAccountNameField @rerun
+@VerifyEmojiNotAcceptedInAccountNameField @rerun @FC
   Scenario: Verify that the account name field does not accept only emojis.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -516,7 +518,7 @@ Scenario: Logout of the application
   And I select the option If I share my private key, my funds can be lost
   Then I see "Continue" button is enabled on the screen
 
-@VerifyInstructionForKeepingSecretPhraseSafe
+@VerifyInstructionForKeepingSecretPhraseSafe @FC
 Scenario: TC-107 Verify Instruction for Keeping Secret Phrase Safe
 Given the app is launched
 When I enter a new PIN "123456"
@@ -580,33 +582,3 @@ Then I should see instruction Second "Do not share it through email, photos, soc
   Then I should be on the "Backup your wallet now" screen
   Then I click on the Back button on Backup your wallet screen
   And I see Create Wallet option
-
-
-@VerifyMnemonicPhraseonbothscreen
-  Scenario: Verify Display of Mnemonic Phrase
-  Given the app is launched
-  When I enter a new PIN "123456"
-  And I confirm the PIN "123456"
-  When I click Create a new wallet button
-  Then I should see the biometric authentication popup
-  When I handle the biometric authentication
-  And I click on Wallet tab
-  Then I see My Wallet option  
-  And I see Create Wallet option
-  And I see Import Wallet option   
-  And I see Choose Wallet option
-  Then I click on Create Wallet option
-  Then I should be on the "Backup your wallet now" screen
-  When I select the option If I lose my private keys, my funds will be lost
-  And I select the option If I share my private key, my funds can be lost
-  And I click on the "Continue" button
-  Then I should be on "Backup Mnemonic Phrase" page
-  And I verify mnemonic phrases are visible on the screen
-  And I store mnemonic phrases from the backup screen
-  When I enter account name "TestAccount" in the Account Name field
-  When I click on the "Done" button
-  Then I should be on "Verify Secret Phrase" screen
-  Then I verify jumbled mnemonic phrases appear for verification
-  Then the mnemonic words on both screens should match
-
-
