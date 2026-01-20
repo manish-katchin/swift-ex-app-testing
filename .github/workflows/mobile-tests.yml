@@ -89,14 +89,14 @@ on:
 
   # Automatic triggers
   push:
-    branches: [ pin-creation, main, develop ]
+    branches: [ pin-creation, main, dev ]
     paths:
       - 'src/**'
       - 'pom.xml'
       - '.github/workflows/**'
   
   pull_request:
-    branches: [ pin-creation, main, develop ]
+    branches: [ pin-creation, main, dev ]
     paths:
       - 'src/**'
       - 'pom.xml'
