@@ -36,7 +36,7 @@ on:
       sauce_device:
         description: 'SauceLabs Device (for cloud execution)'
         required: false
-        default: 'Google Pixel 4 GoogleAPI Emulator'
+        default: 'Google Pixel 4 Emulator'
         type: choice
         options:
           - 'Google Pixel 4 Emulator'
