@@ -37,11 +37,12 @@ on:
       sauce_device:
         description: 'SauceLabs Device (for cloud execution)'
         required: false
-        default: 'Google Pixel 6 Emulator'
+        default: 'Google Pixel 4 Emulator'
         type: choice
         options:
           - 'Google Pixel 4 Emulator'
-          - 'Google Pixel 6 Emulator'
+          - 'Google Pixel 4 GoogleAPI Emulator'
+          - 'Google Pixel 6 GoogleAPI Emulator'
           - 'Samsung Galaxy S22 GoogleAPI Emulator'
           - 'iPhone 14 Simulator'
           - 'iPhone 13 Simulator'
@@ -300,447 +301,21 @@ jobs:
         SAUCELABS_USERNAME: ${{ secrets.SAUCELABS_USERNAME }}
         SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCELABS_ACCESS_KEY }}
     
-    - name: 📊 Generate Enhanced Cucumber HTML Report
+    - name: 📊 Generate Cucumber HTML Report
       if: always()
       run: |
-        echo "Generating enhanced Cucumber HTML test report..."
+        echo "Generating Cucumber HTML test report..."
         
-        # Ensure target directory exists
-        mkdir -p target/cucumber-html-report
-        
-        # Create a comprehensive HTML report with embedded results
-        cat > target/cucumber-html-report/index.html << 'EOF'
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>SwiftEx Mobile Test Report - Run #${{ github.run_number }}</title>
-            <style>
-                body { 
-                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; 
-                    margin: 20px; 
-                    background-color: #f8f9fa; 
-                    color: #333;
-                }
-                .container { 
-                    max-width: 1200px; 
-                    margin: 0 auto; 
-                    background: white; 
-                    padding: 30px; 
-                    border-radius: 12px; 
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
-                }
-                .header { 
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-                    color: white; 
-                    padding: 30px; 
-                    border-radius: 10px; 
-                    margin-bottom: 30px; 
-                    text-align: center;
-                }
-                .header h1 { 
-                    margin: 0; 
-                    font-size: 28px; 
-                    font-weight: 600;
-                }
-                .header p { 
-                    margin: 10px 0 0 0; 
-                    opacity: 0.9; 
-                    font-size: 16px;
-                }
-                .summary { 
-                    background: #f8f9fa; 
-                    padding: 25px; 
-                    border-radius: 10px; 
-                    margin-bottom: 30px; 
-                    border-left: 5px solid #667eea;
-                }
-                .summary h2 { 
-                    margin-top: 0; 
-                    color: #2d3748; 
-                    font-size: 22px;
-                }
-                .summary-grid { 
-                    display: grid; 
-                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-                    gap: 20px; 
-                    margin-top: 20px;
-                }
-                .summary-item { 
-                    background: white; 
-                    padding: 20px; 
-                    border-radius: 8px; 
-                    border: 1px solid #e2e8f0;
-                    transition: transform 0.2s, box-shadow 0.2s;
-                }
-                .summary-item:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-                }
-                .summary-item strong { 
-                    display: block; 
-                    color: #4a5568; 
-                    margin-bottom: 8px; 
-                    font-size: 14px; 
-                    text-transform: uppercase; 
-                    letter-spacing: 0.5px;
-                }
-                .summary-item span { 
-                    font-size: 18px; 
-                    color: #2d3748; 
-                    font-weight: 500;
-                }
-                .test-results { 
-                    margin-top: 30px;
-                }
-                .test-results h2 { 
-                    color: #2d3748; 
-                    font-size: 22px; 
-                    margin-bottom: 20px;
-                }
-                .result-card { 
-                    background: white; 
-                    border: 1px solid #e2e8f0; 
-                    border-radius: 10px; 
-                    padding: 20px; 
-                    margin-bottom: 15px;
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 15px;
-                }
-                .result-card.success { 
-                    border-left: 5px solid #48bb78;
-                }
-                .result-card.failure { 
-                    border-left: 5px solid #f56565;
-                }
-                .result-card.skipped { 
-                    border-left: 5px solid #a0aec0;
-                }
-                .status-icon { 
-                    width: 40px; 
-                    height: 40px; 
-                    border-radius: 50%; 
-                    display: flex; 
-                    align-items: center; 
-                    justify-content: center; 
-                    font-size: 20px; 
-                    flex-shrink: 0;
-                }
-                .success .status-icon { 
-                    background: #c6f6d5; 
-                    color: #22543d;
-                }
-                .failure .status-icon { 
-                    background: #fed7d7; 
-                    color: #742a2a;
-                }
-                .skipped .status-icon { 
-                    background: #e2e8f0; 
-                    color: #4a5568;
-                }
-                .result-content { 
-                    flex: 1;
-                }
-                .result-content h3 { 
-                    margin: 0 0 8px 0; 
-                    font-size: 18px; 
-                    color: #2d3748;
-                }
-                .result-content p { 
-                    margin: 0 0 10px 0; 
-                    color: #4a5568; 
-                    line-height: 1.5;
-                }
-                .timestamp { 
-                    color: #718096; 
-                    font-size: 13px; 
-                    margin-top: 5px;
-                }
-                pre { 
-                    background: #f7fafc; 
-                    padding: 15px; 
-                    border-radius: 8px; 
-                    overflow-x: auto; 
-                    font-family: 'Monaco', 'Menlo', monospace; 
-                    font-size: 13px; 
-                    margin: 10px 0; 
-                    border: 1px solid #e2e8f0;
-                }
-                .screenshots { 
-                    display: grid; 
-                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-                    gap: 10px; 
-                    margin-top: 15px;
-                }
-                .screenshot { 
-                    border: 1px solid #e2e8f0; 
-                    border-radius: 8px; 
-                    overflow: hidden; 
-                    transition: transform 0.2s;
-                }
-                .screenshot:hover { 
-                    transform: scale(1.02);
-                }
-                .screenshot img { 
-                    width: 100%; 
-                    height: 150px; 
-                    object-fit: cover; 
-                    display: block;
-                }
-                .artifact-info { 
-                    background: #ebf8ff; 
-                    padding: 20px; 
-                    border-radius: 10px; 
-                    margin-top: 30px; 
-                    border: 1px solid #bee3f8;
-                }
-                .artifact-info h3 { 
-                    color: #2c5282; 
-                    margin-top: 0;
-                }
-                .artifact-list { 
-                    list-style: none; 
-                    padding: 0;
-                }
-                .artifact-list li { 
-                    padding: 8px 0; 
-                    border-bottom: 1px solid #e2e8f0;
-                }
-                .artifact-list li:last-child { 
-                    border-bottom: none;
-                }
-                .artifact-list a { 
-                    color: #3182ce; 
-                    text-decoration: none;
-                }
-                .artifact-list a:hover { 
-                    text-decoration: underline;
-                }
-                .footer { 
-                    margin-top: 40px; 
-                    padding-top: 20px; 
-                    border-top: 1px solid #e2e8f0; 
-                    text-align: center; 
-                    color: #718096; 
-                    font-size: 14px;
-                }
-                .badge { 
-                    display: inline-block; 
-                    padding: 4px 12px; 
-                    border-radius: 20px; 
-                    font-size: 12px; 
-                    font-weight: 600; 
-                    margin-left: 10px; 
-                    text-transform: uppercase; 
-                    letter-spacing: 0.5px;
-                }
-                .badge-success { 
-                    background: #c6f6d5; 
-                    color: #22543d;
-                }
-                .badge-failure { 
-                    background: #fed7d7; 
-                    color: #742a2a;
-                }
-                .badge-skipped { 
-                    background: #e2e8f0; 
-                    color: #4a5568;
-                }
-                @media (max-width: 768px) {
-                    .container { 
-                        padding: 15px; 
-                    }
-                    .header { 
-                        padding: 20px; 
-                    }
-                    .summary-grid { 
-                        grid-template-columns: 1fr; 
-                    }
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h1>🚀 SwiftEx Mobile Test Report</h1>
-                    <p>Run #${{ github.run_number }} - ${{ github.ref_name }}</p>
-                    <p>$(date +"%Y-%m-%d %H:%M:%S UTC")</p>
-                </div>
-                
-                <div class="summary">
-                    <h2>📊 Test Execution Summary</h2>
-                    <div class="summary-grid">
-                        <div class="summary-item">
-                            <strong>Platform</strong>
-                            <span>${{ inputs.platform || env.DEFAULT_PLATFORM }}</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong>Environment</strong>
-                            <span>${{ inputs.test_environment || 'dev' }}</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong>Test Tags</strong>
-                            <span>${{ inputs.test_tags || env.DEFAULT_TEST_TAGS }}</span>
-                        </div>
-                        <div class="summary-item">
-                            <strong>Device</strong>
-                            <span>${{ inputs.sauce_device || inputs.local_device_name || 'Google Pixel 4 Emulator' }}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="test-results">
-                    <h2>🧪 Test Results</h2>
-                    
-                    <!-- Example test results - these would be dynamically generated from actual test results -->
-                    <div class="result-card success">
-                        <div class="status-icon">✅</div>
-                        <div class="result-content">
-                            <h3>PIN Creation - Successful Flow</h3>
-                            <p>User successfully creates a 4-digit PIN for the SwiftEx mobile application.</p>
-                            <div class="timestamp">Duration: 12.5s | Steps: 8</div>
-                        </div>
-                        <span class="badge badge-success">PASSED</span>
-                    </div>
-                    
-                    <div class="result-card success">
-                        <div class="status-icon">✅</div>
-                        <div class="result-content">
-                            <h3>PIN Validation - Correct PIN</h3>
-                            <p>System successfully validates a correctly entered 4-digit PIN.</p>
-                            <div class="timestamp">Duration: 8.2s | Steps: 6</div>
-                        </div>
-                        <span class="badge badge-success">PASSED</span>
-                    </div>
-                    
-                    <div class="result-card failure">
-                        <div class="status-icon">❌</div>
-                        <div class="result-content">
-                            <h3>PIN Validation - Invalid PIN Length</h3>
-                            <p>System should reject PINs with less than 4 digits.</p>
-                            <pre>Error: Expected validation error but got success response
-Step: User enters "123"
-Expected: Error message "PIN must be 4 digits"
-Actual: PIN was accepted
-Stack Trace:
-    at stepDefinitions.pinSteps.enterPin(pinSteps.java:45)
-    at ✽.User enters "123"(features/create_pin.feature:12)</pre>
-                            <div class="timestamp">Duration: 5.8s | Steps: 4</div>
-                        </div>
-                        <span class="badge badge-failure">FAILED</span>
-                    </div>
-                    
-                    <div class="result-card skipped">
-                        <div class="status-icon">⏭️</div>
-                        <div class="result-content">
-                            <h3>Biometric Authentication</h3>
-                            <p>Skip due to device not supporting biometric authentication.</p>
-                            <div class="timestamp">Skipped</div>
-                        </div>
-                        <span class="badge badge-skipped">SKIPPED</span>
-                    </div>
-                </div>
-                
-                <div class="artifact-info">
-                    <h3>📁 Artifacts & Reports</h3>
-                    <p>Complete test reports and logs are available as workflow artifacts:</p>
-                    <ul class="artifact-list">
-                        <li>📄 <strong>Cucumber HTML Report</strong> - Detailed test execution report</li>
-                        <li>📊 <strong>Allure Report</strong> - Interactive test dashboard with trends</li>
-                        <li>🖼️ <strong>Screenshots</strong> - Visual evidence of test execution</li>
-                        <li>📋 <strong>Test Logs</strong> - Detailed execution logs for debugging</li>
-                        <li>🎯 <strong>JUnit Reports</strong> - XML format for CI/CD integration</li>
-                    </ul>
-                    <p style="margin-top: 15px;">
-                        <strong>Download from:</strong> 
-                        <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">Workflow Run #${{ github.run_number }}</a>
-                    </p>
-                </div>
-                
-                <div class="footer">
-                    <hr>
-                    <p>🔗 <strong>Workflow Run:</strong> 
-                        <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">
-                            View Details on GitHub
-                        </a>
-                    </p>
-                    <p>🏷️ <strong>Commit:</strong> 
-                        <a href="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}">
-                            ${{ github.sha }}
-                        </a>
-                    </p>
-                    <p>⚡ <strong>Triggered by:</strong> ${{ github.event_name }} | <strong>Branch:</strong> ${{ github.ref_name }}</p>
-                    <p style="margin-top: 20px; font-size: 12px;">
-                        Generated by SwiftEx Mobile Automation Framework | $(date)
-                    </p>
-                </div>
-            </div>
-        </body>
-        </html>
-        EOF
-        
-        echo "Enhanced HTML report created at target/cucumber-html-report/index.html"
-        
-        # Create a simple markdown summary for the workflow
-        echo "## 📊 Cucumber Test Report" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 🚀 SwiftEx Mobile Automation" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "| **Parameter** | **Value** |" >> $GITHUB_STEP_SUMMARY
-        echo "|---------------|-----------|" >> $GITHUB_STEP_SUMMARY
-        echo "| Platform | \`${{ inputs.platform || env.DEFAULT_PLATFORM }}\` |" >> $GITHUB_STEP_SUMMARY
-        echo "| Test Tags | \`${{ inputs.test_tags || env.DEFAULT_TEST_TAGS }}\` |" >> $GITHUB_STEP_SUMMARY
-        echo "| Environment | \`${{ inputs.test_environment || 'dev' }}\` |" >> $GITHUB_STEP_SUMMARY
-        echo "| Device | \`${{ inputs.sauce_device || inputs.local_device_name || 'Google Pixel 4 Emulator' }}\` |" >> $GITHUB_STEP_SUMMARY
-        echo "| Branch | \`${{ github.ref_name }}\` |" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        # Add dynamic test results if cucumber.json exists
-        if [ -f "target/cucumber.json" ]; then
-          echo "### 📈 Test Execution Statistics" >> $GITHUB_STEP_SUMMARY
-          
-          # Use jq to parse cucumber.json if available
-          if command -v jq &> /dev/null; then
-            TOTAL=$(jq 'length' target/cucumber.json 2>/dev/null || echo "0")
-            PASSED=$(jq '[.[] | select(.status == "passed")] | length' target/cucumber.json 2>/dev/null || echo "0")
-            FAILED=$(jq '[.[] | select(.status == "failed")] | length' target/cucumber.json 2>/dev/null || echo "0")
-            SKIPPED=$(jq '[.[] | select(.status == "skipped")] | length' target/cucumber.json 2>/dev/null || echo "0")
-            
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "| Status | Count | Percentage |" >> $GITHUB_STEP_SUMMARY
-            echo "|--------|-------|------------|" >> $GITHUB_STEP_SUMMARY
-            echo "| ✅ Passed | $PASSED | $((PASSED * 100 / TOTAL))% |" >> $GITHUB_STEP_SUMMARY
-            echo "| ❌ Failed | $FAILED | $((FAILED * 100 / TOTAL))% |" >> $GITHUB_STEP_SUMMARY
-            echo "| ⏭️ Skipped | $SKIPPED | $((SKIPPED * 100 / TOTAL))% |" >> $GITHUB_STEP_SUMMARY
-            echo "| **Total** | **$TOTAL** | **100%** |" >> $GITHUB_STEP_SUMMARY
-          fi
+        # Check if cucumber HTML report exists
+        if [ -f "target/cucumber-html-report.html" ]; then
+          echo "Cucumber HTML report found at target/cucumber-html-report.html"
+          ls -lh target/cucumber-html-report.html
         else
-          echo "### 📊 Sample Test Results" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**✅ PASSED:** 2 tests" >> $GITHUB_STEP_SUMMARY
-          echo "- PIN Creation - Successful Flow" >> $GITHUB_STEP_SUMMARY
-          echo "- PIN Validation - Correct PIN" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**❌ FAILED:** 1 test" >> $GITHUB_STEP_SUMMARY
-          echo "- PIN Validation - Invalid PIN Length" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**⏭️ SKIPPED:** 1 test" >> $GITHUB_STEP_SUMMARY
-          echo "- Biometric Authentication" >> $GITHUB_STEP_SUMMARY
+          echo "Cucumber HTML report not found, generating..."
+          # The report should be generated during Maven test execution
+          # Check target directory for any HTML reports
+          find target -name "*.html" -type f 2>/dev/null || echo "No HTML reports found"
         fi
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 🔗 Quick Links" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "• [📋 View Detailed HTML Report](artifact://test-results-${{ inputs.platform || env.DEFAULT_PLATFORM }}-${{ github.run_number }}/cucumber-html-report/index.html)" >> $GITHUB_STEP_SUMMARY
-        echo "• [📊 View Allure Report](artifact://test-results-${{ inputs.platform || env.DEFAULT_PLATFORM }}-${{ github.run_number }}/site/allure-maven-plugin/index.html)" >> $GITHUB_STEP_SUMMARY
-        echo "• [📁 Download All Artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
-        echo "• [🔍 View Workflow Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        # Note about viewing HTML
-        echo "> **Note:** HTML reports can be viewed by downloading the artifacts and opening the HTML files in a browser." >> $GITHUB_STEP_SUMMARY
     
     - name: Generate Allure Report
       if: always() && (inputs.generate_allure_report == true || inputs.generate_allure_report == null)
@@ -755,7 +330,7 @@ Stack Trace:
           echo "No Allure results found, skipping report generation"
         fi
     
-    - name: 📤 Upload Test Results and Reports
+    - name: Upload Test Results
       if: always()
       uses: actions/upload-artifact@v4
       with:
@@ -764,88 +339,41 @@ Stack Trace:
           target/surefire-reports/
           target/allure-results/
           target/site/allure-maven-plugin/
-          target/cucumber-reports/
-          target/cucumber-html-report/
-          target/cucumber.json
+          target/cucumber-html-report.html
           target/screenshots/
         retention-days: 30
     
-    - name: 📊 Display HTML Report Preview
-      if: always()
-      run: |
-        echo "========================================="
-        echo "📱 HTML TEST REPORT PREVIEW"
-        echo "========================================="
-        echo ""
-        echo "To view the complete HTML report:"
-        echo "1. Go to this workflow run"
-        echo "2. Scroll down to 'Artifacts' section"
-        echo "3. Download 'test-results-$(echo ${{ inputs.platform || env.DEFAULT_PLATFORM }})-${{ github.run_number }}'"
-        echo "4. Extract and open: cucumber-html-report/index.html"
-        echo ""
-        echo "🔗 Direct workflow link:"
-        echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        echo ""
-        echo "📊 Report includes:"
-        echo "• Test execution summary"
-        echo "• Pass/Fail/Skip statistics"
-        echo "• Step-by-step test results"
-        echo "• Screenshots (if available)"
-        echo "• Error logs and stack traces"
-        echo "========================================="
-        
-        # Show a preview of the report content
-        if [ -f "target/cucumber-html-report/index.html" ]; then
-          echo ""
-          echo "📄 Report Preview:"
-          echo "------------------"
-          # Extract title and key info from HTML
-          grep -o '<title>[^<]*</title>' target/cucumber-html-report/index.html | sed 's/<[^>]*>//g'
-          echo "Location: target/cucumber-html-report/index.html"
-          echo "Size: $(du -h target/cucumber-html-report/index.html | cut -f1)"
-        fi
+    - name: Upload Allure Report
+      if: always() && (inputs.generate_allure_report == true || inputs.generate_allure_report == null)
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report-${{ inputs.platform || env.DEFAULT_PLATFORM }}-${{ github.run_number }}
+        path: target/site/allure-maven-plugin/
+        retention-days: 7
     
-    - name: 📊 Test Results Summary
+    - name: Test Results Summary
       if: always()
       run: |
         echo "========================================="
         echo "🏁 SwiftEx Mobile Test Execution Summary"
         echo "========================================="
-        echo ""
-        echo "⚙️ Configuration:"
-        echo "• Platform: $TEST_PLATFORM"
-        echo "• Device: $TEST_DEVICE"
-        echo "• Tags: $TEST_TAGS"
-        echo "• Environment: $TEST_ENV"
-        echo ""
-        echo "📊 Results:"
-        if [ "$TEST_FAILED" == "true" ]; then
-          echo "• Status: ❌ FAILED"
-          echo "• Some tests have failed. Check reports for details."
-        else
-          echo "• Status: ✅ PASSED"
-          echo "• All tests executed successfully!"
-        fi
-        echo ""
-        echo "🔗 Reports Available in Artifacts:"
-        echo "1. Cucumber HTML Report"
-        echo "2. Allure Report"
-        echo "3. Test Logs & Screenshots"
-        echo ""
-        echo "🌐 Workflow Run:"
-        echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        echo ""
-        echo "📝 Commit: ${{ github.sha }}"
-        echo "🌿 Branch: ${{ github.ref_name }}"
-        echo "🎯 Trigger: ${{ github.event_name }}"
+        echo "Platform: $TEST_PLATFORM"
+        echo "Device: $TEST_DEVICE"
+        echo "Tags: $TEST_TAGS"
+        echo "Environment: $TEST_ENV"
+        echo "Branch: ${{ github.ref_name }}"
+        echo "Commit: ${{ github.sha }}"
         echo "========================================="
         
         if [ "$TEST_FAILED" == "true" ]; then
-          echo "❌ Test execution completed with failures"
+          echo " Test execution had failures"
+          echo " Check the uploaded artifacts for detailed reports"
           exit 1
+        else
+          echo "All tests passed successfully!"
         fi
     
-    - name: 💬 Add PR Comment with Report Links
+    - name: 🔗 Add PR Comment (for Pull Requests)
       if: always() && github.event_name == 'pull_request'
       uses: actions/github-script@v7
       with:
@@ -853,44 +381,21 @@ Stack Trace:
           const testStatus = process.env.TEST_FAILED === 'true' ? '❌ FAILED' : '✅ PASSED';
           const platform = process.env.TEST_PLATFORM;
           const tags = process.env.TEST_TAGS;
-          const runId = context.runId;
-          const repo = context.repo;
-          const owner = repo.owner;
-          const repoName = repo.repo;
           
           const comment = `
           ## 📱 Mobile Test Results ${testStatus}
           
-          ### ⚙️ Configuration
-          | Parameter | Value |
-          |-----------|-------|
-          | **Platform** | \`${platform}\` |
-          | **Test Tags** | \`${tags}\` |
-          | **Environment** | \`${{ inputs.test_environment || 'dev' }}\` |
-          | **Device** | \`${{ inputs.sauce_device || inputs.local_device_name || 'Google Pixel 4 Emulator' }}\` |
+          **Platform:** \`${platform}\`  
+          **Tags:** \`${tags}\`  
+          **Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
           
-          ### 📊 Results Summary
-          Tests execution completed. Detailed reports are available in workflow artifacts.
-          
-          ### 🔗 Quick Links
-          • [📋 View Workflow Run](#${runId})
-          • [📁 Download Test Reports](https://github.com/${owner}/${repoName}/actions/runs/${runId})
-          • [🔍 View Execution Logs](https://github.com/${owner}/${repoName}/actions/runs/${runId})
-          
-          ### 📝 How to View Reports
-          1. Go to the workflow run linked above
-          2. Scroll to the "Artifacts" section
-          3. Download \`test-results-${platform}-${runId}\`
-          4. Extract and open \`cucumber-html-report/index.html\` in a browser
-          
-          ---
-          *Generated by SwiftEx Mobile Automation Framework*
+          [View detailed test reports in artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
           `;
           
           github.rest.issues.createComment({
             issue_number: context.issue.number,
-            owner: owner,
-            repo: repoName,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
             body: comment
           });
       env:
