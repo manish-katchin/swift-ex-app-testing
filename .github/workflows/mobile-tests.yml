@@ -18,11 +18,11 @@ on:
       test_tags:
         description: 'Cucumber Tags (e.g., @createPin, @pinValidationSuccess, @pinValidationFailed)'
         required: true
-        default: '@createPin'
+        default: '@Regression'
         type: choice
         options:
-          - '@createPin'
           - '@Regression'
+          - '@createPin'
           - '@pinValidationSuccess'
           - '@pinValidationFailed'
           - '@smoke'
