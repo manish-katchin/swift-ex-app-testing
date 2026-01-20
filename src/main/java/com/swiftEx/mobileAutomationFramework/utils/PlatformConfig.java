@@ -152,7 +152,7 @@ public class PlatformConfig {
         } else if (ANDROID_SAUCE.equals(platform)) {
             // SauceLabs Android configuration
             capabilities.setProperty("platformName", ConfigLoader.getProperty("saucelabs.android.platformName", "Android"));
-            capabilities.setProperty("deviceName", ConfigLoader.getProperty("saucelabs.android.deviceName", "Google Pixel 4 GoogleAPI Emulator"));
+            capabilities.setProperty("deviceName", ConfigLoader.getProperty("saucelabs.android.deviceName", "Google Pixel 4 Emulator"));
             capabilities.setProperty("platformVersion", ConfigLoader.getProperty("saucelabs.android.platformVersion", "12.0"));
             capabilities.setProperty("automationName", ConfigLoader.getProperty("saucelabs.android.automationName", "UiAutomator2"));
             capabilities.setProperty("app", ConfigLoader.getProperty("saucelabs.android.app", "sauce-storage:android.apk"));

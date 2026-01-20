@@ -1,7 +1,5 @@
 package com.swiftEx.mobileAutomationFramework.driver;
 
-import static java.lang.Math.log;
-
 import com.swiftEx.mobileAutomationFramework.driver.creators.AndroidDriverCreator;
 import com.swiftEx.mobileAutomationFramework.driver.creators.DriverCreator;
 import com.swiftEx.mobileAutomationFramework.driver.creators.IOSDriverCreator;
@@ -10,6 +8,8 @@ import com.swiftEx.mobileAutomationFramework.utils.PlatformConfig;
 
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -18,15 +18,22 @@ import java.net.URL;
 
 @Slf4j
 public class DriverFactory {
+    private static final Logger log = LoggerFactory.getLogger(DriverFactory.class);
 
     private AppiumDriver driver;
     private DriverCreator creator;
+    private String scenarioName;
 
     public AppiumDriver getDriver() {
         {
             driver = createNewDriver();
         }
         return driver;
+    }
+
+    public AppiumDriver getDriver(String scenarioName) {
+        this.scenarioName = scenarioName;
+        return getDriver();
     }
 
     public void quitDriver() {
@@ -75,7 +82,7 @@ public class DriverFactory {
     private DriverCreator getDriverCreator() {
         if (PlatformConfig.isSauceLabs()) {
             log.info("Using SauceLabs driver creator");
-            return new SauceLabsDriverCreator();
+            return new SauceLabsDriverCreator(scenarioName);
         } else if (PlatformConfig.isAndroid()) {
             log.info("Using Android driver creator");
             return new AndroidDriverCreator();

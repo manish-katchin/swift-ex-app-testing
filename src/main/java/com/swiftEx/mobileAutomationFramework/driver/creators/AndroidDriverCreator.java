@@ -1,12 +1,12 @@
 package com.swiftEx.mobileAutomationFramework.driver.creators;
 
-import static java.lang.Math.log;
-
 import com.swiftEx.mobileAutomationFramework.utils.ConfigLoader;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -17,6 +17,7 @@ import java.net.URL;
  */
 @Slf4j
 public class AndroidDriverCreator implements DriverCreator {
+    private static final Logger log = LoggerFactory.getLogger(AndroidDriverCreator.class);
 
     @Override
     public AppiumDriver createDriver(URL serverUrl, DesiredCapabilities capabilities) {

@@ -48,7 +48,7 @@ public class Hooks {
             }
         }
         logger.info("Starting scenario: {}", scenario.getName());
-        BaseStep.setDriver(driverFactory.getDriver());
+        BaseStep.setDriver(driverFactory.getDriver(scenario.getName()));
     }
     @After
     public void tearDown(Scenario scenario) {

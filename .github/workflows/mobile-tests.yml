@@ -18,9 +18,10 @@ on:
       test_tags:
         description: 'Cucumber Tags (e.g., @createPin, @pinValidationSuccess, @pinValidationFailed)'
         required: true
-        default: '@createPin'
+        default: '@Regression'
         type: choice
         options:
+          - '@Regression'
           - '@createPin'
           - '@pinValidationSuccess'
           - '@pinValidationFailed'
@@ -36,11 +37,11 @@ on:
       sauce_device:
         description: 'SauceLabs Device (for cloud execution)'
         required: false
-        default: 'Google Pixel 4 GoogleAPI Emulator'
+        default: 'Google Pixel 6 Emulator'
         type: choice
         options:
-          - 'Google Pixel 4 GoogleAPI Emulator'
-          - 'Google Pixel 6 GoogleAPI Emulator'
+          - 'Google Pixel 4 Emulator'
+          - 'Google Pixel 6 Emulator'
           - 'Samsung Galaxy S22 GoogleAPI Emulator'
           - 'iPhone 14 Simulator'
           - 'iPhone 13 Simulator'
@@ -299,6 +300,22 @@ jobs:
         SAUCELABS_USERNAME: ${{ secrets.SAUCELABS_USERNAME }}
         SAUCELABS_ACCESS_KEY: ${{ secrets.SAUCELABS_ACCESS_KEY }}
     
+    - name: 📊 Generate Cucumber HTML Report
+      if: always()
+      run: |
+        echo "Generating Cucumber HTML test report..."
+        
+        # Check if cucumber HTML report exists
+        if [ -f "target/cucumber-html-report.html" ]; then
+          echo "Cucumber HTML report found at target/cucumber-html-report.html"
+          ls -lh target/cucumber-html-report.html
+        else
+          echo "Cucumber HTML report not found, generating..."
+          # The report should be generated during Maven test execution
+          # Check target directory for any HTML reports
+          find target -name "*.html" -type f 2>/dev/null || echo "No HTML reports found"
+        fi
+    
     - name: Generate Allure Report
       if: always() && (inputs.generate_allure_report == true || inputs.generate_allure_report == null)
       run: |
@@ -321,6 +338,7 @@ jobs:
           target/surefire-reports/
           target/allure-results/
           target/site/allure-maven-plugin/
+          target/cucumber-html-report.html
           target/screenshots/
         retention-days: 30
     
