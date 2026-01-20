@@ -4,6 +4,8 @@ import com.swiftEx.mobileAutomationFramework.utils.ConfigLoader;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSDriver;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
@@ -13,6 +15,7 @@ import java.net.URL;
  */
 @Slf4j
 public class IOSDriverCreator implements DriverCreator {
+    private static final Logger log = LoggerFactory.getLogger(IOSDriverCreator.class);
 
     @Override
     public AppiumDriver createDriver(URL serverUrl, DesiredCapabilities capabilities) {
