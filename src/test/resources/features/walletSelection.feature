@@ -77,7 +77,7 @@ As a user, I want to select and manage wallets in the app
   And I see All available Wallets
 
 
-  @VerifyAvailableWallets
+  @ab @VerifyAvailableWallets
   Scenario: The user should be navigated to the "All Wallets" screen displaying available wallets
   Given the app is launched
   When I enter a new PIN "123456"
@@ -95,7 +95,7 @@ As a user, I want to select and manage wallets in the app
   Then I should see "All Wallets" header on the screen
   And I see All available Wallets
 
-@VerifyActiveWalletIndicator
+@ab @VerifyActiveWalletIndicator
   Scenario: The currently active wallet should have a tick mark on the right and be highlighted.
   Given the app is launched
   When I enter a new PIN "123456"
@@ -117,7 +117,7 @@ As a user, I want to select and manage wallets in the app
 
 
   
-  @VerifyActiveWalletIndicatoronSelectedWallet @J
+  @ab @VerifyActiveWalletIndicatoronSelectedWallet @J
   Scenario: Verify Selecting a Different Wallet and Ensuring the Active Wallet Indicator Updates Accordingly
   Given the app is launched
   When I enter a new PIN "123456"
@@ -151,7 +151,7 @@ As a user, I want to select and manage wallets in the app
 
 
 
-  @VerifyWalletNameUpdateonHomepage @J
+  @ab @VerifyWalletNameUpdateonHomepage @J
   Scenario: Verify Wallet Name Update on Homepage
   Given the app is launched
   When I enter a new PIN "123456"
@@ -181,7 +181,7 @@ As a user, I want to select and manage wallets in the app
 
 
 #TC-95 
- @VerifyPopupOnSelectingWallet @11 @FC
+ @ab @VerifyPopupOnSelectingWallet @11 @FC
   Scenario: Verify Popup on Selecting a Wallet
   Given the app is launched
   When I enter a new PIN "123456"
@@ -235,7 +235,7 @@ As a user, I want to select and manage wallets in the app
 
 
 #TC-97
-@VerifyNavigationtoMyWalletPage @11
+@ab @VerifyNavigationtoMyWalletPage @11
  Scenario: Verify Navigation to My Wallet Page
   Given the app is launched
   When I enter a new PIN "123456"
@@ -254,7 +254,7 @@ As a user, I want to select and manage wallets in the app
   Then I should see "Wallet" header on the screen 
 
 #TC-98
- @VerifyActiveWalletNameDisplay @11
+ @ab @VerifyActiveWalletNameDisplay @11
   Scenario: Verify Active Wallet Name Display
   Given the app is launched
   When I enter a new PIN "123456"
@@ -327,7 +327,7 @@ As a user, I want to select and manage wallets in the app
   Then I verify Show Secret Phrase option is clickable
 
 #TC-101
-@VerifyBackupWalletPopupforWalletflow
+@ab @VerifyBackupWalletPopupforWalletflow
  Scenario: Verify Backup Wallet Popup Appears
   Given the app is launched
   When I enter a new PIN "123456"

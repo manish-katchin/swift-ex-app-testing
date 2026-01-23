@@ -4,7 +4,7 @@ private_key_title:
 
 account_name_field:
   strategy: xpath
-  value: //android.widget.EditText[@hint='Enter your account name']
+  value: //android.widget.EditText[@content-desc="account_Name"]
 
 backup_mnemonic_phrase:
   strategy: xpath
