@@ -139,7 +139,7 @@ public class SwapPage extends BasePage {
 
     // Enters amount in the input field below Amount
     public void enterAmount(String amount) throws InterruptedException {
-        driver.findElement(By.xpath("//android.widget.EditText[@hint='Amount']")).click();
+        driver.findElement(By.xpath("//android.widget.EditText[@text='Amount']")).click();
         Thread.sleep(2000);
         ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.DIGIT_0));
         Thread.sleep(1000);

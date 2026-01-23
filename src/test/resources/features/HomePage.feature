@@ -121,7 +121,7 @@ Then I should see wallet name "Main" displayed
 Then I click on dropdown icon next to wallet name
 Then I should see choose wallet header
 
-@VerifyAddWalletOptionInDropdown
+@ab @VerifyAddWalletOptionInDropdown
 Scenario: Verify Add Wallet option is present in the dropdown.
 Given the app is launched
 When I enter a new PIN "123456"
@@ -138,7 +138,7 @@ Then I should see Add Wallet option in the dropdown
 And I should see All Present Wallets in the dropdown
 
 
-@VerifyAllWalletListed
+@ab @VerifyAllWalletListed
 Scenario: Verify all wallets are listed in the dropdown.
 Given the app is launched
 When I enter a new PIN "123456"
@@ -155,7 +155,7 @@ Then I should see Add Wallet option in the dropdown
 And I should see All Present Wallets in the dropdown
 
 
-@VerifyActiveWalletIndicatoronSelectedWalletinDropdown
+@ab @VerifyActiveWalletIndicatoronSelectedWalletinDropdown
 Scenario: Verify currently active wallet is highlighted with "Active" and a tick.
 Given the app is launched
 When I enter a new PIN "123456"
@@ -171,7 +171,7 @@ Then I should see choose wallet header
 Then I should see Add Wallet option in the dropdown
 Then I should see wallet "Main" has active wallet indication
 
-@VerifySwitchingWalletUpdatesUI
+@ab @VerifySwitchingWalletUpdatesUI
 Scenario: Verify switching wallets updates the UI accordingly
 Given the app is launched
 When I enter a new PIN "123456"
@@ -202,7 +202,7 @@ Then I should see wallet "Sam" has active wallet indication
 And I select the wallet named "Main"
 Then I should see wallet name "Main" displayed
 
-@VerifyAddWalletNavigation
+@ab @VerifyAddWalletNavigation
 Scenario: Verify clicking Add Wallet navigates to the add wallet screen.
 Given the app is launched
 When I enter a new PIN "123456"
@@ -220,7 +220,7 @@ And I tap on Add Wallet option
 And I see Create Wallet option
 
 
-@VerifydropdownClosesOnClickingOutside
+@ab @VerifydropdownClosesOnClickingOutside
 Scenario: Verify dropdown closes when clicking outside
 Given the app is launched
 When I enter a new PIN "123456"
