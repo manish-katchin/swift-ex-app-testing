@@ -1,6 +1,7 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -690,8 +691,11 @@ public class HomePage extends BasePage {
     }
         // Clicks the Swap button specifically on the Swap page
     public void clickRandomCoordinate() throws InterruptedException {
-        tapOnCoordinates(driver, 200, 500);
-        logger.info("Clicked random coordinate on Swap page via coordinates");
+    Dimension size = driver.manage().window().getSize();
+    int x = size.getWidth() / 2;
+    int y = (int) (size.getHeight() * 0.85);
+    tapOnCoordinatesbyfingeractions(driver, x, y);
+    logger.info("Clicked random coordinate on Swap page via coordinates");
     }
 
 }

@@ -220,7 +220,7 @@ And I tap on Add Wallet option
 And I see Create Wallet option
 
 
-@ab @VerifydropdownClosesOnClickingOutside
+@aa @VerifydropdownClosesOnClickingOutside
 Scenario: Verify dropdown closes when clicking outside
 Given the app is launched
 When I enter a new PIN "123456"

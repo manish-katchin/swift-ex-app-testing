@@ -1,17 +1,24 @@
 package com.swiftEx.mobileAutomationFramework.pages;
 
 import io.appium.java_client.AppiumDriver;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.time.Duration;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.openqa.selenium.interactions.Sequence;
+
 import com.swiftEx.mobileAutomationFramework.utils.LocatorLoader;
 import com.swiftEx.mobileAutomationFramework.utils.LocatorUtils;
 
@@ -147,7 +154,21 @@ public abstract class BasePage {
         args.put("duration", 100); // duration in ms
         driver.executeScript("mobile: clickGesture", args);
     }
+public void tapOnCoordinatesbyfingeractions(AppiumDriver driver, int x, int y) {
+    PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+    Sequence tap = new Sequence(finger, 1);
 
+    tap.addAction(finger.createPointerMove(
+            Duration.ZERO,
+            PointerInput.Origin.viewport(),
+            x,
+            y
+    ));
+    tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+    tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+    driver.perform(Collections.singletonList(tap));
+}
 
     public boolean scrollDownUntilVisible(String locatorKey, int maxScrolls) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
