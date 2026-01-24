@@ -25,7 +25,7 @@ When I click on the "Swap" button
 Then I should see the "Swap" header on the screen
 And I enter "0.0001" in the input field below "WETH"
 Then I click on the "Swap" button on Swap page
-And I see "Swap Success" popup on screen
+Then I verify swapping is successful
 
 
 @SwappingCryptoCurrencyfromUSDCToEthereum @aa
@@ -51,7 +51,7 @@ Then I should see the "Swap" header on the screen
 Then I press the currency switch arrow
 And I enter "1" in the input field below "WETH"
 Then I click on the "Swap" button on Swap page
-And I see "Swap Success" popup on screen
+Then I verify swapping is successful
 
 @sendCryptoCurrency @FC
 Scenario:To verify user is able to perform transaction

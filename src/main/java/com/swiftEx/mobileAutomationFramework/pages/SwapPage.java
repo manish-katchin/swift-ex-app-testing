@@ -86,13 +86,20 @@ public class SwapPage extends BasePage {
         return false;
     }
 
-        // Verifies the Transactions header is displayed
-        public boolean isTransactionsHeaderDisplayed() throws InterruptedException {
-            Thread.sleep(30000);
-            return isDisplayed("Transactions_header");
+    // Verifies the Transactions header is displayed
+    public boolean isTransactionsHeaderDisplayed() {
+        logger.info("Waiting for 'Transactions' header to appear");
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(getBy("Transactions_header")));
+            boolean visible = isDisplayed("Transactions_header");
+            logger.info("'Transactions' header visible: {}", visible);
+            return visible;
+        } catch (Exception e) {
+            logger.warn("'Transactions' header not visible within timeout: {}", e.getMessage());
+            return false;
         }
-
-    // Clicks the Swap button specifically on the Swap page
+    }    // Clicks the Swap button specifically on the Swap page
     public void clickSwapButtonOnSwapPage() throws InterruptedException {
         logger.info("Waiting 30 seconds before clicking Swap button on Swap page");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));

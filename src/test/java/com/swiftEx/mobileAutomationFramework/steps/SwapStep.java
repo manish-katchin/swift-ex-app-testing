@@ -234,8 +234,15 @@ public class SwapStep extends BaseStep {
            swapPage.tapPasteButtonInRecipientAddressField();
        }
        @Then("The displayed address should match {string}")
-public void verifyDisplayedAddress(String expectedAddress) {
-    String actualAddress = swapPage.getDisplayedAddress();
-    Assert.assertEquals("Displayed address does not match expected value!", expectedAddress, actualAddress);
+       public void verifyDisplayedAddress(String expectedAddress) {
+           String actualAddress = swapPage.getDisplayedAddress();
+           Assert.assertEquals("Displayed address does not match expected value!", expectedAddress, actualAddress);
+       }
+@Then("I verify swapping is successful")
+public void iVerifySwappingIsSuccessful() {
+    logger.info("Verifying swapping is successful by checking Transactions header");
+    Assert.assertTrue("Transactions header should be displayed after successful swap - swap may have failed!", 
+                     swapPage.isTransactionsHeaderDisplayed());
+    logger.info("✅ Swapping completed successfully - Transactions screen displayed");
 }
 }
