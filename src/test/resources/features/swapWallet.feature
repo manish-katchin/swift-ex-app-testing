@@ -3,7 +3,7 @@
 Feature: Swap Wallet 
 As a user I want to Swap wallet
     
-@SwappingCryptoCurrencyfromEthereumToUSDC   @FC
+@SwappingCryptoCurrencyfromEthereumToUSDC   @FC @aa
 Scenario: Verify successful Crypto Swap from Ether to USDC
 Given the app is launched
 When I enter a new PIN "123456"
@@ -25,10 +25,10 @@ When I click on the "Swap" button
 Then I should see the "Swap" header on the screen
 And I enter "0.0001" in the input field below "WETH"
 Then I click on the "Swap" button on Swap page
-And I see "Swap Success" popup on screen
+Then I verify swapping is successful
 
 
-@SwappingCryptoCurrencyfromUSDCToEthereum 
+@SwappingCryptoCurrencyfromUSDCToEthereum @aa
 Scenario: Verify successful Crypto Swap from USDC to Ethereum
 Given the app is launched
 When I enter a new PIN "123456"
@@ -51,7 +51,7 @@ Then I should see the "Swap" header on the screen
 Then I press the currency switch arrow
 And I enter "1" in the input field below "WETH"
 Then I click on the "Swap" button on Swap page
-And I see "Swap Success" popup on screen
+Then I verify swapping is successful
 
 @sendCryptoCurrency @FC
 Scenario:To verify user is able to perform transaction

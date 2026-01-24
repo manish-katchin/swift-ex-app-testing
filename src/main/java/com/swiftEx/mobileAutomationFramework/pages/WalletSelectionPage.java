@@ -13,7 +13,7 @@ public class WalletSelectionPage extends BasePage {
       LoggerFactory.getLogger(WalletSelectionPage.class);
 
   public WalletSelectionPage(AppiumDriver driver) {
-    super(driver, "walletSelection.yaml");
+    super(driver, "WalletSelection.yaml");
     logger.info("✅ WalletSelectionPage ready for platform: {}",
         getPlatform().toUpperCase());
   }
