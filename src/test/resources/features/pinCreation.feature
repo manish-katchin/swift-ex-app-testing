@@ -26,10 +26,10 @@ When I enter a new PIN "12345"
 Then I am on pin page
 
 @verifyPopupOnClickingFingerIdOnEnterPin @aa
-Scenario: Verify that the user must re-enter the PIN for confirmation
+Scenario: Verify Popup On Clicking FingerId On EnterPin
 Given the app is launched
 When I click on FingerPrint Sensor 
-And I should see "Enable biometrics in SwiftEx app settings."
+And I should see "Enable biometrics in SwiftEx app settings." on fingerprint screen
 
 
 @verifyPopupOnClickingFingerIdOnReEnterPin
@@ -37,7 +37,7 @@ Scenario: Verify that when clicking on Finger ID on the "Re-enter Your PIN" page
 Given the app is launched
 When I enter a new PIN "123456"
 When I click on FingerPrint Sensor 
-And I should see "Enable biometrics in SwiftEx app settings."
+And I should see "Enable biometrics in SwiftEx app settings." on fingerprint screen
 
 @VerifyCannotProceedWithoutSettingPin
 Scenario: Verify that the user cannot proceed without setting up a PIN.

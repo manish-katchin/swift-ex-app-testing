@@ -84,6 +84,68 @@ public class PinCreationStep extends BaseStep {
         logger.info("Error message verified successfully");
     }
 
+@Then("I should see {string} on fingerprint screen")
+public void i_should_saw(String expectedError) {
+    logger.info("Verifying error message: {}", expectedError);
+    
+    int maxRetries = 3;
+    String actualErrorString = null;
+    
+    for (int attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            actualErrorString = pinPage.getErrorMessage();
+            
+            if (actualErrorString != null && !actualErrorString.isEmpty()) {
+                assertThat(actualErrorString)
+                    .as("Error message should match expected value")
+                    .isEqualTo(expectedError);
+                
+                logger.info("Error message verified successfully on attempt {}", attempt);
+                return; // Success, exit method
+            }
+            
+            // If no error message found, tap fingerprint sensor again
+            logger.warn("Error message not found on attempt {}. Tapping fingerprint sensor again...", attempt);
+            pinPage.tapFingerPrintSensor();
+            Thread.sleep(1000); // Small delay after tapping
+            
+        } catch (AssertionError e) {
+            if (attempt == maxRetries) {
+                logger.error("Error message verification failed after {} attempts. Expected: '{}', Actual: '{}'", 
+                    maxRetries, expectedError, actualErrorString);
+                throw e;
+            }
+            logger.warn("Error message mismatch on attempt {}. Expected: '{}', Actual: '{}'. Retrying...", 
+                attempt, expectedError, actualErrorString);
+            pinPage.tapFingerPrintSensor();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+        } catch (Exception e) {
+            if (attempt == maxRetries) {
+                logger.error("Failed to get error message after {} attempts: {}", maxRetries, e.getMessage());
+                throw new RuntimeException("Failed to verify error message on fingerprint screen", e);
+            }
+            logger.warn(" Exception on attempt {}: {}. Tapping fingerprint sensor again...", attempt, e.getMessage());
+            pinPage.tapFingerPrintSensor();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    logger.error(" Failed to verify error message after {} attempts", maxRetries);
+    throw new AssertionError(
+        String.format("Error message not found after %d attempts. Expected: '%s', Last attempt: '%s'", 
+            maxRetries, expectedError, actualErrorString)
+    );
+}
+
+
     @Then("I click {string} button on screen")
     public void i_click_button_on_screen(String buttonText) throws InterruptedException {
         logger.info("Clicking button: {}", buttonText);
