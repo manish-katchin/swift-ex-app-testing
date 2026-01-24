@@ -112,7 +112,7 @@ public class PinCreationStep extends BaseStep {
     @Then("I see {string} popup on screen")
     public void i_see_popup_on_screen(String popupText) throws InterruptedException {
         logger.info("Verifying popup: {}", popupText);
-        Thread.sleep(3000); // Wait for UI to update
+        Thread.sleep(1000); // Wait for UI to update
         String dynamicXPath = String.format("//*[@text='%s']", popupText);
         logger.info("Using XPath: {}", dynamicXPath);
 

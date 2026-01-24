@@ -25,7 +25,7 @@ Given the app is launched
 When I enter a new PIN "12345"
 Then I am on pin page
 
-@verifyPopupOnClickingFingerIdOnEnterPin
+@verifyPopupOnClickingFingerIdOnEnterPin @aa
 Scenario: Verify that the user must re-enter the PIN for confirmation
 Given the app is launched
 When I click on FingerPrint Sensor 
