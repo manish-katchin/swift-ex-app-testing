@@ -101,10 +101,10 @@ on:
       - 'src/**'
       - 'pom.xml'
 
-  # Schedule for nightly runs
-  schedule:
-    # Run every day at 2 AM UTC (adjust timezone as needed)
-    - cron: '0 2 * * *'
+  # # Schedule for nightly runs
+  # schedule:
+  #   # Run every day at 2 AM UTC (adjust timezone as needed)
+  #   - cron: '0 2 * * *'
 
 env:
   # Default values for automatic runs
